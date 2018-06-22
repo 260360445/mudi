@@ -1,0 +1,185 @@
+<div class="cont">
+          <div class="wupin">
+            <h3>现有物品明细</h3>
+            <div class="wubiao">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>物品名称</th>
+                    <th>物品价格</th>
+                    <th>物品单位</th>
+                    <th>物品简介</th>
+                  </tr>
+                </thead>
+                <tbody class="wlist">
+                  {foreach $glist as  $vo}
+                        <tr class="tr_{$vo.id}" row_id = "{$vo.id}">
+                          <td class = "row_sn" style="display:none;">{$vo.sn}</td>
+                          <td class = "row_title">{$vo.title}</td>
+                          <td class = "row_price">{$vo.price}</td>
+                          <td class = "row_type">{$vo.type}</td>
+                          <td class = "row_cont">{$vo.cont}</td>
+                        </tr>
+                  {/foreach}
+                </tbody>
+              </table>
+            </div>
+            <div class="wupinform">
+              <form class="edit_row">
+                <fieldset>
+                  <legend>购买信息</legend>
+                  <div class="wupd">
+                    <div class="wupa">
+                      <p>物品编号</p>
+                      <input type="text" class="row_sn" name="sn" readonly="" />
+                    </div>
+                    <div class="wupb">
+                      <p>物品名称</p>
+                      <input type="text" class="row_title" name="title"/>
+                      <input type="text" class="row_id" name="id" style="display:none;"/>
+                    </div>
+                  </div>
+                  <div class="wupd">
+                    <div class="wupc">
+                      <p>物品单价</p>
+                      <input type="text" class="row_price" name="price"/><em>元</em>
+                    </div>
+                    <div class="wupe">
+                      <p>购买数量</p>
+                      <input type="text" class="row_num" name="num"/><em>个</em>
+                    </div>
+                  </div>
+                  <button class="wupf" type="button" id="addtr"> 添加到购买明细</button>
+                </fieldset>
+              </form>
+            </div>
+            </div>
+            <div class="wupin">
+            <h3>以购买物品明细</h3>
+            <div class="wubiao">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th><input type="checkbox" onclick="checkall(this)"  /></th>
+                    <th>物品编号</th>
+                    <th>物品名称</th>
+                    <th>物品价格</th>
+                    <th>购买数量</th>
+                    <th>物品购买小计</th>
+                  </tr>
+                </thead>
+                <tbody id="addsettr">
+                 
+                </tbody>
+              </table>
+            </div>
+            <div class="wupinform">
+              <form>
+                <fieldset>
+                  <legend>购买操作</legend>
+                    <p class="wupz">物品总额:<i class="sumprice" value="0"></i>元</p>
+                    <div class="wupy">
+                      <p>操作员：</p>
+                      <select id="userid">
+                        {foreach $role as  $vo}
+                          <option value="{$vo.id}">{$vo.title}</option>
+                        {/foreach}
+                      </select>
+                      <i>*</i>
+                    </div>
+                  <button class="wupg" type="button" id="addtrdel"> 将选中项从购物明细中删除</button><br>
+                  <button class="wupg" type="button" id="addtradd"> 保存物品购买明细</button><br>
+                  <button class="wupg" type="button" id="addtrdy"> 打印物品购买信息</button>
+                </fieldset>
+                
+              </form>
+            </div>
+            </div>
+        </div>
+<script type="text/javascript">
+  $("#addtrdel").click(function(){
+       $(".check_alls").each(function(k,v){
+         let tr = $(this);
+        if(tr.prop("checked")){  
+          var idstr=tr.val();
+          tr.parent().parent().remove();
+        }
+      })
+  })
+  $("#addtradd").click(function(){
+    var seluser=$("#userid option:selected").val();
+    var d=[];
+    //console.log(seluser);
+    $(".check_alls").each(function(k,v){
+       let tr = $(this);
+      if(tr.prop("checked")){  
+        var idstr=tr.val();
+        var num=$('.tr_'+idstr+'').find('.row_num').text();
+        d.push({id: idstr,num:num});
+        //console.log(d); 
+        /*$(".sumprice").html(sum);*/
+      }
+    })
+    $.ajax({
+        type        : 'post',
+        url         : '{:url('glist_add')}',
+        dataType    : 'json',
+        data        : {
+            item : d,
+            roleid:seluser,
+        },
+        success     : function(e){
+            //console.log(e); 
+            if (e == '2') {
+                alt('添加成功');
+            } else {
+                alt('添加失败');
+            }
+
+
+        },
+        error       : function () {
+
+        },
+    });
+  })
+    //=========全选=======//
+  function checkall(qx){
+    $(".check_alls").prop("checked",qx.checked);
+  }
+  $('.wlist tr').click(function(){
+        let tr = $(this);
+        $('.edit_row').find('.row_title').val(tr.find('.row_title').text());
+        $('.edit_row').find('.row_sn').val(tr.find('.row_sn').text());
+        $('.edit_row').find('.row_price').val(tr.find('.row_price').text());
+        $('.edit_row').find('.row_id').val(tr.attr('row_id'));
+        $('.edit_row').find('.row_num').val('');
+    });
+  $("#addtr").click(function(){
+    var sn=$('.edit_row').find('.row_sn').val();
+    var title=$('.edit_row').find('.row_title').val();
+    var price=$('.edit_row').find('.row_price').val();
+    var num=$('.edit_row').find('.row_num').val();
+    var id=$('.edit_row').find('.row_id').val();
+    var zong=$(".sumprice").val();
+    var sum=num*price;
+    var summoney=Number(zong)+Number(sum);
+    $(".sumprice").text(summoney);
+    $(".sumprice").val(summoney);
+    //sump();
+    $("#addsettr").append('<tr class="trr_'+id+'" row_id = "'+id+'"><td class = "row_cont"><input type="checkbox" checked name="id[]" class="check_alls" value="'+id+'" row_sum = "'+sum+'"/></td><td class = "row_sn" >'+sn+'</td><td class = "row_title">'+title+'</td><td class = "row_price">'+price+'</td><td class = "row_num">'+num+'</td><td class = "row_sum">'+sum+'</td></tr>');
+  })
+  function sump(){
+    
+    $(".check_alls").each(function(){
+       let tr = $(this);
+      if(tr.prop("checked")){  
+        var idstr=tr.val();
+        var sum='';
+        var sum=tr.attr('row_sum');console.log(sum);
+        /*$(".sumprice").html(sum);*/
+        alert(sum);
+      }
+    })
+  }
+</script>

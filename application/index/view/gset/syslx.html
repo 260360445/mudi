@@ -1,0 +1,160 @@
+          <div class="ghsz">
+            <form  action="{:url('syslx_add')}" class="add_row" method="post">
+              <fieldset>
+                <legend>骨灰盒设置</legend>
+                <div class="ghszm">
+                  <div class="ghszma">
+                    <div class="ghszmaa">
+                      <p>骨灰盒名称</p>
+                      <input type="text" name="title"/>
+                    </div>
+                    <div class="ghszmab">
+                      <p>骨灰盒长</p>
+                      <input type="text" name="cd"/>
+                      <i>mm</i>
+                    </div>
+                    <div class="ghszmab">
+                      <p>骨灰盒宽</p>
+                      <input type="text" name="wd"/>
+                      <i>mm</i>
+                    </div>
+                    <div class="ghszmab">
+                      <p>骨灰盒高</p>
+                      <input type="text" name="hd"/>
+                      <i>mm</i>
+                    </div>
+                  </div>
+                  <div class="ghszmb">
+                    <div class="ghszmba">
+                      <p>骨灰盒价格</p>
+                      <input type="text" name="price"/>
+                      <i>¥</i>
+                    </div>
+                    <div class="ghszmbb">
+                      <p>选择材质</p>
+                      <select name="sysysid">
+                        <option value="">请选择</option>
+                         {foreach $sysys as  $vo}
+                            <option value="{$vo.id}">{$vo.title}</option>
+                          {/foreach}
+                      </select>
+                    </div>
+                    <button class="ghszmbc" type="submit"> 添加</button>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+          <div class="ghszbiao">
+            <table class="table table-bordered">
+             
+              <thead>
+                <tr>
+                  <th>骨灰盒名称</th>
+                  <th>材质名称</th>
+                  <th>长</th>
+                  <th>宽</th>
+                  <th>高</th>
+                  <th>价格</th>
+                  
+                </tr>
+              </thead>
+              <tbody class="wlist">
+                   {foreach $sysls as  $vo}
+                        <tr class="tr_{$vo.id}" row_id = "{$vo.id}">
+                          <td class = "row_title">{$vo.title}</td>
+                          <td class = "row_cem_id"  val = "{$vo.sysysid}">{$sysyst[$vo['sysysid']]['title']}</td>
+                          <td ><font class = "row_cd">{$vo.cd}</font>mm</td>
+                          <td ><font class = "row_wd">{$vo.wd}</font>mm</td>
+                          <td ><font class = "row_hd">{$vo.hd}</font>mm</td>
+                          <td class = "row_price">{$vo.price}</td>
+                        </tr>
+                    {/foreach}
+              </tbody>
+            </table>
+          </div>
+          <div class="ghsz">
+            <form  action="{:url('syslx_edit')}" method="post" class="edit_row">
+              <fieldset>
+                <legend>骨灰盒设置</legend>
+                <div class="ghszm">
+                  <div class="ghszma">
+                    <div class="ghszmaa">
+                      <p>骨灰盒名称</p>
+                      <input type="text" name="title" class="ro_title"/>
+                    </div>
+                    <div class="ghszmab">
+                      <p>骨灰盒长</p>
+                      <input type="text" name="cd" class="ro_cd"/>
+                      <i>mm</i>
+                    </div>
+                    <div class="ghszmab">
+                      <p>骨灰盒宽</p>
+                      <input type="text" name="wd" class="ro_wd"/>
+                      <i>mm</i>
+                    </div>
+                    <div class="ghszmab">
+                      <p>骨灰盒高</p>
+                      <input type="text" name="hd" class="ro_hd"/>
+                      <i>mm</i>
+                    </div>
+                  </div>
+                  <div class="ghszmb">
+                    <div class="ghszmba">
+                      <p>骨灰盒价格</p>
+                      <input type="text" name="price" class="ro_price"/>
+                      <input type="hidden" name="id" class="row_id" />
+                      <i>¥</i>
+                    </div>
+                    <div class="ghszmbb">
+                      <p>选择材质</p>
+                      <select name="sysysid" class="cem_id">
+                         <option value="">请选择</option>
+                         {foreach $sysys as  $vo}
+                            <option value="{$vo.id}">{$vo.title}</option>
+                          {/foreach}
+                      </select>
+                    </div>
+                     <button type="submit" class="ghszmbc">修改</button>
+                      <button type="button" class="ghszmbcs row_del">删除</button>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+<script>
+  $('.wlist tr').click(function(){
+      $(".edit_row .cem_id").val($(this).find('.row_cem_id').attr('val'));
+      $(".edit_row .ro_title").val($(this).find('.row_title').text());
+      $(".edit_row .ro_cd").val($(this).find('.row_cd').text());
+      $(".edit_row .ro_wd").val($(this).find('.row_wd').text());
+      $(".edit_row .ro_hd").val($(this).find('.row_hd').text());
+      $(".edit_row .ro_price").val($(this).find('.row_price').text());
+      $(".edit_row .row_id").val($(this).attr('row_id'));
+  });
+  $('.row_del').click(function(){
+    var row_id = $(".edit_row .row_id").val();
+    if (row_id && confirm('确认删除?')) {
+        $.ajax({
+            type        : 'GET',
+            url         : '{:url('syslx_del')}',
+            dataType    : 'json',
+            data        : {
+                id : row_id
+            },
+            success     : function(e){
+                if (e.status) {
+                    $('.tr_' + row_id).remove();
+                } else {
+                    alt(e.msg);
+                }
+
+
+            },
+            error       : function () {
+
+            },
+        });
+    }
+});
+</script>

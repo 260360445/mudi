@@ -1,0 +1,17 @@
+
+    <div class="mwnav">
+        <ul>
+            {foreach $tab as $k => $vo}
+            <li
+
+            {if $k eq $type}
+            class="navon"
+            {/if}
+
+             ><a
+
+                href = "{:url('wlist', ['type' => $k])}" >{$vo}</a></li>
+            {/foreach}
+
+        </ul>
+    </div>

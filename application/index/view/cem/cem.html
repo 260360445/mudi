@@ -1,0 +1,159 @@
+<div class="mwshezhi">
+      {include file="cem/tab" /}
+
+    <div class="mwmain">
+        <div class="mwd">
+            <div class="mwda">
+                <form class="add_row" action="{:url('add')}" method="post" >
+                    <fieldset>
+                        <legend>墓园设置</legend>
+                        <div class="mwdale">
+                            <div class="mwdtop">
+                              <div class="mwdlea">
+                                  <p>墓园名称</p>
+                                  <p>墓园简介</p>
+
+                               </div>
+                               <div class="mwdleb">
+                                   <input type="hidden" name="id" class="row_id" />
+                                   <input type="text" name="title" class="row_title" />
+                                   <input type="text" name="desc"  class="row_desc"  />
+                                </div>
+                            </div>
+                                <div class="mwdlec">
+                                    <button type="button" class="mwdcontc row_add"  >添加</button>
+                                    <button type="button" class="mwdcontc row_edit"  >修改</button>
+                                    <button type="button" class="mwdcontc row_del"  >删除</button>
+                                    <!-- <button type="button" class="mwdcontc row_cancel"  >取消</button> -->
+                                </div>
+                        </div>
+                        <div class="mwdari">
+                              <div class="mwdaria">
+                                    <img class="row_img"  alt = '未选择' />
+                                    <input type="hidden" name="thumb" class="row_thumb" />
+                              </div>
+                              <button type="button" class="mwdcontcs slimg">选择图片</button>
+
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="mwdb">
+                <table class="table table-bordered">
+
+                  <thead>
+                    <tr>
+                      <th>墓园名称</th>
+                      <th>墓园介绍</th>
+
+                    </tr>
+                  </thead>
+                  <tbody class="wlist">
+                    {foreach $cem_list as $k=>$vo}
+                        <tr row_id = "{$vo.id}" row_thumb = "{$vo.thumb}" class="tr_{$vo.id}">
+                          <td class="title">{$vo.title}</td>
+                          <td class="desc"> {$vo.desc}</td>
+                        </tr>
+                    {/foreach}
+                  </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <style media="screen">
+        .row_img {
+            width: 100%;
+        }
+    </style>
+    <iframe id = "iframeSon" style = "display:none;" src = "{:url('p/upload')}"> </iframe>
+    <script type="text/javascript">
+
+        $('.slimg').click(function(){
+           $( "#iframeSon" ).contents().find("#file").click();
+        });
+
+        function new_img (src) {
+            $('.row_img').attr('src', src);
+            $('.row_thumb').val(src);
+        }
+    </script>
+    <script type="text/javascript">
+        $('.wlist tr').click(function(){
+            $(".add_row .row_img").attr('src', $(this).attr('row_thumb'));
+            $(".add_row .row_thumb").attr('src', $(this).attr('row_thumb'));
+            $(".add_row .row_id").val($(this).attr('row_id'));
+            $(".add_row .row_title").val($(this).find('.title').text());
+            $(".add_row .row_desc").val($(this).find('.desc').text());
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        $('.row_add').click(function(){
+            $('.add_row').attr('action', "{:url('cem_add')}").submit();
+
+        });
+
+        $('.row_edit').click(function(){
+            $('.add_row').attr('action', "{:url('cem_edit')}").submit();
+        });
+
+        $('.row_del').click(function(){
+            var row_id = $(".add_row .row_id").val();
+            if (row_id && confirm('确认删除?')) {
+                $.ajax({
+                    type        : 'GET',
+                    url         : '{:url('cem_del')}',
+                    dataType    : 'json',
+                    data        : {
+                        id : row_id
+                    },
+                    success     : function(e){
+                        if (e.status) {
+                            $('.tr_' + row_id).remove();
+                        } else {
+                            alt(e.msg);
+                        }
+
+
+                    },
+                    error       : function () {
+
+                    },
+                });
+            }
+        });
+
+
+    </script>
+
+
+
+    <script type="text/javascript">
+
+
+    $(".add_row").validate({
+        rules:{
+            title:{
+                required:true,
+            },
+            desc:{
+                required:true,
+            },
+
+        },
+        errorClass: "help-inline",
+        errorElement: "div",
+        highlight:function(element, errorClass, validClass) {
+            $(element).parents('.control-group').addClass('error');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).parents('.control-group').removeClass('error');
+            $(element).parents('.control-group').addClass('success');
+        },
+        ignore : "",
+
+    });
+    </script>

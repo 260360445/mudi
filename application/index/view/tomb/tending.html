@@ -1,0 +1,257 @@
+<div class="cont">
+    <form class="add_row">
+        <fieldset>
+            <legend>预定维护</legend>
+
+           <div class="conta">
+              <p>选择墓园</p>
+              <p>选择墓区</p>
+              <p>选择墓排</p>
+              <p>墓位样式</p>
+
+
+           </div>
+           <div class="contb">
+               <select name="cem_id" class="cem_id">
+                  <option value="">请选择</option>
+                  {foreach $cem_list as $k => $vo}
+                       <option value="{$vo.id}">{$vo.title}</option>
+                  {/foreach}
+               </select>
+
+
+
+                   <select name="cem_area_id" class="cem_area_id">
+                      <option value="0">请选择</option>
+                   </select>
+
+
+
+                   <select name="cem_row_id" class="cem_row_id">
+                      <option value="0">请选择</option>
+
+                   </select>
+                       <select class="style_id">
+                   {foreach $cem_style as $k => $vo}
+                        <option value="{$vo.id}">{$vo.title}</option>
+                   {/foreach}
+                      </select>
+
+                    <input value="{:cem_status(1)}" class="status_id" type="hidden" />
+
+                <button type="button" class="contc show_all">显示全部已预订墓位</button>
+
+           </div>
+        </fieldset>
+
+    </form>
+    <div class="ding wlist">
+
+
+    </div>
+</div>
+</div>
+
+
+
+
+    <script type="text/javascript">
+        $(document).on('click', '.all_btn', function(){
+            $('.wlist input').prop('checked', $(this).prop('checked'));
+        });
+        // $('.wlist ').on('click', 'tr', function(){
+        //     $(".add_row .cem_id").val($(this).find('.row_cem_id').attr('val'));
+        //     get_area($(".add_row .cem_id"), $(this).find('.row_cem_area_id').attr('val') );
+        //     // $(".add_row .row_cem_area_id").val($(this).find('.row_cem_area_id').attr('val'));
+        //     $(".add_row .row_title").val($(this).find('.row_title').text());
+        //     $(".add_row .row_id").val($(this).attr('row_id'));
+        // });
+
+        $('.all_btn_z').click(function(){
+            $('.all_btn_z').parents('.mwtxribbot').find('input').prop('checked', $(this).prop('checked'));
+        });
+
+        $('.sbmt').click(function(){
+            if ($(this).hasClass('del') && confirm('确认删除?'))  {
+                $('.add_row').attr('action', $(this).attr('url')).submit();
+            } else {
+                $('.add_row').attr('action', $(this).attr('url')).submit();
+            }
+
+        });
+
+        $(document).on('click', '.del', function(){
+            var ids = [];
+            $('.wlist input').each(function(){
+                if ($(this).prop('checked')) {
+                    ids.push($(this).val());
+                }
+
+            });
+            if (!ids.length) {
+                return alt('请先选择要删除的墓位');
+            }
+
+            $.ajax({
+                type        : 'GET',
+                url         : '{:url('info_del')}',
+                dataType    : 'json',
+                data        : {
+                    ids : ids
+                },
+                success     : function(e){
+                    if (e.status) {
+                        for (let i in ids) {
+                            $('.tr_' + ids[i]).remove();
+                        }
+                    }
+                },
+                error       : function () {
+
+                },
+            });
+
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        function get_row (_this, _select_id) {
+            // var _select_id = _select_id ? _select_id : 0;
+            let cem_area_id = _this.val();
+            let form = _this.parents('form');
+            if (cem_area_id) {
+                $.ajax({
+                    type        : 'GET',
+                    url         : '{:url('Cem/row_wlist')}',
+                    dataType    : 'json',
+                    data        : {
+                        cem_area_id : cem_area_id
+                    },
+                    success     : function(e){
+                        let html = '<option value = "0">请选择</option>';
+                        for (i in e) {
+                            html += '<option ';
+                            if (_select_id == e[i]['id']) {
+                                html += 'selected';
+                            }
+                            html += ' value="'+e[i]['id']+'">'+e[i]['title']+'</option>';
+                        }
+                        form.find('.cem_row_id').html(html);
+                    },
+                    error       : function () {
+
+                    },
+                });
+            }
+        }
+
+
+
+        function get_area (_this, _select_id) {
+            // var _select_id = _select_id ? _select_id : 0;
+            let cem_id = _this.val();
+            let form = _this.parents('form');
+            if (cem_id) {
+                $.ajax({
+                    type        : 'GET',
+                    url         : '{:url('Cem/area_wlist')}',
+                    dataType    : 'json',
+                    data        : {
+                        cem_id : cem_id
+                    },
+                    success     : function(e){
+                        let html = '<option value = "0">请选择</option>';
+                        for (i in e) {
+                            html += '<option ';
+                            if (_select_id == e[i]['id']) {
+                                html += 'selected';
+                            }
+                            html += ' value="'+e[i]['id']+'">'+e[i]['title']+'</option>';
+                        }
+                        form.find('.cem_area_id').html(html);
+                    },
+                    error       : function () {
+
+                    },
+                });
+            }
+        }
+
+        $('.cem_id').change(function(){
+            get_area($(this), '-1');
+        });
+
+        $('.cem_area_id').change(function(){
+            get_row($(this), '-1');
+        });
+    </script>
+    <script>
+        $('.show_all').click(function(){
+            var cem_id = $('.add_row').find('.cem_id').val();
+            var cem_area_id = $('.add_row').find('.cem_area_id').val();
+            var cem_row_id = $('.add_row').find('.cem_row_id').val();
+            var status_id = $('.add_row').find('.status_id').val();
+            var style_id = $('.add_row').find('.style_id').val();
+
+            $.ajax({
+                type        : 'POST',
+                url         : '{:url('Cem/info_wlist_html')}',
+
+                data        : {
+                    cem_id : cem_id,
+                    cem_area_id : cem_area_id,
+                    cem_row_id : cem_row_id,
+                    status_id : status_id,
+                    style_id : style_id,
+                    mb:2,
+                },
+                success     : function(e){
+                    $('.wlist').html(e);
+                },
+                error       : function () {
+
+                },
+            });
+
+        });
+    </script>
+
+
+
+<script type="text/javascript">
+    $(".add_row").validate({
+        rules:{
+            price:{
+                number:true,
+                required:true,
+            },
+            length:{
+                number:true,
+                required:true,
+            },
+            width:{
+                number:true,
+                required:true,
+            },
+            acreage:{
+                number:true,
+                required:true,
+            },
+
+
+        },
+        errorClass: "help-inline",
+        errorElement: "div",
+        highlight:function(element, errorClass, validClass) {
+            $(element).parents('.control-group').addClass('error');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).parents('.control-group').removeClass('error');
+            $(element).parents('.control-group').addClass('success');
+        },
+        ignore : "",
+
+    });
+</script>
+</form>

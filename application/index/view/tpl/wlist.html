@@ -1,0 +1,109 @@
+<div class="shezhiys">
+    <form action="{:url('add')}" class="add_row">
+        <fieldset>
+            <legend>{$name}设置一添加</legend>
+            <div class="shezhiysa">
+                <p>{$name}名称</p>
+                <input type="text" name="title" />
+            </div>
+           <button class="contc" type="submit"> 添加</button>
+        </fieldset>
+
+    </form>
+</div>
+<div class="shezhiysbiao">
+    <table class="table table-bordered">
+      <!--<caption>边框表格布局</caption>-->
+      <thead>
+        <tr>
+          <th>{$name}编号</th>
+          <th>{$name}名称</th>
+
+        </tr>
+      </thead>
+      <tbody class="wlist">
+           {foreach $list as  $vo}
+                <tr row_id = "{$vo.id}">
+                  <td class = "row_sn">{$vo.sn}</td>
+                  <td class = "row_title">{$vo.title}</td>
+                </tr>
+            {/foreach}
+      </tbody>
+    </table>
+</div>
+<div class="shezhiysb">
+    <form method="post" action="{:url('edit')}" class="edit_row">
+        <fieldset>
+            <legend>墓位材质设置一修改</legend>
+            <div class="shezhiysc">
+                <p>{$name}编号</p>
+                <input type="text" name="sn" class="row_sn" />
+            </div>
+            <div class="shezhiysd">
+                <p>{$name}名称</p>
+                <input type="text" name="title" class="row_title" />
+                <input type="hidden" name="id" class="row_id" />
+            </div>
+             <button class="contc" type="submit">修改</button>
+             <button class="contcys" type="button">删除</button>
+        </fieldset>
+
+    </form>
+</div>
+
+
+<script type="text/javascript">
+    $('.wlist tr').click(function(){
+        let tr = $(this);
+        $('.edit_row').find('.row_title').val(tr.find('.row_title').text());
+        $('.edit_row').find('.row_sn').val(tr.find('.row_sn').text());
+        $('.edit_row').find('.row_id').val(tr.attr('row_id'));
+    });
+</script>
+
+<script type="text/javascript">
+
+
+$(".edit_row").validate({
+    rules:{
+        title:{
+            required:true,
+        },
+        id:{
+            required:true,
+        },
+
+    },
+    errorClass: "help-inline",
+    errorElement: "div",
+    highlight:function(element, errorClass, validClass) {
+        $(element).parents('.control-group').addClass('error');
+    },
+    unhighlight: function(element, errorClass, validClass) {
+        $(element).parents('.control-group').removeClass('error');
+        $(element).parents('.control-group').addClass('success');
+    },
+    ignore : "",
+
+});
+
+$(".add_row").validate({
+    rules:{
+        title:{
+            required:true,
+        },
+    },
+    errorClass: "help-inline",
+    errorElement: "div",
+    highlight:function(element, errorClass, validClass) {
+        $(element).parents('.control-group').addClass('error');
+    },
+    unhighlight: function(element, errorClass, validClass) {
+        $(element).parents('.control-group').removeClass('error');
+        $(element).parents('.control-group').addClass('success');
+    },
+    ignore : "",
+
+});
+
+</script>

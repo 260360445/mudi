@@ -1,0 +1,272 @@
+<div class="usercon">
+    <div class="userconle">
+        <form class="add_row" action="{:url('cem_add')}" method="post" >
+            <fieldset>
+                <legend>用户信息添加</legend>
+                <div class="userpd">
+                    <div class="usera">
+                        <div class="useraa">
+                            <p>用&nbsp;&nbsp;户&nbsp;&nbsp;名：</p>
+                            <input type="text" name="account" />
+                            <i>*</i>
+                        </div>
+                        <div class="useraa">
+                            <p>真实姓名：</p>
+                            <input type="text" name="nickname" />
+                            <i>*</i>
+                        </div>
+                    </div>
+                    <div class="usera">
+                        <div class="useraa">
+                            <p>系统密码：</p>
+                            <input type="text" name="pwd" />
+                            <i>*</i>
+                        </div>
+                        <div class="useraa">
+                            <p>用户权限：</p>
+                            <select class="" name="role_id">
+                                {foreach $role_list as $vo}
+                                    <option value="{$vo.id}"> {$vo.title}</option>
+                                {/foreach}
+                            </select>
+                            <i>*</i>
+                        </div>
+                    </div>
+                   <div class="userb">
+                        <div class="useraa userba">
+                            <p>身份证号：</p>
+                            <input type="text" name="idcard" />
+                            <i>*</i>
+                        </div>
+                        <button type="submit" class="userc">添加用户</button>
+
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+        <div class="conbiao userbiao">
+            <table class="table table-bordered">
+              <!--<caption>边框表格布局</caption>-->
+              <thead>
+                <tr>
+                  <th>用户名</th>
+                  <th>密码</th>
+                  <th>姓名</th>
+                  <th>身份证号</th>
+                  <th>用户权限</th>
+
+                  <th>销售折扣权限</th>
+
+                  <th>状态</th>
+                </tr>
+              </thead>
+              <tbody class="wlist">
+               {foreach $user_list as  $vo}
+                    <tr row_id = "{$vo.id}" class="tr_{$vo.id}">
+                      <td class="row" field = 'account'>{$vo.account}</td>
+                      <td>--</td>
+                      <td class="row" field = 'nickname'>{$vo.nickname}</td>
+                      <td class="row" field = 'idcard'>{$vo.idcard}</td>
+                      <td class="role_id" field_val = "{$vo.role_id}" field = 'role_id'>{$role_list[$vo['role_id']]['title']}</td>
+                      <td>{$role_list[$vo['role_id']]['discount']}</td>
+
+                      <td class=" row_status" field = 'account' >{$_status[$vo['status']]}</td>
+                    </tr>
+                {/foreach}
+              </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="userconri">
+        <form class="edit_row" action="{:url('edit')}" method="post">
+            <fieldset>
+                <legend>用户信息修改</legend>
+                <div class="userxg">
+                    <div class="userxga">
+                        <p>用&nbsp;&nbsp;户&nbsp;&nbsp;名：</p>
+                        <input type="text" name="account" />
+                    </div>
+                    <div class="userxga">
+                        <p>真实姓名：</p>
+                        <input type="text" name="nickname" />
+                    </div>
+                    <div class="userxga">
+                        <p>系统密码：</p>
+                        <input type="text" name="pwd" />
+                    </div>
+                    <div class="userxga userxgb">
+                        <p>身份证号：</p>
+                        <input type="text" name="idcard" />
+                    </div>
+                    <div class="userxga">
+                        <p>用户角色：</p>
+                        <select class="" name="role_id">
+                            {foreach $role_list as $vo}
+                                <option value="{$vo.id}"> {$vo.title}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                    <input type="hidden" name="id" class="id" />
+                    <div class="userxgbtn diffuserxg">
+                        <button  type="submit" class="userd">修改用户</button>
+                        <button type="button" class="userd del_row">删除用户</button>
+                    </div>
+                    <div class="userxgbtn">
+                        <button type="button" class="userd row_status_0">锁定用户</button>
+                        <button type="button"  class="userd row_status_1">解除锁定</button>
+                    </div>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<div class="usercz">
+    <form>
+        <fieldset>
+            <legend>操作提示</legend>
+        </fieldset>
+    </form>
+</div>
+
+
+
+<script type="text/javascript">
+    $('.wlist tr').click(function(){
+        $(this).find('.row').each(function(){
+            $(".edit_row input[name='"+$(this).attr('field')+"']").val($(this).text());
+        });
+        $(".edit_row select").val($(this).find('.role_id').attr('field_val'));
+        $(".edit_row .id").val($(this).attr('row_id'));
+    });
+</script>
+<script type="text/javascript">
+    $('.del_row').click(function(){
+        var row_id = $(".edit_row .id").val();
+        if (row_id && confirm('确认删除此用户?')) {
+            $.ajax({
+                type        : 'GET',
+                url         : '{:url('del')}',
+                dataType    : 'json',
+                data        : {
+                    id : row_id
+                },
+                success     : function(e){
+                    if (e.status) {
+                        $('.tr_' + row_id).remove();
+                    } else {
+                        alt(e.msg);
+                    }
+
+
+                },
+                error       : function () {
+
+                },
+            });
+        }
+    });
+
+    function set_status (id, val) {
+        $.ajax({
+            type        : 'GET',
+            url         : '{:url('set_status')}',
+            dataType    : 'json',
+            data        : {
+                id : id, val:val,
+            },
+            success     : function(e){
+                alt(e.msg);
+                if (e.status) {
+                    if (val) {
+                        let str = '已启用';
+                    } else {
+                        let str = '已禁用';
+                    }
+                    $('.tr_' + id + '  .row_status').html(str);
+                }
+
+
+            },
+            error       : function () {
+
+            },
+        });
+    }
+    $('.row_status_0').click(function(){
+        var row_id = $(".edit_row .id").val();
+        if (row_id) {
+            set_status(row_id, 0);
+        }
+
+    });
+
+    $('.row_status_1').click(function(){
+        var row_id = $(".edit_row .id").val();
+        if (row_id) {
+            set_status(row_id, 1)
+        }
+
+    });
+</script>
+
+
+
+<script type="text/javascript">
+
+
+$(".add_row").validate({
+    rules:{
+        account:{
+            required:true,
+        },
+        nickname:{
+            required:true,
+        },
+        pwd:{
+            required:true,
+            rangelength:[6,20],
+        },
+
+
+    },
+    errorClass: "help-inline",
+    errorElement: "div",
+    highlight:function(element, errorClass, validClass) {
+        $(element).parents('.control-group').addClass('error');
+    },
+    unhighlight: function(element, errorClass, validClass) {
+        $(element).parents('.control-group').removeClass('error');
+        $(element).parents('.control-group').addClass('success');
+    },
+    ignore : "",
+
+});
+
+$(".edit_row").validate({
+    rules:{
+        account:{
+            required:true,
+        },
+        nickname:{
+            required:true,
+        },
+        pwd:{
+            rangelength:[6,20],
+        },
+    },
+    errorClass: "help-inline",
+    errorElement: "div",
+    highlight:function(element, errorClass, validClass) {
+        $(element).parents('.control-group').addClass('error');
+    },
+    unhighlight: function(element, errorClass, validClass) {
+        $(element).parents('.control-group').removeClass('error');
+        $(element).parents('.control-group').addClass('success');
+    },
+    ignore : "",
+
+});
+
+</script>

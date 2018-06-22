@@ -1,0 +1,410 @@
+<form class="add_row" method="post" action="{:url('info_add')}">
+<div class="mwshezhi">
+     {include file="cem/tab" /}
+    <div class="mwmain">
+
+        <div class="mwd">
+            <div class="mwtx">
+
+                    <fieldset>
+                        <legend>墓位设置</legend>
+                        <div class="mwtxle">
+                            <div class="mwtxa">
+                                <div class="mwtxaa">
+                                    <p>选择墓园</p>
+                                    <select name="cem_id" class="cem_id">
+                                       <option value="">请选择</option>
+                                       {foreach $cem_list as $k => $vo}
+                                            <option value="{$vo.id}">{$vo.title}</option>
+                                       {/foreach}
+                                    </select>
+                                </div>
+                                <div class="mwtxaa">
+                                    <p>选择墓区</p>
+                                    <select name="cem_area_id" class="cem_area_id">
+                                       <option value="0">请选择</option>
+                                    </select>
+
+                                </div>
+                                <div class="mwtxaa">
+                                    <p>选择墓排</p>
+                                    <select name="cem_row_id" class="cem_row_id">
+                                       <option value="0">请选择</option>
+
+                                    </select>
+
+                                </div>
+                                <button type="button" class="mwtxcontc show_all">显示全部</button>
+                            </div>
+                        </div>
+                        <div class="mwtxri">
+                            <div class="mwtxria">
+                                <div class="mwtxriaa">
+                                    <input type="radio" name="type"  checked value="one" />单条处理
+                                </div>
+                                <div class="mwtxriab">
+                                     <input type="text" name="title" />
+                                    <h1>墓位号（数字）</h1>
+                                </div>
+                                <div class="mwtxriac">
+                                    <input type="radio" name="type"  value="many" />批量处理
+                                </div>
+                                <div class="mwtxriad">
+                                    <p>墓位开始编号</p>
+                                    <input type="text" name="many_start" />
+                                </div>
+                                <div class="mwtxriad">
+                                    <p>墓位数量</p>
+                                     <input type="text"  name="many_num" />
+                                </div>
+                            </div>
+                            <div class="mwtxrib">
+                                <div class="mwtxrible">
+                                    <div class="mwtxribtop">
+                                        <div class="mwtxribtople">
+                                            <div class="mwtxribtopa">
+                                                <div class="mwtxribtopd">
+                                                    <p>墓位型号</p>
+                                                <select name="model" class="row_model">
+                                                    {foreach $cem_model as $k => $vo}
+                                                         <option value="{$vo.id}">{$vo.title}</option>
+                                                    {/foreach}
+                                                </select>
+                                                </div>
+                                                <div class="mwtxribtopd">
+                                                    <p>墓位材料</p>
+                                                    <select name="material" class="row_material">
+                                                        {foreach $cem_mat as $k => $vo}
+                                                             <option value="{$vo.id}">{$vo.title}</option>
+                                                        {/foreach}
+                                                    </select>
+                                                </div>
+                                                <div class="mwtxribtopd">
+                                                    <p>墓位样式</p>
+                                                    <select name = "style" class="row_style">
+                                                        {foreach $cem_sty as $k => $vo}
+                                                             <option value="{$vo.id}">{$vo.title}</option>
+                                                        {/foreach}
+                                                    </select>
+                                                </div>
+                                                <div class="mwtxribtopd">
+                                                    <p>墓位状态</p>
+                                                    <select name="status" class="row_status">
+                                                        {foreach $cem_status as $k => $vo}
+                                                             <option value="{$vo.id}">{$vo.title}</option>
+                                                        {/foreach}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="mwtxribtopa">
+                                                <div class="mwtxribtopd mwtxriad">
+                                                    <p>墓位价格（¥）</p>
+                                                    <input type="text" name="price" />
+                                                </div>
+                                                <div class="mwtxribtopd mwtxriad">
+                                                    <p>墓位长（m）</p>
+                                                    <input type="text" name="width" />
+                                                </div>
+                                                <div class="mwtxribtopd mwtxriad">
+                                                    <p>墓位宽（m）</p>
+                                                    <input type="text" name="length" />
+                                                </div>
+                                                <div class="mwtxribtopd mwtxriad">
+                                                    <p>墓位面积（m²）</p>
+                                                    <input type="text" name="acreage" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mwtxribtopri">
+                                            <div class="xssz">
+                                                <input type="radio" checked name="show_type" value="num" />显示数字
+                                            </div>
+                                            <div class="xsszs">
+                                                <!-- <input type="radio"  name="show_type" value="word" />显示字母 -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mwtxribbot">
+
+                                            <fieldset>
+                                                <legend>选择要修改的信息</legend>
+                                                <!-- <div class="mwbbotxz">
+                                                    <input type="checkbox" name="e_cem_id"  value="1"/>墓园
+                                                </div>
+                                                <div class="mwbbotxz">
+                                                    <input type="checkbox" name="e_cem_area_id"  value="1" />墓区
+                                                </div>
+                                                <div class="mwbbotxz">
+                                                    <input type="checkbox" name="e_cem_row_id"  value="1" />墓排
+                                                </div> -->
+
+                                                <div class="mwbbotxz">
+                                                    <input type="checkbox" name="e_price"  value="1"/>墓位价格
+                                                </div>
+                                                <div class="mwbbotxz">
+                                                    <input type="checkbox" name="e_style"  value="1" />墓位样式
+                                                </div>
+
+                                                <div class="mwbbotxz">
+                                                    <input type="checkbox" name="e_material"  value="1" />墓位材料
+                                                </div>
+                                                <div class="mwbbotxz">
+                                                    <input type="checkbox" name="e_model"  value="1" />墓位型号
+                                                </div>
+                                                    <br>
+                                                <div class="mwbbotxz">
+                                                    <input type="checkbox" name="e_status" value="1" />墓位状态
+                                                </div>
+                                                <div class="mwbbotxz">
+                                                    <input type="checkbox" name="e_length" value="1" />长度
+                                                </div>
+
+                                                <div class="mwbbotxz">
+                                                    <input type="checkbox" name="e_width"  value="1" />宽度
+                                                </div>
+                                                <div class="mwbbotxz">
+                                                    <input type="checkbox" name="e_acreage" value="1" />面积
+                                                </div>
+                                                <div class="mwbbotxz">
+                                                    <input type="checkbox" class="all_btn_z" name = 'e_all' value="1" />全部
+                                                </div>
+
+                                            </fieldset>
+
+                                    </div>
+                                </div>
+                                <div class="mwtxribri" style="width:90px;">
+                                    <button type="button" url = "{:url('info_add')}"   class="sbmt mwtxribricontc">添加</button>
+                                    <button type="button"    class=" del mwtxribricontc">删除</button>
+                                    <button type="button" url = "{:url('info_edit')}"   class="sbmt mwtxribricontc">修改</button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+            </div>
+            <div class="mwtxbiao">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th><input type = "checkbox"  class="all_btn"></th>
+                      <th>墓园名称</th>
+                      <th>墓区名称</th>
+                      <th>墓排名称</th>
+                      <th>墓位全称</th>
+                      <th>墓位长</th>
+                      <th>墓位宽</th>
+                      <th>墓位面积</th>
+                      <th>墓位价格</th>
+                      <th>墓位样式</th>
+                      <th>墓位材质</th>
+                      <th>墓位样式</th>
+                      <th>墓位状态</th>
+                      <th>操作人</th>
+                      <th>操作时间</th>
+                    </tr>
+                  </thead>
+                  <tbody class="wlist">
+
+
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).on('click', '.all_btn', function(){
+            $('.wlist input').prop('checked', $(this).prop('checked'));
+        });
+        // $('.wlist ').on('click', 'tr', function(){
+        //     $(".add_row .cem_id").val($(this).find('.row_cem_id').attr('val'));
+        //     get_area($(".add_row .cem_id"), $(this).find('.row_cem_area_id').attr('val') );
+        //     // $(".add_row .row_cem_area_id").val($(this).find('.row_cem_area_id').attr('val'));
+        //     $(".add_row .row_title").val($(this).find('.row_title').text());
+        //     $(".add_row .row_id").val($(this).attr('row_id'));
+        // });
+
+        $('.all_btn_z').click(function(){
+            $('.all_btn_z').parents('.mwtxribbot').find('input').prop('checked', $(this).prop('checked'));
+        });
+
+        $('.sbmt').click(function(){
+            if ($(this).hasClass('del') && confirm('确认删除?'))  {
+                $('.add_row').attr('action', $(this).attr('url')).submit();
+            } else {
+                $('.add_row').attr('action', $(this).attr('url')).submit();
+            }
+
+        });
+
+        $(document).on('click', '.del', function(){
+            var ids = [];
+            $('.wlist input').each(function(){
+                if ($(this).prop('checked')) {
+                    ids.push($(this).val());
+                }
+
+            });
+            if (!ids.length) {
+                return alt('请先选择要删除的墓位');
+            }
+
+            $.ajax({
+                type        : 'GET',
+                url         : '{:url('info_del')}',
+                dataType    : 'json',
+                data        : {
+                    ids : ids
+                },
+                success     : function(e){
+                    if (e.status) {
+                        for (let i in ids) {
+                            $('.tr_' + ids[i]).remove();
+                        }
+                    }
+                },
+                error       : function () {
+
+                },
+            });
+
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        function get_row (_this, _select_id) {
+            // var _select_id = _select_id ? _select_id : 0;
+            let cem_area_id = _this.val();
+            let form = _this.parents('form');
+            if (cem_area_id) {
+                $.ajax({
+                    type        : 'GET',
+                    url         : '{:url('row_wlist')}',
+                    dataType    : 'json',
+                    data        : {
+                        cem_area_id : cem_area_id
+                    },
+                    success     : function(e){
+                        let html = '<option value = "0">请选择</option>';
+                        for (i in e) {
+                            html += '<option ';
+                            if (_select_id == e[i]['id']) {
+                                html += 'selected';
+                            }
+                            html += ' value="'+e[i]['id']+'">'+e[i]['title']+'</option>';
+                        }
+                        form.find('.cem_row_id').html(html);
+                    },
+                    error       : function () {
+
+                    },
+                });
+            }
+        }
+
+
+
+        function get_area (_this, _select_id) {
+            // var _select_id = _select_id ? _select_id : 0;
+            let cem_id = _this.val();
+            let form = _this.parents('form');
+            if (cem_id) {
+                $.ajax({
+                    type        : 'GET',
+                    url         : '{:url('area_wlist')}',
+                    dataType    : 'json',
+                    data        : {
+                        cem_id : cem_id
+                    },
+                    success     : function(e){
+                        let html = '<option value = "0">请选择</option>';
+                        for (i in e) {
+                            html += '<option ';
+                            if (_select_id == e[i]['id']) {
+                                html += 'selected';
+                            }
+                            html += ' value="'+e[i]['id']+'">'+e[i]['title']+'</option>';
+                        }
+                        form.find('.cem_area_id').html(html);
+                    },
+                    error       : function () {
+
+                    },
+                });
+            }
+        }
+
+        $('.cem_id').change(function(){
+            get_area($(this), '-1');
+        });
+
+        $('.cem_area_id').change(function(){
+            get_row($(this), '-1');
+        });
+    </script>
+    <script>
+        $('.show_all').click(function(){
+            var cem_id = $('.add_row').find('.cem_id').val();
+            var cem_area_id = $('.add_row').find('.cem_area_id').val();
+            var cem_row_id = $('.add_row').find('.cem_row_id').val();
+
+            $.ajax({
+                type        : 'POST',
+                url         : '{:url('info_wlist_html')}',
+
+                data        : {
+                    cem_id : cem_id,
+                    cem_area_id : cem_area_id,
+                    cem_row_id : cem_row_id,
+                },
+                success     : function(e){
+                    $('.wlist').html(e);
+                },
+                error       : function () {
+
+                },
+            });
+
+        });
+    </script>
+
+
+
+<script type="text/javascript">
+    $(".add_row").validate({
+        rules:{
+            price:{
+                number:true,
+                required:true,
+            },
+            length:{
+                number:true,
+                required:true,
+            },
+            width:{
+                number:true,
+                required:true,
+            },
+            acreage:{
+                number:true,
+                required:true,
+            },
+
+
+        },
+        errorClass: "help-inline",
+        errorElement: "div",
+        highlight:function(element, errorClass, validClass) {
+            $(element).parents('.control-group').addClass('error');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).parents('.control-group').removeClass('error');
+            $(element).parents('.control-group').addClass('success');
+        },
+        ignore : "",
+
+    });
+</script>
+</form>

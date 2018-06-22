@@ -1,0 +1,168 @@
+<div class="mwshezhi">
+   <div class="mwnav">
+        <ul>
+          <li class="navon"><a href="{:url('System/sysjc')}">寄存厅设置</a></li>
+          <li><a href="{:url('System/sysjct')}">寄存室设置</a></li>
+          <li><a href="{:url('System/sysjcc')}">寄存层设置</a></li>
+          <li><a href="{:url('System/sysjcw')}">寄存位设置</a></li>
+        </ul>
+      </div>
+    <div class="mwmain">
+      <div class="mwd">
+        <div class="mwda">
+          <form class="add_row" action="{:url('add')}" method="post" enctype="multipart/form-data">
+            <fieldset>
+              <legend>寄存厅设置</legend>
+              <div class="mwdale">
+                <div class="mwdtop">
+                  <div class="mwdlea">
+                      <p>寄存厅名称</p>
+                      <p>寄存厅简介</p>
+                   </div>
+                   <div class="mwdleb">
+                        <input type="hidden" name="id" class="row_id" />
+                        <input type="text" name="title" class="row_title" />
+                        <input type="text" name="cont"  class="row_desc"  />
+                  </div>
+                </div>
+                  <div class="mwdlec">
+                    <button type="button" class="mwdcontc row_add"  >添加</button>
+                    <button type="button" class="mwdcontc row_edit"  >修改</button>
+                    <button type="button" class="mwdcontc row_del"  >删除</button>
+                    <!-- <div class="mwdcontc">保存</div> -->
+                    <!-- <div class="mwdcontc">取消</div>  -->                           
+                  </div>
+              </div>                      
+              <div class="mwdari">
+                    <div class="mwdaria">
+                         <!--  <img class="row_img"  alt = '未选择' />
+                          <input type="hidden" name="thumb" class="row_thumb" /> -->
+                          
+                          <div id="dd1" style=" width:120px;height:90px;"><img class="row_img"  style=" width:120px;height:90px;"/></div>
+                    </div>
+                   <!--  <button type="button" class="mwdcontcs slimg">选择图片</button> -->
+                   <input class="uploading" type="file" name="img" id="doc1" multiple="multiple"  style="width:148px;" onchange="javascript:setImagePreviews1();" accept="image/*" /> 
+              </div>                   
+            </fieldset>                   
+          </form>
+        </div>
+        <div class="mwdb">
+          <table class="table table-bordered">
+            
+            <thead>
+              <tr>
+                <th>寄存厅名称</th>
+                <th>寄存厅介绍</th>
+                
+              </tr>
+            </thead>
+            <tbody class="wlist">
+              {foreach $sys_list as $k=>$vo}
+                <tr row_id = "{$vo.id}" class="tr_{$vo.id}">
+                  <td class="row_images" style="display:none;" row_imgs="{$vo.img}"></td>
+                  <td class="title">{$vo.title}</td>
+                  <td class="desc"> {$vo.cont}</td>
+                </tr>
+              {/foreach}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- <iframe id = "iframeSon" style = "display:none;" src = "{:url('p/upload')}"> </iframe> -->
+  </div>
+<script>
+//下面用于多图片上传预览功能
+function setImagePreviews1(avalue1) {
+  var docObj1 = document.getElementById("doc1");
+  var dd1 = document.getElementById("dd1");
+  dd1.innerHTML = "";
+  var fileList = docObj1.files;
+  for (var i = 0; i < fileList.length; i++) {           
+    dd1.innerHTML += "<div style='float:left' > <img id='img" + i + "'  /> </div>";
+    var imgObjPreview = document.getElementById("img"+i); 
+    if (docObj1.files && docObj1.files[i]) {
+      //火狐下，直接设img属性
+      imgObjPreview.style.display = 'block';
+      imgObjPreview.style.width = '120px';
+      imgObjPreview.style.height = '900px';
+      //imgObjPreview.src = docObj1.files[0].getAsDataURL();
+      //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+      imgObjPreview.src = window.URL.createObjectURL(docObj1.files[i]);
+    }
+    else {
+      //IE下，使用滤镜
+      docObj1.select();
+      var imgSrc = document.selection.createRange().text;
+      alert(imgSrc)
+      var localImagId = document.getElementById("img" + i);
+      //必须设置初始大小
+      localImagId.style.width = "120px";
+      localImagId.style.height = "90px";
+      //图片异常的捕捉，防止用户修改后缀来伪造图片
+      try {
+          localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+          localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+      }
+      catch (e) {
+          alert("您上传的图片格式不正确，请重新选择!");
+          return false;
+      }
+      imgObjPreview.style.display = 'none';
+      document.selection.empty();
+    }
+  }  
+  return true;
+}
+</script>
+<script type="text/javascript">
+    $('.wlist tr').click(function(){
+        $(".add_row .row_img").attr('src', $(this).find('.row_images').attr('row_imgs'));
+        $(".add_row .row_id").val($(this).attr('row_id'));
+        $(".add_row .row_title").val($(this).find('.title').text());
+        $(".add_row .row_desc").val($(this).find('.desc').text());
+    });
+</script>
+<script type="text/javascript">
+/*$('.slimg').click(function(){
+   $( "#iframeSon" ).contents().find("#file").click();
+});*/
+/*function new_img (src) {
+    $('.row_img').attr('src', src);
+    $('.row_thumb').val(src);
+}*/
+$('.row_add').click(function(){
+    $('.add_row').attr('action', "{:url('sysjc_add')}").submit();
+
+});
+
+$('.row_edit').click(function(){
+    $('.add_row').attr('action', "{:url('sysjc_edit')}").submit();
+});
+
+$('.row_del').click(function(){
+    var row_id = $(".add_row .row_id").val();
+    if (row_id && confirm('确认删除?')) {
+        $.ajax({
+            type        : 'GET',
+            url         : '{:url('sysjc_del')}',
+            dataType    : 'json',
+            data        : {
+                id : row_id
+            },
+            success     : function(e){
+                if (e.status) {
+                    $('.tr_' + row_id).remove();
+                } else {
+                    alt(e.msg);
+                }
+
+
+            },
+            error       : function () {
+
+            },
+        });
+    }
+});
+</script>

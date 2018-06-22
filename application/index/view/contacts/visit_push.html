@@ -1,0 +1,253 @@
+
+					<form action="" method="post">
+						<fieldset>
+							<legend>客户信息</legend>
+							<div class="ketop">
+								<div class="kehu">
+									<p>来访者姓名：</p>
+									<input type="text" name="name" class="keinput"/>
+									<i>*</i>
+								</div>
+								<div class="kehuc">
+									<p>与墓位使用人关系：</p>
+									<select name="relationship">
+                                        {foreach $relationship as $k=> $vo}
+				                             <option value="{$vo.id}">{$vo.title}</option>
+                                        {/foreach}
+									</select>
+								</div>
+							</div>
+							<div class="kebot">
+								<div class="kehub">
+									<p>联系电话：</p>
+									<input type="text" name="tel" class="kebinput"/>
+									<i>*</i>
+								</div>
+								<div class="kehud">
+									<p>家庭住址：</p>
+									<input type="text" name="address" class="kedinput"/>
+								</div>
+							</div>
+						</fieldset>
+
+						<fieldset>
+							<legend>来访信息</legend>
+							<div class="laifa">
+								<div class="laia">
+									<p>渠道1：</p>
+									<select class="row_pid"  name="channel_t1" >
+                                        <option value="0">请选择</option>
+                                        {foreach $t1 as $k=>$vo}
+				                              <option value="{$vo.id}">{$vo.title}</option>
+                                        {/foreach}
+									</select>
+								</div>
+								<div class="laia ">
+									<p>渠道2：</p>
+									<select class="row_ppid" name="channel_t2">
+
+									</select>
+									<i>*</i>
+								</div>
+								<div class="laia">
+									<p>渠道3：</p>
+									<select class="row_pppid" name="channel_t3">
+										<option></option>
+									</select>
+									<i>*</i>
+								</div>
+							</div>
+							<div class="laifb">
+								<div class="laib difflaib">
+									<p>来访日期：</p>
+									<input type="text" name="come_date" class="kedinput"/>
+								</div>
+								<div class="laib">
+									<p>来访次数：</p>
+									<select>
+                                        {foreach $come_num as $k=>$vo}
+				                              <option value="{$vo.id}">{$vo.title}</option>
+                                        {/foreach}
+									</select>
+									<div class="lainum">
+										<p>来访人数：</p>
+										<input type="number" min = "1" name="people_num" value="1"/>
+										<i>*</i>
+									</div>
+								</div>
+								<div class="laib">
+									<p>来访方式：</p>
+									<select name="come_fun">
+                                        {foreach $come_fun as $k=>$vo}
+				                              <option value="{$vo.id}">{$vo.title}</option>
+                                        {/foreach}
+									</select>
+								</div>
+							</div>
+							<div class="laifc">
+								<div class="laic">
+									<p>咨询电话：</p>
+									<select name="tel_id">
+                                        {foreach $tel as $k=>$vo}
+										<option value="{$vo.id}"> {$vo.title}</option>
+                                        {/foreach}
+									</select>
+								</div>
+								<div class="laic">
+									<p>接待员：</p>
+									<select>
+                                        {foreach $staff as $k=>$vo}
+										<option value="{$k}">{$vo}</option>
+                                        {/foreach}
+									</select>
+								</div>
+
+							</div>
+						</fieldset>
+
+						<fieldset>
+							<legend>成交情况</legend>
+							<div class="cjqk">
+								<div class="cja">
+									<p>成交情况</p>
+									<select name="transaction_status">
+										<option value="1">成交</option>
+										<option value="0">未成交</option>
+									</select>
+								</div>
+								<div class="cja">
+									<p>成交（未成交）原因：</p>
+									<select name="no_transaction_ps">
+
+                                        {foreach $no_transaction_ps as $k=>$vo}
+										<option value="{$vo.id}">{$vo.title}</option>
+                                        {/foreach}
+
+									</select>
+								</div>
+							</div>
+							<div class="cjrq">
+								<p>成交日期：</p>
+									<input type="text" name="transaction_suc_date" value=""/>
+							</div>
+							<div class="cjjl">
+								<div class="cjjla">
+									<p>接待记录：</p>
+									<textarea name="reception_log"></textarea>
+								</div>
+								<div class="cjjla">
+									<p>备注：</p>
+									<textarea name="remarks"></textarea>
+								</div>
+							</div>
+						</fieldset>
+						<div class="czts">
+							<fieldset>
+								<legend>操作提示</legend>
+
+							</fieldset>
+							<button type="submit" class="contc">保存客户来访信息</button>
+						</div>
+					</form>
+				</div>
+			</div>
+
+
+<script type="text/javascript">
+
+    $(".from").validate({
+        rules:{
+            name:{
+                required:true,
+            },
+        },
+        errorClass: "help-inline",
+        errorElement: "div",
+        highlight:function(element, errorClass, validClass) {
+            $(element).parents('.control-group').addClass('error');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).parents('.control-group').removeClass('error');
+            $(element).parents('.control-group').addClass('success');
+        },
+        ignore : "",
+
+    })
+
+</script>
+
+<script type="text/javascript">
+
+    function get_t2 (_this, _select_id) {
+        let pid = _this.val();
+        let form = _this.parents('form');
+        if (pid) {
+            $.ajax({
+                type        : 'GET',
+                url         : '{:url('ComeChannel/tlist')}',
+                dataType    : 'json',
+                data        : {
+                    pid : pid
+                },
+                success     : function(e){
+                    let html = '';
+                    for (i in e) {
+                        html += '<option ';
+                        if (_select_id == e[i]['id']) {
+                            html += 'selected';
+                        }
+                        html += ' value="'+e[i]['id']+'">'+e[i]['title']+'</option>';
+                    }
+                    form.find('.row_ppid').html(html);
+                    get_t3($('.row_ppid'), '-1');
+                },
+                error       : function () {
+
+                },
+            });
+        }
+    }
+
+    $('.row_pid').change(function(){
+        get_t2($(this), '-1');
+
+    });
+    $('.row_ppid').change(function(){
+        get_t3($(this), '-1');
+    });
+    function get_t3 (_this, _select_id) {
+        let ppid = _this.val();
+
+        let form = _this.parents('form');
+        if (ppid) {
+            $.ajax({
+                type        : 'GET',
+                url         : '{:url('ComeChannel/tlist')}',
+                dataType    : 'json',
+                data        : {
+                    pid : $('.row_pid').val(),
+                    ppid:ppid,
+                },
+                success     : function(e){
+                    let html = '';
+                    for (i in e) {
+                        html += '<option ';
+                        if (_select_id == e[i]['id']) {
+                            html += 'selected';
+                        }
+                        html += ' value="'+e[i]['id']+'">'+e[i]['title']+'</option>';
+                    }
+                    form.find('.row_pppid').html(html);
+                },
+                error       : function () {
+
+                },
+            });
+        }
+    }
+
+    $('.row_pid').change(function(){
+        get_t2($(this), '-1');
+    });
+
+</script>

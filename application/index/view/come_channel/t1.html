@@ -1,0 +1,140 @@
+
+					<div class="shezhiys">
+						<form action="add" method="post" class="add_row">
+							<fieldset>
+								<legend>客户来访来访渠道1设置一添加</legend>
+								<div class="shezhiysaa">
+									<p>编号</p>
+									<input type="text" name="sn" />
+								</div>
+								<div class="shezhiysaa">
+									<p>来访渠道1</p>
+									<input type="text" name="title" />
+								</div>
+								<div class="shezhiysab">
+									<p>说明</p>
+									<input type="text" name="desc" />
+								</div>
+							   <button type="submit" class="contc">添加</button>
+							</fieldset>
+
+						</form>
+					</div>
+					<div class="shezhiysbiao">
+						<table class="table table-bordered">
+						  <!--<caption>边框表格布局</caption>-->
+						  <thead>
+						    <tr>
+						      <th>来访渠道编号</th>
+						      <th>来访渠道</th>
+						      <th>来访渠道说明</th>
+						    </tr>
+						  </thead>
+						  <tbody class="wlist">
+
+                            {foreach $t1 as $k=>$vo}
+    						    <tr class="tr_{$vo.id}" row_id = "{$vo.id}">
+    						      <td class="row_sn">{$vo.sn}</td>
+    						      <td class="row_title">{$vo.title}</td>
+    						      <td class="row_desc">{$vo.desc}</td>
+    						    </tr>
+                            {/foreach}
+
+						  </tbody>
+						</table>
+					</div>
+					<div class="shezhiysb">
+						<form class="edit_row" action="{:url('edit')}" method="post">
+							<fieldset>
+								<legend>客户来访来访渠道1设置一修改</legend>
+								<div class="phonesz">
+									<div class="shezhiysc shezhiysca">
+										<p>编号</p>
+										<input type="text" name="sn" class="row_sn" />
+									</div>
+									 <button  type="submit"class="contc">修改</button>
+									 <button type="button" class="contcys row_del">删除</button>
+								 </div>
+								 <div class="phonesz">
+									<div class="shezhiysc">
+										<p>来访渠道1</p>
+										<input type="text"  name="title" class="row_title" />
+									</div>
+									<div class="shezhiysc">
+										<p>说明</p>
+										<input type="text"   name="desc" class="row_desc"/>
+										<input type="hidden"   name="id" class="row_id"/>
+									</div>
+								 </div>
+							</fieldset>
+
+						</form>
+					</div>
+
+
+
+<script type="text/javascript">
+    $('.mqszb input').click(function(){
+        if($(this).val() == 'one') {
+            $('.add_row').addClass('one_form');
+            $('.add_row').removeClass('many_form');
+        } else {
+            $('.add_row').removeClass('one_form');
+            $('.add_row').addClass('many_form');
+        }
+    })
+    $('.wlist tr').click(function(){
+        $(".edit_row .row_desc").val($(this).find('.row_desc').text());
+        $(".edit_row .row_sn").val($(this).find('.row_sn').text());
+        $(".edit_row .row_title").val($(this).find('.row_title').text());
+        $(".edit_row .row_id").val($(this).attr('row_id'));
+    });
+</script>
+
+<script type="text/javascript">
+
+    $(".from").validate({
+        rules:{
+            title:{
+                required:true,
+            },
+        },
+        errorClass: "help-inline",
+        errorElement: "div",
+        highlight:function(element, errorClass, validClass) {
+            $(element).parents('.control-group').addClass('error');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).parents('.control-group').removeClass('error');
+            $(element).parents('.control-group').addClass('success');
+        },
+        ignore : "",
+
+    });
+
+    $('.row_del').click(function(){
+        var row_id = $(".edit_row .row_id").val();
+        if (row_id && confirm('确认删除?')) {
+            $.ajax({
+                type        : 'GET',
+                url         : '{:url('del')}',
+                dataType    : 'json',
+                data        : {
+                    id : row_id
+                },
+                success     : function(e){
+                    if (e.status) {
+                        $('.tr_' + row_id).remove();
+                    } else {
+                        alt(e.msg);
+                    }
+
+
+                },
+                error       : function () {
+
+                },
+            });
+        }
+    });
+</script>

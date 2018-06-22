@@ -1,0 +1,248 @@
+<div class="usercon">
+    <div class="userconle">
+        <form method="post" action="{:url('add')}" class="add_row">
+            <fieldset>
+                <legend>用户角色设置一添加</legend>
+                <div class="usersz">
+                    <div class="usersza">
+                        <p>用户角色名称</p>
+                        <input type="text" name="title"/>
+                    </div>
+                    <div class="userszb">
+                        <p>销售折扣权限</p>
+                        <input type="text" name="discount"/>
+                    </div>
+                    <button class="userszc" type="submit">添加</button>
+                </div>
+
+            </fieldset>
+        </form>
+        <div class="userbiao">
+            <table class="table table-bordered">
+              <!--<caption>边框表格布局</caption>-->
+              <thead>
+                <tr>
+                  <th>用户角色名称</th>
+                  <th>销售折扣权限(两位小数)</th>
+                  <th>角色编号</th>
+
+                </tr>
+              </thead>
+              <tbody class="wlist">
+                    {foreach $list as $vo}
+                        <tr row_id  = "{$vo.id}">
+                          <td class = "row_title">{$vo.title}</td>
+                          <td class = "row_discount">{$vo.discount}</td>
+                          <td class = "row_sn">{$vo.sn}</td>
+                        </tr>
+                    {/foreach}
+              </tbody>
+            </table>
+        </div>
+
+    </div>
+    <div class="userconri">
+        <form method="post" action="{:url('edit')}" class="edit_row">
+            <fieldset>
+                <legend>角色设置</legend>
+                <div class="userxg">
+                    <div class="userxga">
+                        <p>用户角色编号</p>
+                        <input type="text" name="sn" class="row_sn"/>
+                    </div>
+                    <div class="userxga">
+                        <p>用户角色名称</p>
+                        <input type="text"  name="title" class="row_title" />
+                    </div>
+                    <div class="userxga">
+                        <p>销售折扣权限</p>
+                        <input type="text" name="discount" class="row_discount" />
+                    </div>
+
+                    <input type="hidden" name="id" class="row_id" />
+
+                    <div class="usermenu">
+                        <p>用户菜单选择</p>
+                        <div class="usermenud">
+                            <!--menu-->
+                            <div class="zTreeDemoBackground left">
+                                <ul id="treeDemo" class="ztree"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="userbao" type="submit">保存用户菜单</button>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+$(".edit_row").validate({
+    rules:{
+        title:{
+            required:true,
+        },
+        id:{
+            required:true,
+        },
+        discount: {
+            required:true,
+            max:1,
+            min:0.001,
+            number:true,
+        }
+
+    },
+    errorClass: "help-inline",
+    errorElement: "div",
+    highlight:function(element, errorClass, validClass) {
+        $(element).parents('.control-group').addClass('error');
+    },
+    unhighlight: function(element, errorClass, validClass) {
+        $(element).parents('.control-group').removeClass('error');
+        $(element).parents('.control-group').addClass('success');
+    },
+    ignore : "",
+
+});
+
+$(".add_row").validate({
+    rules:{
+        title:{
+            required:true,
+        },
+        id:{
+            required:true,
+        },
+        discount: {
+            required:true,
+            max:1,
+            min:0.001,
+            number:true,
+        }
+    },
+    errorClass: "help-inline",
+    errorElement: "div",
+    highlight:function(element, errorClass, validClass) {
+        $(element).parents('.control-group').addClass('error');
+    },
+    unhighlight: function(element, errorClass, validClass) {
+        $(element).parents('.control-group').removeClass('error');
+        $(element).parents('.control-group').addClass('success');
+    },
+    ignore : "",
+
+});
+
+</script>
+
+
+<script type="text/javascript">
+    $(document).on('click', '.wlist tr', function(){
+        let tr = $(this);
+        let row_id = tr.attr('row_id');
+        $('.edit_row').find('.row_title').val(tr.find('.row_title').text());
+        $('.edit_row').find('.row_sn').val(tr.find('.row_sn').text());
+        $('.edit_row').find('.row_discount').val(tr.find('.row_discount').text());
+        $('.edit_row').find('.row_id').val(tr.attr('row_id'));
+
+
+        $.ajax({
+            type        : 'GET',
+            url         : '{:url('get_auth')}',
+            dataType    : 'json',
+            data        : {
+                id : row_id
+            },
+            success     : function(e){
+                $('.usermenud input').each(function(){
+                    if (in_array($(this).val(), e)) {
+                        $(this).prop('checked', true);
+                    } else {
+                        $(this).prop('checked', false);
+                    }
+                });
+            },
+            error       : function () {
+
+            },
+        });
+
+    });
+</script>
+
+
+<SCRIPT type="text/javascript">
+<!--
+var setting = {
+    check: {
+        enable: true
+    },
+    data: {
+        simpleData: {
+            enable: true
+        }
+    }
+};
+
+</script>
+<script>
+var zNodes =[
+
+];
+
+{foreach $node_list as $vo}
+    zNodes.push({
+        id:{$vo.id},
+        pId:{$vo.pid},
+        name:'{$vo.name}',
+    });
+{/foreach}
+</script>
+<script>
+
+var code;
+
+function setCheck() {
+    var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+    py = $("#py").attr("checked")? "p":"",
+    sy = $("#sy").attr("checked")? "s":"",
+    pn = $("#pn").attr("checked")? "p":"",
+    sn = $("#sn").attr("checked")? "s":"",
+    type = { "Y":py + sy, "N":pn + sn};
+    zTree.setting.check.chkboxType = type;
+    showCode('setting.check.chkboxType = { "Y" : "' + type.Y + '", "N" : "' + type.N + '" };');
+}
+function showCode(str) {
+    if (!code) code = $("#code");
+    code.empty();
+    code.append("<li>"+str+"</li>");
+}
+
+$(document).ready(function(){
+    var aauth = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+    aauth.expandAll(true);
+    setCheck();
+    $("#py").bind("change", setCheck);
+    $("#sy").bind("change", setCheck);
+    $("#pn").bind("change", setCheck);
+    $("#sn").bind("change", setCheck);
+});
+//-->
+</SCRIPT>
+
+<script type="text/javascript">
+    $(document).on('click', '.level0 input:first', function() {
+        $(this).parents('li').find('input').prop('checked', $(this).prop('checked'));
+    });
+    $(document).on('click', '.level1 input', function() {
+        if ($(this).prop('checked')) {
+            $(this).parents('.level0').find('input').eq(0).prop('checked', true);
+        }
+
+    });
+</script>

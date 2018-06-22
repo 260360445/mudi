@@ -1,0 +1,127 @@
+<div class="cont">
+          <div class="wptj">
+            <form action="{:url('gset_add')}" class="add_row" method="post">
+              <fieldset>
+                <legend>物品信息添加</legend>
+                <div class="wptja">
+                  <p>物品编号</p>
+                  <input type="text" name="sn" maxlength="10"/>
+                </div>
+                <div class="wptjb">
+                  <p>物品名称</p>
+                  <input type="text" name="title" maxlength="50"/>
+                </div>
+                <div class="wptja">
+                  <p>物品单价</p>
+                  <input type="text" name="price" maxlength="10"/>
+                  <i>¥</i>
+                </div>
+                <div class="wptjb">
+                  <p>物品单位名称</p>
+                  <input type="text" name="type" maxlength="10"/>
+                </div>
+                <div class="wptjc">
+                  <p>物品简介</p>
+                  <input type="text" name="cont" maxlength="50" />
+                </div>
+                <div class="wptjd">
+                  <button class="wptjda" type="submit"> 添加</button>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+          <div class="wptjbiao">
+            <table class="table table-bordered">
+             
+              <thead>
+                <tr>
+                  <th>物品编号</th>
+                  <th>物品名称</th>
+                  <th>物品价格</th>
+                  <th>物品单位</th>
+                  <th>物品简介</th>
+                </tr>
+              </thead>
+              <tbody class="wlist">
+                 {foreach $glist as  $vo}
+                      <tr class="tr_{$vo.id}" row_id = "{$vo.id}">
+                        <td class = "row_sn">{$vo.sn}</td>
+                        <td class = "row_title">{$vo.title}</td>
+                        <td class = "row_price">{$vo.price}</td>
+                        <td class = "row_type">{$vo.type}</td>
+                        <td class = "row_cont">{$vo.cont}</td>
+                      </tr>
+                  {/foreach}         
+              </tbody>
+            </table>
+          </div>
+          <div class="wptj">
+            <form  method="post" action="{:url('gset_edit')}" class="edit_row">
+              <fieldset>
+                <legend>物品信息添加</legend>
+                <div class="wptja">
+                  <p>物品编号</p> 
+                  <input type="text" name="sn" maxlength="10" class = "row_sn"/>
+                </div>
+                <div class="wptjb">
+                  <p>物品名称</p>
+                  <input type="text" name="title" maxlength="50" class="row_title" />
+                </div>
+                <div class="wptja">
+                  <p>物品单价</p>
+                  <input type="text" name="price" maxlength="10" class = "row_price"/>
+                  <input type="hidden" name="id" class="row_id" />
+                  <i>¥</i>
+                </div>
+                <div class="wptjb">
+                  <p>物品单位名称</p>
+                  <input type="text" name="type" maxlength="10" class = "row_type"/>
+                </div>
+                <div class="wptjc">
+                  <p>物品简介</p>
+                  <input type="text" name="cont" maxlength="50" class = "row_cont"/>
+                </div>
+                <div class="wptje">
+                  <button class="wptjea" type="submit">修改</button>
+                  <button class="wptjeb row_del" type="button">删除</button>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+ <script type="text/javascript">
+  $('.wlist tr').click(function(){
+      let tr = $(this);
+      $('.edit_row').find('.row_title').val(tr.find('.row_title').text());
+      $('.edit_row').find('.row_sn').val(tr.find('.row_sn').text());
+      $('.edit_row').find('.row_price').val(tr.find('.row_price').text());
+      $('.edit_row').find('.row_type').val(tr.find('.row_type').text());
+      $('.edit_row').find('.row_cont').val(tr.find('.row_cont').text());
+      $('.edit_row').find('.row_id').val(tr.attr('row_id'));
+  });
+  $('.row_del').click(function(){
+  var row_id = $(".edit_row .row_id").val();
+  if (row_id && confirm('确认删除?')) {
+      $.ajax({
+          type        : 'GET',
+          url         : '{:url('gset_del')}',
+          dataType    : 'json',
+          data        : {
+              id : row_id
+          },
+          success     : function(e){
+              if (e.status) {
+                  $('.tr_' + row_id).remove();
+              } else {
+                  alt(e.msg);
+              }
+
+
+          },
+          error       : function () {
+
+          },
+      });
+  }
+});
+</script>

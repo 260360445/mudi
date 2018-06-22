@@ -1,0 +1,143 @@
+<div class="mwshezhi">
+     <div class="mwnav">
+        <ul>
+          <li ><a href="{:url('System/sysjc')}">寄存厅设置</a></li>
+          <li class="navon"><a href="{:url('System/sysjct')}">寄存室设置</a></li>
+          <li><a href="{:url('System/sysjcc')}">寄存层设置</a></li>
+          <li><a href="{:url('System/sysjcw')}">寄存位设置</a></li>
+        </ul>
+      </div>
+    <div class="mwmain">
+      <div class="mwd">
+                <div class="mwdba">
+                  <form class="add_row one_form  many_form" action="{:url('sysjct_add')}" method="post" >
+                    <fieldset>
+                      <legend>寄存室设置一添加</legend>
+                      <div class="mqsz">
+                        <div class="mqsza">
+                          <p>选择寄存厅</p>
+                          <select name="sysid">
+                            {foreach $sys_list as $k => $vo}
+                                <option value="{$vo.id}">{$vo.title}</option>
+                            {/foreach}
+                          </select>
+                        </div>
+                        <div class="mqszb">
+                         <div class="mqszba">
+                             <input type="radio" name="type"  value="many" />批量处理
+                          </div>
+                          <div class="mqszbb">
+                             <input type="radio" name="type"  checked value="one" />单条处理
+                          </div>
+                        </div>
+                        <div class="mqszc">
+                            <p>寄存厅开始编号</p>
+                            <input type="text" name="many_start" />
+                            <input type="text" name="title" />
+                        </div>
+                        <div class="mqszd">
+                            <p>寄存厅数量</p>
+                            <input type="text"  name="num" />
+                            <h1>请填写单个寄存厅号（数字）</h1>
+                        </div>
+                        <button  type="submit" class="mqsze">添加</button>
+                      </div>
+                    </fieldset>
+                  </form>
+                </div>
+                <div class="mwdbb">
+                  <div class="mwdbble">
+                    <table class="table table-bordered">                      
+                      <thead>
+                        <tr>    
+                          <th>寄存厅名称</th>
+                          <th>寄存室名称</th>                          
+                        </tr>
+                      </thead>
+                      <tbody class="wlist">
+                        {foreach $sys_list_s as $k=>$vo}
+                            <tr class="tr_{$vo.id}" row_id = "{$vo.id}" >
+                              <td class="row_cem_id" val = "{$vo.sysid}">{$sys_list[$vo['sysid']]['title']}</td>
+                              <td class="row_title">{$vo.title}</td>
+                            </tr>
+                        {/foreach}                 
+                      </tbody>
+                    </table>
+                  </div>
+                   <div class="mwdbbri">
+                    <form action="{:url('sysjct_edit')}" method="post" class="edit_row">
+                        <fieldset>
+                            <legend>寄存厅设置一修改</legend>
+                            <div class="mqxg">
+                                <div class="mqxga">
+                                    <p>选择寄存厅</p>
+                                    <select name="sysid" class="row_cem_id">
+                                        {foreach $sys_list as $k => $vo}
+                                            <option value="{$vo.id}">{$vo.title}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                                <div class="mqxga">
+                                    <p>寄存厅编号</p>
+                                    <input type="text" name="title" class="row_title" />
+                                    <input type="hidden" name="id" class="row_id" />
+                                </div>
+
+                                <div class="mqxgb">
+                                    <button type="submit" class="mqxgcontc">修改</button>
+                                    <button type="button" class="mqxgcontcs row_del">删除</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                </div>
+              </div>
+    </div>
+    <iframe id = "iframeSon" style = "display:none;" src = "{:url('p/upload')}"> </iframe>
+  </div>
+<script type="text/javascript">
+        $('.mqszb input').click(function(){
+            if($(this).val() == 'one') {
+                $('.add_row').addClass('one_form');
+                $('.add_row').removeClass('many_form');
+            } else {
+                $('.add_row').removeClass('one_form');
+                $('.add_row').addClass('many_form');
+            }
+        })
+        $('.wlist tr').click(function(){
+            $(".edit_row .row_cem_id").val($(this).find('.row_cem_id').attr('val'));
+            $(".edit_row .row_title").val($(this).find('.row_title').text());
+            $(".edit_row .row_id").val($(this).attr('row_id'));
+        });
+    </script>
+<script type="text/javascript">
+
+
+$('.row_del').click(function(){
+    var row_id = $(".edit_row .row_id").val();
+    if (row_id && confirm('确认删除?')) {
+        $.ajax({
+            type        : 'GET',
+            url         : '{:url('sysjct_del')}',
+            dataType    : 'json',
+            data        : {
+                id : row_id
+            },
+            success     : function(e){
+                if (e.status) {
+                    $('.tr_' + row_id).remove();
+                } else {
+                    alt(e.msg);
+                }
+
+
+            },
+            error       : function () {
+
+            },
+        });
+    }
+});
+</script>

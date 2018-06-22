@@ -1,0 +1,24 @@
+
+{foreach $list as $k=>$vo}
+
+<tr class="tr_{$vo.id}" row_id = "{$vo.id}">
+
+  <td class="row_cem_id"> <input type = "checkbox" name = "ids[]" value = "{$vo.id}"> </td>
+  <td class="row_cem_id"> {$vo['title']} </td>
+  <td class="row_cem_area_id">{$sys_list[$vo['sysid']]['title']}  </td>
+  <td class="row_cem_row_id">{$sys_list_s[$vo['sysid_s']]['title']}  </td>
+  <td class="row_cem_row_id">{$sysjcc[$vo['sysid_c']]['title']}  </td>
+  <td class="row_cem_row_id">{$sysys[$vo['sysysid']]['title']}  </td>
+  <td class="row_cem_row_id">
+    {if condition="$vo['syszt'] eq 1"}
+       空闲
+    {elseif condition="$vo['syszt'] eq 2" /} 
+       已预订
+    {elseif condition="$vo['syszt'] eq 3" /} 
+       已购买
+    {/if}
+  </td>
+  <td class="row_cem_row_id">{$sysls[$vo['syslxid']]['title']}  </td>
+   <td class=""> {$vo.time|date='Y-m-d H:i:s',###}  </td>
+</tr>
+{/foreach}

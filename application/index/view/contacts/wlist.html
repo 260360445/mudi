@@ -1,0 +1,76 @@
+
+
+						<fieldset>
+
+						    <div class="lxd">
+						    	<p>关键字填写：</p>
+						        <input type="text" class="lxc kwd"  value="{$wh}" />
+								<button class="lxb kwdbtn" >查询</button>
+								<button class="lxb">打印联系人信息</button>
+						        <button class="lxb" onclick = "go_to("{'url('wlist', '', '')'}");">退出</button>
+						    </div>
+						    <div class="lxd">
+						    	<p>查询结果数量：</p>
+						        <i>{$count}个</i>
+						        <span>双击联系人信息修改其信息</span>
+						    </div>
+						</fieldset>
+
+
+					<div class="conbiao">
+						<table class="table table-bordered">
+						  <!--<caption>边框表格布局</caption>-->
+						  <thead>
+						    <tr>
+						      <th>关联墓位全称</th>
+						      <th>姓名</th>
+						      <th>性别</th>
+						      <th>与故者关系</th>
+						      <th>身份证号</th>
+						      <th>电话</th>
+						      <th>手机</th>
+						      <th>电子邮件</th>
+						      <th>住址</th>
+						      <th>工作单位</th>
+						      <th>操作员</th>
+						      <th>状态</th>
+						      <th>添加时间</th>
+						      <th>邮政编码</th>
+
+						    </tr>
+						  </thead>
+						  <tbody class="wlist">
+                            {foreach $list as $k => $vo}
+    						    <tr row_id = "{$vo.id}" class="tr_{$vo.id}">
+    						      <td></td>
+    						      <td>{$vo.name}</td>
+    						      <td>{$vo.sex}</td>
+    						     <td>{$relationship[$vo['relationship']]}</td>
+    						      <td>{$vo.idcard}</td>
+    						      <td>{$vo.tel}</td>
+    						      <td>{$vo.tel}</td>
+
+    						      <td>{$vo.email}</td>
+    						      <td>{$vo.address}</td>
+    						      <td>{$vo.workplace}</td>
+    						      <td>{$staff[$vo['create_by']]}</td>
+
+    						      <td>-</td>
+    						      <td>{$vo.create_time}</td>
+    						      <td>{$vo.postcode}</td>
+
+    						    </tr>
+                            {/foreach}
+
+						  </tbody>
+						</table>
+					</div>
+				</div>
+
+<script type="text/javascript">
+    $('.kwdbtn').click(function(){
+        let vl = $('.kwd').val();
+
+        go_to("{:url('wlist', '', '')}/wh/" + vl);
+    });
+</script>

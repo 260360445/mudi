@@ -1,0 +1,94 @@
+
+    <fieldset>
+        <legend>查询条件设置</legend>
+        <div class="lxd">
+
+        </div>
+        <div class="lxd">
+            <p>关键字填写：</p>
+            <input type="text" class="lxc kwd"  value="{$wh}" />
+            <button class="lxb kwdbtn" >查询</button>
+            <!-- <button class="lxb">打印联系人信息</button> -->
+            <button class="lxb" onclick = "go_to('/index.php/index/Contacts/visit_log')">退出</button>
+        </div>
+        <div class="lxd">
+            <p>查询结果数量：</p>
+            <i>{$count}个</i>
+            <span>双击联系人信息查看其身份证信息，鼠标右键编辑关联销售信息</span>
+        </div>
+    </fieldset>
+
+
+<div class="conbiao">
+    <table class="table table-bordered">
+      <!--<caption>边框表格布局</caption>-->
+      <thead>
+        <tr>
+          <th>来访者姓名</th>
+          <th>接待员</th>
+          <th>联系方式</th>
+          <th>来访人数</th>
+          <th>来访日期</th>
+          <th>来访渠道1</th>
+          <th>来访渠道2</th>
+          <th>来访渠道3</th>
+          <th>咨询电话</th>
+          <th>成交情况</th>
+          <th>未购买原因</th>
+          <th>来访方式</th>
+
+          <th>成交日期</th>
+          <th>来访次数</th>
+
+          <th>接待记录</th>
+          <th>住址</th>
+          <th>备注</th>
+
+          <th>与逝者关系</th>
+          <!-- <th>是否已锁定</th> -->
+        </tr>
+      </thead>
+      <tbody>
+
+        {foreach $list as $k => $vo}
+            <tr>
+              <td>{$vo.name}</td>
+              <td>{$staff[$vo['receiver']]}</td>
+              <td>{$vo.tel}</td>
+              <td>{$vo.people_num}</td>
+              <td>{$vo.transaction_suc_date}</td>
+              <td>{$t1[$vo['channel_t1']]['title']}</td>
+              <td>{$t2[$vo['channel_t2']]['title']}</td>
+              <td>{$t3[$vo['channel_t3']]['title']}</td>
+
+              <td>{$tel[$vo['tel_id']]['title']}</td>
+              <td>{$transaction_status ? '成交' : '未成交'}</td>
+              <td>{$transaction_status ? $no_transaction_ps[$vo['no_transaction_ps']]['title'] : ''}</td>
+              <td>{$come_fun[$vo['come_fun']]['title']}</td>
+
+              <td>{$vo.transaction_suc_date}</td>
+              <td>{$come_num[$vo['come_num']]}</td>
+              <td>{$vo.reception_log}</td>
+              <td>{$vo.address}</td>
+              <td>{$vo.remarks}</td>
+              <td>{$relationship[$vo['relationship']]['title']}</td>
+
+            </tr>
+
+        {/foreach}
+      </tbody>
+    </table>
+</div>
+</div>
+</div>
+
+
+
+
+<script type="text/javascript">
+    $('.kwdbtn').click(function(){
+        let vl = $('.kwd').val();
+
+        go_to("{:url('visit_log', '', '')}/wh/" + vl);
+    });
+</script>

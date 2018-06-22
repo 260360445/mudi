@@ -1,0 +1,3 @@
+<?php
+//000000000000a:6:{i:30;a:4:{s:2:"id";i:30;s:3:"pid";i:25;s:4:"name";s:12:"墓位销售";s:11:"client_path";s:9:"Tomb/Sale";}i:31;a:4:{s:2:"id";i:31;s:3:"pid";i:25;s:4:"name";s:12:"预定维护";s:11:"client_path";s:12:"Tomb/Tending";}i:32;a:4:{s:2:"id";i:32;s:3:"pid";i:25;s:4:"name";s:18:"已购墓位管理";s:11:"client_path";s:10:"Tomb/buyed";}i:27;a:4:{s:2:"id";i:27;s:3:"pid";i:25;s:4:"name";s:15:"查看联系人";s:11:"client_path";s:14:"Contacts/wlist";}i:28;a:4:{s:2:"id";i:28;s:3:"pid";i:25;s:4:"name";s:18:"客户来访登记";s:11:"client_path";s:19:"Contacts/visit_push";}i:29;a:4:{s:2:"id";i:29;s:3:"pid";i:25;s:4:"name";s:24:"客户来访信息管理";s:11:"client_path";s:18:"Contacts/visit_log";}}
+?>

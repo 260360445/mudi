@@ -1,0 +1,186 @@
+<div class="mwshezhi">
+      {include file="cem/tab" /}
+    <div class="mwmain">
+
+        <div class="mwd">
+            <div class="mwdba">
+                <form class="add_row one_form  many_form" action="{:url('sys_add')}" method="post" >
+                    <fieldset>
+                        <legend>墓区设置一添加</legend>
+                        <div class="mqsz">
+                            <div class="mqsza">
+                                <p>选择墓园</p>
+                                <select name="cem_id">
+                                    {foreach $cem_list as $k => $vo}
+                                        <option value="{$vo.id}">{$vo.title}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                            <div class="mqszb">
+                                <div class="mqszba">
+                                   <input type="radio" name="type"  value="many" />批量处理
+                                </div>
+                                <div class="mqszbb">
+                                   <input type="radio" name="type"  checked value="one" />单条处理
+                                </div>
+                            </div>
+                            <div class="mqszc">
+                                <p>墓区开始编号</p>
+                                <input type="text" name="many_start" />
+                                <input type="text" name="title" />
+                            </div>
+                            <div class="mqszd">
+                                <p>墓区数量</p>
+                                <input type="text"  name="many_num" />
+                                <h1>请填写单个墓区号（数字）</h1>
+                            </div>
+                            <button  type="submit" class="mqsze">添加</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="mwdbb">
+                <div class="mwdbble">
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>墓园名称</th>
+                          <th>墓区名称</th>
+                        </tr>
+                      </thead>
+                      <tbody class="wlist">
+                            {foreach $area_list as $k=>$vo}
+                                <tr class="tr_{$vo.id}" row_id = "{$vo.id}" >
+                                  <td class="row_cem_id" val = "{$vo.cem_id}">{$cem_list[$vo['cem_id']]['title']}</td>
+                                  <td class="row_title">{$vo.title}</td>
+                                </tr>
+                            {/foreach}
+                      </tbody>
+                    </table>
+                </div>
+                <div class="mwdbbri">
+                    <form action="{:url('area_edit')}" method="post" class="edit_row">
+                        <fieldset>
+                            <legend>墓区设置一修改</legend>
+                            <div class="mqxg">
+                                <div class="mqxga">
+                                    <p>选择墓园</p>
+                                    <select name="cem_id" class="row_cem_id">
+                                        {foreach $cem_list as $k => $vo}
+                                            <option value="{$vo.id}">{$vo.title}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                                <div class="mqxga">
+                                    <p>墓区编号</p>
+                                    <input type="text" name="title" class="row_title" />
+                                    <input type="hidden" name="id" class="row_id" />
+                                </div>
+
+                                <div class="mqxgb">
+                                    <button type="submit" class="mqxgcontc">修改</button>
+                                    <button type="button" class="mqxgcontcs row_del">删除</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <script type="text/javascript">
+        $('.mqszb input').click(function(){
+            if($(this).val() == 'one') {
+                $('.add_row').addClass('one_form');
+                $('.add_row').removeClass('many_form');
+            } else {
+                $('.add_row').removeClass('one_form');
+                $('.add_row').addClass('many_form');
+            }
+        })
+        $('.wlist tr').click(function(){
+            $(".edit_row .row_cem_id").val($(this).find('.row_cem_id').attr('val'));
+            $(".edit_row .row_title").val($(this).find('.row_title').text());
+            $(".edit_row .row_id").val($(this).attr('row_id'));
+        });
+    </script>
+
+
+    <script type="text/javascript">
+        $('.row_add').click(function(){
+            $('.add_row').attr('action', "{:url('cem_add')}").submit();
+
+        });
+
+        $('.row_edit').click(function(){
+            $('.add_row').attr('action', "{:url('cem_edit')}").submit();
+        });
+
+        $('.row_del').click(function(){
+            var row_id = $(".edit_row .row_id").val();
+            if (row_id && confirm('确认删除?')) {
+                $.ajax({
+                    type        : 'GET',
+                    url         : '{:url('area_del')}',
+                    dataType    : 'json',
+                    data        : {
+                        id : row_id
+                    },
+                    success     : function(e){
+                        if (e.status) {
+                            $('.tr_' + row_id).remove();
+                        } else {
+                            alt(e.msg);
+                        }
+
+
+                    },
+                    error       : function () {
+
+                    },
+                });
+            }
+        });
+
+
+    </script>
+
+
+
+    <script type="text/javascript">
+
+
+    // $(".one_form").validate({
+    //     rules:{
+    //         title:{
+    //             required:true,
+    //             digits:true,
+    //         },
+    //         many_num:{
+    //             required:true,
+    //             digits:true,
+    //         },
+    //         many_start:{
+    //             digits:true,
+    //             required:true,
+    //         },
+    //
+    //     },
+    //     errorClass: "help-inline",
+    //     errorElement: "div",
+    //     highlight:function(element, errorClass, validClass) {
+    //         $(element).parents('.control-group').addClass('error');
+    //     },
+    //     unhighlight: function(element, errorClass, validClass) {
+    //         $(element).parents('.control-group').removeClass('error');
+    //         $(element).parents('.control-group').addClass('success');
+    //     },
+    //     ignore : "",
+    //
+    // });
+
+    </script>

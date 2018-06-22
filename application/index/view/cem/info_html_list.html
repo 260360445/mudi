@@ -1,0 +1,27 @@
+
+{foreach $list as $k=>$vo}
+
+<tr class="tr_{$vo.id}" row_id = "{$vo.id}">
+
+  <td class="row_cem_id"> <input type = "checkbox" name = "ids[]" value = "{$vo.id}"> </td>
+  <td class="row_cem_id"> {$cem_list[$vo['cem_id']]['title']} </td>
+  <td class="row_cem_area_id">{$area_list[$vo['cem_area_id']]['title']}  </td>
+  <td class="row_cem_row_id">{$row_list[$vo['cem_row_id']]['title']}  </td>
+    <td class="row_title">
+        {$cem_list[$vo['cem_id']]['title']}-
+        {$area_list[$vo['cem_area_id']]['title']}-
+        {$row_list[$vo['cem_row_id']]['title']} -
+        {$vo.title}   </td>
+  <td class="row_length">{$vo.length}  </td>
+  <td class="row_width">{$vo.width}   </td>
+  <td class="row_acreage"> {$vo.acreage}  </td>
+  <td class="row_price">  {$vo.price}     </td>
+  <td class="row_acreage"> --  </td>
+  <td class="" val = "{$vo.style}">{$cem_sty[$vo['style']]['title']}   </td>
+  <td class="" val = "{$vo.style}"> {$cem_mat[$vo['material']]['title']}   </td>
+  <td class="" val = "{$vo.style}"> {$cem_status[$vo['status']]['title']}  </td>
+  <td class="" val = "{$vo.style}"> {$staff_list[$vo.create_by]}   </td>
+  <td class="" val = "{$vo.style}"> {$vo.create_time}  </td>
+
+</tr>
+{/foreach}
