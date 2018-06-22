@@ -17,6 +17,8 @@ class System  extends Root {
     	$this->assign('sys_list', _System::wlist());
         return $this->fetch();
     }
+
+    
      public function sysjc_edit () {
      	// 获取上传文件信息
         if(!empty($_FILES['img']['name'])){//处理上传的文件
