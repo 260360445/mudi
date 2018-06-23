@@ -1,0 +1,83 @@
+  <div class="cont">
+          <div class="wupfei">
+            <h3>待确认物品销售信息</h3>
+            <button  type="button" class="wupfeid">物品销售收费确认</button>
+            <div class="conbiao wupfeib">
+              <table class="table table-bordered">
+                <!--<caption>边框表格布局</caption>-->
+                <thead>
+                  <tr>
+                    <th>选择</th>
+                    <th>是否已付款</th>
+                    <th>定购总额</th>
+                    <th>定购日期</th>
+                    <th>操作员</th>
+                  </tr>
+                </thead>
+                <tbody class="whlist">
+                 {foreach $glist as  $vo}
+                        <tr class="tr_{$vo.id}" row_id = "{$vo.id}">
+                          <td style="width:30px;"><input type="radio" class="fukuan_{$vo.id}" name="fukuan" value="{$vo.id}" /></td>
+                          <td class = "row_title">
+                            {if condition="$vo['sta'] eq 2"}
+                               <font style="color:green;">已付款</font>
+                            {else /} 
+                               <font style="color:red;">未付款</font> 
+                            {/if}
+                          </td>
+                          <td class = "row_price">{$vo.price}</td>
+                          <td class = "row_type">{$vo.time|date='Y-m-d H:i:s',###}</td>
+                          <td class = "row_cont">{$role[$vo['roleid']]['title']}</td>
+                        </tr>
+                  {/foreach}
+                </tbody>
+              </table>
+             </div>
+           </div>
+        </div>
+<script src="__JS__/layer/layer.js"></script>
+<script>
+$(function(){
+  $("input:radio").eq(0).attr("checked","checked");
+  $("tr").bind("click",function(){
+    $(this).find("input:radio").attr("checked","checked");
+  });
+})
+$(".wupfeid").click(function(){
+   var val=$('input:radio[name="fukuan"]:checked').val();
+   var index=layer.confirm('是否确认该收费记录？', {
+      btn: ['确定','取消'] //按钮
+    }, function(){
+        layer.close(index);
+        var ihtml = layer.load(0, {
+          shade: [0.5] //0.1透明度的白色背景
+        });
+        $.ajax({
+            type        : 'post',
+            url         : '{:url('finan_set_glist')}',
+            dataType    : 'json',
+            data        : {
+                id : val
+            },
+            success     : function(e){
+                if (e == '2') {
+                  layer.close(ihtml);
+                  layer.msg('设置成功',{offset: '300px',time: 2000,icon: 1},function () {
+                       window.location.reload();
+                    });
+                } else {
+                  layer.close(ihtml);
+                  layer.msg('设置失败',{offset: '300px',time: 2000,icon: 2},function () {
+                       window.location.reload();
+                    });
+                }
+            },
+            error       : function () {
+
+            },
+        });
+    }, function(){
+      layer.close(index);
+    });
+})
+</script>

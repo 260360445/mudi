@@ -966,9 +966,9 @@ html,body{width: 100%;height: 100%;}
 	font-size: 22px;
 	color: #840000;
 }
-.usera{
+/*.usera{
 	overflow: hidden;
-}
+}*/
 .useraa{	
 	margin-right: 20px;
 	float: left;
@@ -984,7 +984,8 @@ html,body{width: 100%;height: 100%;}
 }
 .useraa i{
 	color: #ff0000;
-	font-size: 24px;
+	/*font-size: 24px;*/
+	font-size: 21px;
 	margin-left: 10px;
 	float: left;
 }
@@ -1025,9 +1026,9 @@ html,body{width: 100%;height: 100%;}
 .userxg{
 	padding: 20px;
 }
-.userxga{
+/*.userxga{
 	overflow: hidden;
-}
+}*/
 .userxga p{
 	font-size: 14px;
 	color: #000;
@@ -1110,7 +1111,7 @@ html,body{width: 100%;height: 100%;}
 	float: left;
 }
 .userszas input{
-	width: 30px;
+	width: 40px;
 	float: left;
 }
 .userszbs p{
@@ -2180,4 +2181,3791 @@ html,body{width: 100%;height: 100%;}
 }
 .userxgbtns .userd {
 	margin-left: 10px;
+}
+
+.useraa {
+	position: relative;
+	padding-bottom: 16px;
+}
+
+.usertip {
+	font-size: 14px;
+	color: red;
+	position: absolute;
+	left: 70px;
+	top: 24px;
+	z-index: 10;
+}
+.userxga{
+	position: relative;
+	padding-bottom: 16px;
+}
+.usersza{
+	position: relative;
+	padding-bottom: 16px;
+}
+.userszb{
+	position: relative;
+	padding-bottom: 16px;
+}
+.usertips{
+	font-size: 14px;
+	color: red;
+	position: absolute;
+	left: 80px;
+	top: 24px;
+	z-index: 10;
+}
+.userszas{
+	position: relative;
+	padding-bottom: 16px;
+}
+.userszbs{
+	position: relative;
+	padding-bottom: 16px;
+}
+.userszcs{
+	position: relative;
+	padding-bottom: 16px;
+}
+/********************************************/
+.tanc{
+	width: 786px;
+	height: 600px;
+	overflow: hidden;
+	background: #c6c6c6;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -393px;
+	margin-top: -300px;
+}
+.tantop{
+	font-size: 14px;
+	color: #000;
+	width: 100%;
+	height: 20px;
+	line-height: 20px;
+}
+.tanf{
+	width: 95%;
+	margin: 0 auto;
+}
+.tanf fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.tanf legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.tanfa p{
+	font-size: 14px;
+	color: #0000ff;
+	margin: 0;
+	margin-left: 30px;	
+}
+.tanfb{
+	width: 70%;
+	margin: 0 auto;
+}
+.tanfb div{
+	float: left;
+	background: #fff;
+    font-size: 14px;
+    color: #000;
+    margin-right: 10px;
+    margin-top: 10px;
+    padding: 0 5px;
+}
+.tang{
+	width: 95%;
+	margin: 0 auto;
+}
+.tang fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.tang legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.tangb{
+	width: 246px;
+	float: left;
+	margin-left: 10px;
+}
+.tangb div{
+	width: 100%;
+	height: 20px;
+	line-height: 20px;
+	font-size: 14px;
+	color: #000;
+	background: #fff;
+	margin-top: 10px;
+}
+.tangc{
+	width: 246px;
+	float: left;
+	margin-left: 10px;
+}
+.tangc div{
+	width: 100%;
+	height: 20px;
+	line-height: 20px;
+	font-size: 14px;
+	color: #000;
+	background: #fff;
+	margin-top: 10px;
+}
+.tangd{
+	width: 210px;
+	float: left;
+	margin-left: 10px;
+}
+.tanfgda{
+	overflow: hidden;
+}
+.tanfgda p{
+	float: left;
+	font-size: 14px;
+	color: #000;
+}
+.tanfgda div{
+	float: right;
+	font-size: 14px;
+	color: #000;
+	background: #999;
+	margin-right: 10px;
+	width: 80px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+}
+.tangd textarea{
+	width: 100%;
+	resize: none;
+	height: 120px;
+	outline: none;
+}
+.tanh{
+	width: 95%;
+	margin: 10px auto;
+	overflow: hidden;
+}
+.tanha{
+	overflow: hidden;
+	margin-bottom: 5px;
+}
+.tanha p{
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+}
+.tanha div{
+    font-size: 14px;
+    color: #000;
+    padding: 0 10px;
+    background: #999;
+    float: left;
+    width: auto;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.tanhb{
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+    height: 110px;
+}
+.tanhb table{
+	min-width: 100%;
+}
+.tanhb .table-bordered>thead>tr>th {
+    min-width: 140px;
+}
+.tank{
+	margin-left: 37px;
+}
+.tank div{
+    font-size: 14px;
+    color: #000;
+    background: #999;
+    float: left;
+    width: 166px;
+    text-align: center;
+    margin-left: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.zftan{
+	width: 816px;
+	height: 600px;
+	overflow: hidden;
+	background: #c6c6c6;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -408px;
+	margin-top: -300px;
+}
+.zftantop{
+	font-size: 14px;
+	color: #000;
+	width: 100%;
+	height: 20px;
+	line-height: 20px;
+}
+.tanfq{
+	width: 95%;
+	margin: 0 auto;
+}
+.tanfq fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.tanfq legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.tanfqa p{
+	font-size: 14px;
+	color: #0000ff;
+	margin: 0;
+	margin-left: 30px;	
+}
+.tanfqb{
+	width: 68%;
+	margin: 0 auto;
+}
+.tanfqb div{
+	float: left;
+	background: #fff;
+    font-size: 14px;
+    color: #000;
+    margin-right: 10px;
+    margin-top: 10px;
+    padding: 0 5px;
+}
+.ydtan{
+	width: 596px;
+	height: 416px;
+	overflow: hidden;
+	background: #c6c6c6;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -298px;
+	margin-top: -208px;
+}
+.ydtantop{
+	font-size: 14px;
+	color: #000;
+	width: 100%;
+	height: 20px;
+	line-height: 20px;
+}
+.tanfs{
+	width: 95%;
+	margin: 0 auto;
+}
+.tanfs fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.tanfs legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.tanfsa p{
+	font-size: 14px;
+	color: #0000ff;
+	margin: 0;
+	margin-left: 30px;	
+}
+.tanfsb{
+	width: 78%;
+	margin: 0 auto;
+}
+.tanfsb div{
+	float: left;
+	background: #fff;
+    font-size: 14px;
+    color: #000;
+    margin-right: 10px;
+    margin-top: 10px;
+    padding: 0 5px;
+}
+.tangs{
+	width: 95%;
+	margin: 0 auto;
+}
+.tangs fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.tangs legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.tangsb{
+	width: 246px;
+	float: left;
+	margin-left: 25px;
+}
+.tangsb div{
+	width: 100%;
+	height: 20px;
+	line-height: 20px;
+	font-size: 14px;
+	color: #000;
+	background: #fff;
+	margin-top: 10px;
+}
+.tangsc{
+	width: 246px;
+	float: left;
+	margin-left: 10px;
+}
+.tangsc div{
+	width: 100%;
+	height: 20px;
+	line-height: 20px;
+	font-size: 14px;
+	color: #000;
+	background: #fff;
+	margin-top: 10px;
+}
+.zftant{
+	width: 95%;
+	margin: 0 auto;
+	overflow: hidden;
+}
+.zftanle{
+	width: 270px;
+	float: left;
+}
+.zftanle fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.zftanle legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.zftanri{
+	width: 500px;
+	float: right;
+}
+.zftanri fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.zftanri legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.zftanlea div {
+    background: #fff;
+    font-size: 14px;
+    color: #000;
+    margin: 0 10px;
+    margin-top: 10px;   
+}
+.zftanria{
+	padding: 0 13px;
+}
+.zftanrib{
+	overflow: hidden;
+}
+.zftanrib p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.zftanrib input{
+	width: 140px;
+	height: 20px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin-left: 10px;
+}
+.zftank{
+	font-size: 14px;
+    color: #000;
+    background: #999;
+    float: left;
+    width: 150px;
+    text-align: center;
+    margin-left: 20px;
+    cursor: pointer;
+}
+.zftanric{
+	overflow: hidden;
+}
+.zftanric p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.zftanric select{
+	width: 140px;
+	height: 20px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin-left: 10px;
+}
+.zftanrica{
+	float: left;
+	margin-left: 20px;
+}
+.zftanrid{
+	overflow: hidden;
+}
+.zftanrida{
+	float: left;
+}
+.zftanrida p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.zftanrida select{
+	width: 140px;
+	height: 20px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin-left: 10px;
+}
+.zftanridb{
+	float: left;
+	margin-left: 20px;
+}
+.zftanridb p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.zftanridb select{
+	width: 140px;
+	height: 20px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin-left: 10px;
+}
+.zftanbz{
+	overflow: hidden;
+}
+.zftanbz p{
+	font-size: 14px;
+	color: #000;
+}
+.beizhu textarea{
+	width: 240px;
+	height: 75px;
+	float: left;
+	outline: 0;
+	resize: none;
+}
+.bzmore{
+	float: left;
+}
+.bzmorea{
+    font-size: 14px;
+    color: #000;
+    background: #999;
+    width: 86px;
+    text-align: center;
+    margin-left: 10px;
+    margin-bottom: 30px;
+}
+.bzmoreb{
+    font-size: 14px;
+    color: #000;
+    background: #999;
+    width: 86px;
+    text-align: center;
+    margin-left: 10px;
+}
+.zftancz{
+	width: 95%;
+	margin: 0 auto;
+}
+.zftancz fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 30px;
+}
+.zftancz legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.ydtanb{
+	width: 80%;
+	margin: 0 auto;
+	overflow: hidden;
+}
+.ydtanb div{
+    font-size: 14px;
+    color: #000;
+    background: #999;
+    float: left;
+    width: 140px;
+    text-align: center;
+    margin-left: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.ydtanc{
+    font-size: 14px;
+    color: #000;
+    background: #999;
+    width: 140px;
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 220px;
+}
+.ydtana{
+	margin-top: 10px;
+	border-top: 1px solid #000;
+}
+.whtan{
+	width: 844px;
+	height: 534px;
+	overflow: hidden;
+	background: #c6c6c6;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -422px;
+	margin-top: -267px;
+	display: none;
+}
+.whtantop{
+	font-size: 14px;
+	color: #000;
+	width: 100%;
+	height: 20px;
+	line-height: 20px;
+}
+.whtana{
+	width: 95%;
+	margin: 0 auto;
+}
+.whtana fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.whtana legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.whtand{
+	overflow: hidden;
+	float: left;
+	margin-left: 30px;
+}
+
+.whtand p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.whtand select{
+	width: 140px;
+	height: 20px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.whtand input{
+	width: 140px;
+	height: 20px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.whtand i{
+	font-size: 12px;
+	color: #ff0000;
+	width: 10px;
+	height: 10px;
+	display: inline-block;
+}
+.whtand em{
+	font-size: 12px;
+	color: #0000ff;
+}
+.whtane{
+	width: 95%;
+	margin: 0 auto;
+	overflow: hidden;
+}
+.whtanele{
+	width: 550px;
+	float: left;
+}
+.whtanele fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.whtanele legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.whtaneri{
+	width: 245px;
+	float: right;
+}
+.whtaneri fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.whtaneri legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.whlea{
+	overflow: hidden;
+	margin-left: 30px;
+}
+.whleb{
+	float: left;
+}
+.whleb p{
+	width: 85px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.whleb input{
+	width: 140px;
+	height: 20px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.whlec{
+	float: left;
+	margin-left: 20px;
+}
+.whlec p{
+	width: 85px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.whlec input{
+	width: 140px;
+	height: 20px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.whlec select{
+	width: 140px;
+	height: 20px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.whlea i{
+	font-size: 12px;
+	color: #ff0000;
+	width: 10px;
+	height: 10px;
+	display: inline-block;
+}
+.whtanyw{
+	overflow: hidden;
+}
+.whtanyw p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.whtanyw input{
+	width: 140px;
+	height: 20px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.whtanyw select{
+	width: 140px;
+	height: 20px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.whtanyw i{
+	font-size: 12px;
+	color: #ff0000;
+	width: 10px;
+	height: 10px;
+	display: inline-block;
+}
+.whtanbz p{
+	font-size: 14px;
+	color: #000;
+}
+.whtanbz textarea{
+	width: 220px;
+	height: 94px;
+	outline: 0;
+	resize: none;
+}
+.whtanbc{
+	overflow: hidden;
+}
+.whtanbca{
+	width: 90px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin-left: 10px;
+	background: #999;
+	text-align: center;
+}
+.whtanbcb{
+	width: 90px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin-left: 10px;
+	background: #999;
+	text-align: center;
+}
+.whtandy{
+	width: 158px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin-left: 30px;
+	background: #999;
+	text-align: center;
+	margin-top: 10px;
+}
+.whtancz{
+	width: 95%;
+	margin: 0 auto;
+}
+.whtancz fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.whtancz legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 30px;
+}
+
+.bwtan{
+	width: 998px;
+	min-height: 650px;
+	overflow: hidden;
+	background: #c6c6c6;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -499px;
+	margin-top: -325px;
+	padding-bottom: 5px;
+	display: none;
+}
+.bwtantop{
+	font-size: 14px;
+	color: #000;
+	width: 100%;
+	height: 20px;
+	line-height: 20px;
+}
+.bwtana{
+	width: 95%;
+	margin: 0 auto;
+}
+.bwtana fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.bwtana legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.bwtanb p{
+	font-size: 14px;
+	color: #0000ff;
+	margin: 0;
+	margin-left: 30px;	
+}
+.bwtanc div{
+	float: left;
+	background: #fff;
+    font-size: 14px;
+    color: #000;
+    margin-left: 10px;
+    margin-top: 10px;
+    padding: 0 5px;
+}
+
+.bwtand{
+	width: 95%;
+	margin: 0 auto;
+}
+.bwtand fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.bwtand legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.bwtanea{
+	float: left;
+}
+.bwtanf{
+	overflow: hidden;
+	margin-left: 20px;
+}
+.bwtanf p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.bwtanf select{
+	width: 96px;
+	height: 20px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.bwtanbtn{
+	margin-left: 130px;
+	margin-top: 30px;
+}
+.bwtanbtn div {
+    float: left;
+    background: #999;
+    font-size: 14px;
+    color: #000;
+    margin-left: 20px;
+    margin-top: 10px;
+    width: 146px;
+    text-align: center;
+}
+.bwtanul{
+    width: 100%;
+    height: 26px;
+    margin-top: 5px;
+    border-bottom: 1px solid #bbb;
+    position: relative;
+}
+.bwtanul ul {
+    position: absolute;
+    top: -2px;
+}
+.bwtanul li.bwon {
+    height: 28px;
+    border-bottom: 1px solid #c6c6c6;
+}
+.bwtanul li {
+    float: left;
+    text-align: center;
+    line-height: 26px;
+    border: 1px solid #999;
+    border-right: none;
+    cursor: pointer;
+}
+.bwtanul li:last-child {
+    border-right: 1px solid #999;
+}
+.bwtanul li a {
+    font-size: 14px;
+    color: #000;
+    text-decoration: none;
+}
+.inner{
+	display: none;	
+}
+.inner:first-child{
+	display: block;
+}
+.bwtantable{
+	width: 95%;
+	height: 105px;
+	margin: 0 auto;
+}
+.bwtantable{
+    overflow-x: auto;
+    overflow-y: auto;
+    height: 110px;
+}
+.bwtantable table{
+	min-width: 100%;
+}
+.bwtantable .table-bordered>thead>tr>th {
+    min-width: 140px;
+}
+.bwtannr{
+	width: 95%;
+	margin: 0 auto;
+}
+.bwtannr fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.bwtannr legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.bwnra{
+	width: 322px;
+	float: left;
+	margin-left: 20px;
+}
+.bwnraa{
+	overflow: hidden;
+}
+.bwnrab p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.bwnrab input{
+	width: 80px;
+	height: 20px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.bwnrac p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.bwnrac input{
+	width: 80px;
+	height: 20px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.bwnrab{
+	float: left;
+}
+.bwnrac{
+	margin-left: 20px;
+	float: left;
+}
+.bwnrad{
+	overflow: hidden;
+}
+.bwnrad p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.bwnrad input{
+	width: 250px;
+	height: 20px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+
+.bwnrae{
+	overflow: hidden;
+}
+.bwnrae p{
+	width: 80px;
+	text-align: center;
+	float: left;
+	font-size: 14px;
+	color: #000;
+}
+.bwnrae p.bwnrp{
+	width: 70px;
+}
+.bwnraf p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.bwnraf input{
+	width: 80px;
+	height: 20px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin-left: 5px;
+}
+.bwnraf input:first-of-type{
+	margin-left: 0;
+}
+.bwnraf{
+	overflow: hidden;
+}
+.bwnrag p{
+	font-size: 14px;
+	color: #000;
+}
+.bwnrag textarea{
+	width: 316px;
+	height: 80px;
+	outline: 0;
+	resize: none;
+}
+.bwnrb{
+	width: 365px;
+	float: left;
+	margin-left: 20px;
+}
+
+.bwnrba{
+	overflow: hidden;
+}
+.bwnrba p{
+	width: 80px;
+	text-align: center;
+	float: left;
+	font-size: 14px;
+	color: #000;
+}
+.bwnrba p.bwnrbap{
+	width: 70px;
+}
+.bwnrbb p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.bwnrbb input{
+	width: 80px;
+	height: 20px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin-left: 5px;
+}
+.bwnrbb input:first-of-type{
+	margin-left: 0;
+}
+.bwnrbb{
+	overflow: hidden;
+}
+.bwnrbcle{
+	width: 113px;
+	float: left;
+}
+.bwnrbcle p{
+	font-size: 14px;
+	color: #000;
+}
+.bwnrbcle textarea{
+	width: 113px;
+	height: 84px;
+	outline: 0;
+	resize: none;
+}
+.bwnrbcri{
+	width: 200px;
+	float: left;
+	margin-left: 8px;
+	
+}
+.bwnrbcri p{
+	font-size: 14px;
+	color: #000;
+}
+.bwnrbcri textarea{
+	width: 200px;
+	height: 84px;
+	outline: 0;
+	resize: none;
+}
+.bwnrc{
+	width: 190px;
+	float: left;
+}
+.bwnrca{
+	overflow: hidden;
+	margin-top: 20px;
+}
+.bwnrca div {
+    width: 190px;
+    background: #999;
+    font-size: 14px;
+    color: #000;  
+    margin-top: 10px;
+    text-align: center;
+}
+/******************************************/
+.jsdtan{
+	width: 998px;
+	/*height: 650px;*/
+	overflow: hidden;
+	background: #c6c6c6;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -499px;
+	margin-top: -335px;
+	display: none;
+}
+.jsdtantop{
+	font-size: 14px;
+	color: #000;
+	width: 100%;
+	height: 20px;
+	line-height: 20px;
+}
+.jsdtana{
+	width: 95%;
+	margin: 0 auto;
+}
+.jsdtana fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.jsdtana legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.jsdtanb p{
+	font-size: 14px;
+	color: #0000ff;
+	margin: 0;
+	margin-left: 30px;	
+}
+.jsdtanc div{
+	float: left;
+	background: #fff;
+    font-size: 14px;
+    color: #000;
+    margin-left: 10px;
+    margin-top: 10px;
+    padding: 0 5px;
+}
+.jsdtantable{
+	width: 95%;
+	height: 105px;
+	margin: 0 auto;
+	margin-top: 10px;
+}
+.jsdtantable{
+    overflow-x: auto;
+    overflow-y: auto;
+    height: 110px;
+}
+.jsdtantable table{
+	min-width: 100%;
+}
+.jsdtantable .table-bordered>thead>tr>th {
+    min-width: 140px;
+}
+.jsdtanf{
+	width: 95%;
+	margin: 0 auto;
+}
+.jsdtanfle{
+	width: 786px;
+	float: left;
+}
+.jsdtanfle fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.jsdtanfle legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.jsdtanfri{
+	width: 150px;
+	float: left;
+}
+.jsdsa{
+	width: 80px;
+	float: left;
+	text-align: center;
+	margin-left: 15px;
+}
+.jsdsb{
+	width: 140px;
+	float: left;
+	text-align: center;
+	margin-left: 15px;
+}
+.jsdsc{
+	width: 140px;
+	float: left;
+	text-align: center;
+	margin-left: 15px;
+}
+.jsdsd{
+	width: 140px;
+	float: left;
+	text-align: center;
+	margin-left: 15px;
+}
+.jsdse{
+	width: 140px;
+	float: left;
+	text-align: center;
+	margin-left: 15px;
+}
+.jsdtans p{
+	font-size: 14px;
+	color: #000;
+	margin: 0;
+}
+.jsdscb{
+	width: 70px;
+	float: left;
+}
+.jsdscb input{
+	width: 70px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	text-align: center;
+}
+.jsdscb p{
+	height: 40px;
+}
+.jsdscd{
+	width: 70px;
+	float: left;
+}
+.jsdscd p{
+	height: 40px;
+}
+.jsdscd input{
+	width: 70px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	text-align: center;
+}
+.jsdse textarea{
+	width: 140px;
+	height: 103px;
+	margin-top: 40px;
+	resize: none;
+}
+.jsdtans{
+	overflow: hidden;
+}
+.jsdxj{
+	margin-left: 392px;
+	overflow: hidden;
+}
+.jsdxj p{
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.jsdxj input{
+	width: 70px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	text-align: center;
+}
+.jsdsba{
+	overflow: hidden;
+}
+.jsdsba p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+}
+.jsdsba input{
+	width: 70px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	text-align: center;
+}
+.jsdsbc{
+	margin-top: 40px;
+}
+
+.jsdsan{
+	width: 80px;
+	float: left;
+	text-align: center;
+	margin-left: 15px;
+}
+.jsdsbn{
+	width: 140px;
+	float: left;
+	text-align: center;
+	margin-left: 15px;
+}
+.jsdscn{
+	width: 140px;
+	float: left;
+	text-align: center;
+	margin-left: 15px;
+}
+.jsdsdn{
+	width: 140px;
+	float: left;
+	text-align: center;
+	margin-left: 15px;
+}
+.jsdsen{
+	width: 140px;
+	float: left;
+	text-align: center;
+	margin-left: 15px;
+}
+.jsdtansn p{
+	font-size: 14px;
+	color: #000;
+	margin: 0 auto;
+}
+.jsdsan input{
+    float: left;
+}
+.jsdsan label{
+    font-size: 14px;
+    color: #000;
+    float: left;
+    font-weight: normal;
+}
+.jsdsbnle{
+	width: 70px;
+	float: left;
+}
+.jsdsbnri{
+	width: 70px;
+	float: right;
+	border: 1px solid #a9a9a9;
+}
+.jsdsbnri input{
+	width: 70px;
+	text-align: center;
+}
+.jsdscn input{
+	width: 140px;
+	text-align: center;
+}
+.jsdsdn input{
+	width: 140px;
+	text-align: center;
+}
+.jsdsen textarea{
+	width: 130px;
+	height: 48px;
+	outline: none;
+	resize: none;
+}
+.jsdtansn{
+	overflow: hidden;
+}
+.jsdsen textarea.jztjtext{
+	width: 130px;
+	height: 24px;
+	outline: none;
+	resize: none;
+}
+.hjtana{
+	width: 80px;
+	height: 24px;
+	float: left;
+	font-size: 14px;
+	text-align: center;
+	background: #999;	
+	margin-left: 15px;
+}
+.hjtanb p{
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+}
+.hjtanb{
+	overflow: hidden;
+	margin-left: 30px;
+	float: left;
+}
+.hjtanb input{
+	width: 196px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	text-align: center;
+}
+.jsdanfria{
+	width: 150px;
+	float: left;
+	font-size: 14px;
+	text-align: center;
+	background: #999;	
+	margin-left: 15px;
+	margin-top: 15px;
+}
+/******************************************/
+.djtan{
+	width: 844px;
+	height: 590px;
+	overflow: hidden;
+	background: #c6c6c6;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -422px;
+	margin-top: -295px;
+}
+.djtantop{
+	font-size: 14px;
+	color: #000;
+	width: 100%;
+	height: 20px;
+	line-height: 20px;
+}
+.djtana{
+	width: 95%;
+	margin: 0 auto;
+}
+.djtana fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.djtana legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.djtanb{
+	margin-left: 30px;
+	float: left;
+}
+.djtanba{
+	overflow: hidden;
+	
+}
+.djtanba p{
+	width: 128px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.djtanba input{
+	width: 118px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.djtanb i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.djtanbb{
+	overflow: hidden;
+}
+.djtanbb p{
+	width: 128px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.djtanbb select{
+	width: 118px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	text-align: center;
+	height: 20px;
+}
+.djtanc{
+	margin-left: 30px;
+	float: left;
+}
+.djtanc i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.djtanca{
+	overflow: hidden;
+}
+.djtanca p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.djtanca input{
+	width: 235px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.djtancb{
+	overflow: hidden;
+}
+.djtancb p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.djtancb input{
+	width: 293px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.djtand{
+	width: 95%;
+	margin: 0 auto;
+}
+.djtand fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.djtand legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.djtanda{
+	float: left;
+	overflow: hidden;
+	margin-left: 10px;
+}
+.djtandq{
+	overflow: hidden;
+}
+.djtandq p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.djtandq select{
+	width: 128px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.djtandq i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.djtandb{
+	float: left;
+	margin-left: 20px;
+	overflow: hidden;
+}
+.djtandbt{
+	overflow: hidden;
+}
+.djtandbt p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.djtandbt select{
+	width: 223px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.djtandbt i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.djtandbta{
+	overflow: hidden;
+}
+.djtanbtle{
+	float: left;
+}
+.djtanbtle p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.djtanbtle select{
+	width: 95px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.djtanbtri{
+	float: left;
+}
+.djtanbtri p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.djtanbtri input{
+	width: 45px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.djtanbtri i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.djtandbtb{
+	overflow: hidden;
+}
+.djtandbtb p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.djtandbtb select{
+	width: 95px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.djtandc{
+	float: left;
+	overflow: hidden;
+	margin-left: 20px;
+}
+.djtandca{
+	overflow: hidden;
+}
+.djtandca p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.djtandca select{
+	width: 95px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.djtancj{
+	width: 95%;
+	margin: 0 auto;
+}
+.djtancj fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.djtancj legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.djtancja{
+	overflow: hidden;
+	margin-left: 30px;
+}
+.djtancjale{
+	float: left;
+}
+.djtancjale p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.djtancjale select{
+	width: 98px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.djtancjari{
+	float: left;
+	margin-left: 20px;
+}
+.djtancjari p{
+	width: auto;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.djtancjari select{
+	width: 206px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+
+.djtancjb{
+	overflow: hidden;
+	margin-left: 30px;
+}
+.djtancjb p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.djtancjb select{
+	width: 206px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.djtancjc{
+	overflow: hidden;
+}
+.djtancjcle{
+	float: left; 
+	overflow: hidden;
+	margin-left: 30px;
+}
+.djtancjcle p{
+	width: auto;
+	font-size: 14px;
+	color: #000;
+	margin: 0;
+}
+.djtancjcle textarea{
+	width: 276px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	height: 100px;
+	resize: none;
+	
+}
+.djtancjcri{
+	float: left;
+	overflow: hidden;
+	margin-left: 60px;
+}
+.djtancjcri p{
+	width: auto;
+	font-size: 14px;
+	color: #000;
+	margin: 0;
+}
+.djtancjcri textarea{
+	width: 276px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	height: 100px;
+	resize: none;
+}
+.djtancz{
+	width: 95%;
+	margin: 0 auto;
+	overflow: hidden;
+}
+.djtancza{
+	width: 610px;
+	float: left;
+}
+.djtancza fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 30px;
+}
+.djtancza legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.djtanczb{
+    width: 166px;
+    font-size: 14px;
+    color: #000;
+    float: left;
+    margin-left: 10px;
+    background: #999;
+    text-align: center;
+    margin-top: 10px;
+}
+/***************************************/
+.yjtan{
+	width: 1050px;
+	height: 636px;
+	overflow: hidden;
+	background: #c6c6c6;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -525px;
+	margin-top: -318px;
+}
+.yjtantop{
+	font-size: 14px;
+	color: #000;
+	width: 100%;
+	height: 20px;
+	line-height: 20px;
+}
+.yjtana{
+	width: 95%;
+	margin: 0 auto;
+}
+.yjtana fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.yjtana legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.yjtana p{
+	font-size: 14px;
+	color: #000;
+	margin: 0;
+}
+.yjtantable{
+	width: 100%;
+    overflow-x: auto; 
+    overflow-y: auto; 
+    height: 105px;
+}
+.yjtantable table{
+	min-width: 100%;	
+}
+.yjtanb{
+	width: 95%;
+	margin: 0 auto;
+}
+.yjtanb fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.yjtanb legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.yjtanba {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+.yjtanba p {
+    font-size: 14px;
+    color: #000;
+    float: left;
+    margin: 0 34px;
+}
+.yjtanbb {
+    overflow: hidden;
+}
+.yjtanbb select:first-child {
+    margin-left: 34px;
+}
+.yjtanbb select {
+    width: 114px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    float: left;
+    margin-left: 10px;
+}
+.yjtanbc {
+    font-size: 14px;
+    color: #000;
+    padding: 3px 23px;
+    background: #999;
+    float: left;
+    width: auto;
+    margin-left: 10px;
+}
+.yjtanc{
+	width: 95%;
+	height: 340px;
+	margin: 0 auto;
+	overflow-y: auto;
+	margin-top: 10px;
+}
+.yjtanca{
+    width: 87px;
+    margin-right: 10px;
+    float: left;
+    margin-bottom: 10px;
+}
+.yjtanca .yjtancb {
+    width: 80%;
+    margin: 0 auto;
+}
+.yjtanca .yjtancb img{
+    width: 100%;
+}
+.yjtanca p {
+    font-size: 14px;
+    color: #000;
+    text-align: center;
+}
+.yjtand{
+	width: 95%;
+	margin: 0 auto;
+	overflow: hidden;
+}
+.yjtanda{
+	font-size: 14px;
+	color: #000;
+	padding: 0 20px;
+	border-right: 1px solid #000;
+	float: left;
+}
+/********************************************/
+.ydjtan{
+    width: 788px;
+    height: 406px;
+    overflow: hidden;
+    background: #ddd;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -394px;
+    margin-top: -203px;
+    display: none;
+}
+.ydjtanbot{
+	overflow: hidden;
+	border-top: 1px solid #000;
+	margin-top: 10px;
+}
+.ydjtand{
+	width: 300px;
+	margin: 0 auto;
+}
+.ydjtanbota{
+    font-size: 14px;
+    color: #000;
+    background: #999;
+    float: left;
+    width: 140px;
+    text-align: center;
+    margin-left: 10px;
+    margin-top: 30px;
+}
+.ydjtanbotb{
+    font-size: 14px;
+    color: #000;
+    background: #999;
+    float: left;
+    width: 140px;
+    text-align: center;
+    margin-left: 10px;
+    margin-top: 30px;
+}
+/*************************************/
+.gztan{
+	width: 860px;
+	height: 600px;
+	overflow: hidden;
+	background: #c6c6c6;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -430px;
+	margin-top: -300px;
+	display: none;
+}
+.gztantop{
+	font-size: 14px;
+	color: #000;
+	width: 100%;
+	height: 20px;
+	line-height: 20px;
+}
+.gztana{
+	width: 95%;
+	margin: 0 auto;
+}
+.gztana fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.gztana legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.gztanb{
+	overflow: hidden;
+}
+.gztanba{
+    float: left;
+    margin-left: 20px;
+}
+.gztanba p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanba input{
+	width: 183px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanbb{
+    float: left;
+    margin-left: 20px;
+}
+.gztanbb p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanbb input{
+	width: 140px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanbb i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.gztanbc{
+    float: left;
+    margin-left: 20px;
+}
+.gztanbc p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanbc select{
+	width: 140px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanc{
+	overflow: hidden;
+}
+.gztanca{
+    float: left;
+    margin-left: 20px;
+}
+.gztanca p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanca input{
+	width: 140px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanca i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.gztancb{
+    float: left;
+    margin-left: 53px;
+}
+.gztancb p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztancb select{
+	width: 100px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztancb i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.gztancc{
+    float: left;
+    margin-left: 60px;
+}
+.gztancc p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztancc select{
+	width: 140px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztand{
+	overflow: hidden;
+}
+.gztanda{
+    float: left;
+    margin-left: 20px;
+}
+.gztanda p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanda input{
+	width: 183px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztandb{
+    float: left;
+    margin-left: 20px;
+}
+.gztandb p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztandb input{
+	width: 140px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztandb i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.gztandc{
+    float: left;
+    margin-left: 30px;
+}
+.gztandc p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztandc select{
+	width: 140px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztane{
+	overflow: hidden;
+}
+.gztanea{
+    float: left;
+    margin-left: 20px;
+}
+.gztanea p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanea select{
+	width: 120px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanea b{
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.gztaneb{
+    float: left;
+    margin-left: 27px;
+}
+.gztaneb p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztaneb select{
+	width: 120px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztaneb b{
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.gztanec{
+    float: left;
+    margin-left: -5px;
+}
+.gztanec p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanec select{
+	width: 120px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanec b{
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.gztanf{
+	overflow: hidden;
+}
+.gztanfa{
+    float: left;
+    margin-left: 20px;
+}
+.gztanfa p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanfa input{
+	width: 120px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanfa b{
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.gztanfb{
+    float: left;
+    margin-left: 27px;
+}
+.gztanfb p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanfb input{
+	width: 120px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanfb b{
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.gztanfc{
+    float: left;
+    margin-left: -5px;
+}
+.gztanfc p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanfc input{
+	width: 120px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanfc b{
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.gztang{
+	overflow: hidden;
+}
+.gztanga{
+	float: left;
+	margin-left: 90px;
+}
+.gztanga select{
+	width: 120px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztangb{
+	float: left;
+	width: 230px;
+	margin-left: 153px;
+}
+.gztangb select{
+	width: 120px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztangb p{
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.gztangc{
+	float: left;
+	margin-left: 11px;
+}
+.gztangc select{
+	width: 120px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanh{
+	overflow: hidden;
+}
+.gztanha{
+	margin-left: 362px;
+}
+.gztanha select{
+	width: 120px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	height: 20px;
+}
+.gztanj{
+	width: 95%;
+	margin: 0 auto;
+	overflow: hidden;
+}
+.gztanjle{
+	width: 560px;
+	float: left;
+	overflow: hidden;
+}
+
+.gztanja{
+	width: 560px;
+	float: left;
+	overflow: hidden;
+}
+.gztanja fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.gztanja legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.gztanjb{
+	width: 560px;
+	float: left;
+	overflow: hidden;
+}
+.gztanjb fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 30px;
+}
+.gztanjb legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.gztanjri{
+	width: 250px;
+	float: left;
+	overflow: hidden;
+	margin-left: 5px;
+}
+.gztanjri fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.gztanjri legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.gztanjc{
+	overflow: hidden;
+	
+}
+.gztanjca{
+	float: left;
+	margin-left: 20px;
+}
+.gztanjca p{
+	width: 85px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanjca input{
+	width: 160px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanjca i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.gztanjcb{
+	float: left;
+	margin-left: 20px;
+}
+.gztanjcb p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanjcb select{
+	width: 104px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanjcb i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.gztanjd{
+	overflow: hidden;
+	
+}
+.gztanjda{
+	float: left;
+	margin-left: 20px;
+}
+.gztanjda p{
+	width: 85px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanjda input{
+	width: 160px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanjda i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.gztanjdb{
+	float: left;
+	margin-left: 20px;
+}
+.gztanjdb p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanjdb select{
+	width: 104px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanjdb i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+
+.gztanje{
+	overflow: hidden;
+	
+}
+.gztanjea{
+	float: left;
+	margin-left: 20px;
+}
+.gztanjea p{
+	width: 85px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanjea input{
+	width: 160px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanjea i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.gztanjeb{
+	float: left;
+	margin-left: 20px;
+}
+.gztanjeb p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanjeb input{
+	width: 160px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanjeb i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.gztanjf{
+	overflow: hidden;	
+}
+.gztanjfa{
+	float: left;
+	margin-left: 20px;
+}
+.gztanjfa p{
+	width: 85px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanjfa input{
+	width: 160px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanjfa i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.gztanjfb{
+	float: left;
+	margin-left: 20px;
+}
+.gztanjfb p{
+	width: 70px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanjfb input{
+	width: 160px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanjfb i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.gztanjg{
+	overflow: hidden;	
+}
+.gztanjga{
+	float: left;
+	margin-left: 20px;
+}
+.gztanjga p{
+	width: 85px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanjga input{
+	width: 200px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanjh{
+	overflow: hidden;	
+}
+.gztanjha{
+	float: left;
+	margin-left: 20px;
+}
+.gztanjha p{
+	width: 85px;
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+	text-align: right;
+}
+.gztanjha input{
+	width: 420px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanjria{
+	overflow: hidden;
+	margin-left: 20px;
+}
+.gztanjria p{
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+}
+.gztanjria input{
+	width: 105px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanjria i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.gztanjrib{
+	overflow: hidden;
+	margin-left: 20px;
+}
+.gztanjrib p{
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+}
+.gztanjrib input{
+	width: 105px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanjrib i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.gztanjric{
+	overflow: hidden;
+	margin-left: 20px;
+}
+.gztanjric p{
+	font-size: 14px;
+	color: #000;
+	margin: 0;
+}
+.gztanjric textarea{
+	width: 180px;
+	height: 64px;
+	outline: 0;
+	resize: none;
+}
+.gztanjrid{
+	overflow: hidden;
+}
+.gztanjrida{
+    width: 60px;
+    font-size: 14px;
+    color: #000;
+    float: left;
+    margin-left: 40px;
+    background: #999;
+    text-align: center;
+    cursor: pointer;
+}
+.gztanjridb{
+    width: 60px;
+    font-size: 14px;
+    color: #000;
+    float: left;
+    margin-left: 20px;
+    background: #999;
+    text-align: center;
+    cursor: pointer;
+}
+.gztanjrie {
+    width: 158px;
+    font-size: 14px;
+    color: #000;
+    float: left;
+    margin-left: 30px;
+    background: #999;
+    text-align: center;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.gztanjrif{
+    width: 158px;
+    font-size: 14px;
+    color: #000;
+    float: left;
+    margin-left: 30px;
+    background: #999;
+    text-align: center;
+    margin-top: 10px;
+    cursor: pointer;
+}
+.gltana{
+	overflow: hidden;
+}
+.gltanaa{
+	float: left;
+}
+.gltanaa p{
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+}
+.gltanaa input{
+	width: 186px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gltanab{
+	float: left;
+	margin-left: 50px;
+}
+.gltanab p{
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+}
+.gltanab input{
+	width: 106px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gltanac{
+	float: left;
+	margin-left: 50px;
+}
+.gltanac p{
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+}
+.gltanac select{
+	width: 126px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+
+.gltanb{
+	overflow: hidden;
+}
+.gltanba{
+	float: left;
+}
+.gltanba p{
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+}
+.gltanba input{
+	width: 106px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gltanbb{
+	float: left;
+	margin-left: 60px;
+}
+.gltanbb p{
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+}
+.gltanbb input{
+	width: 106px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gltanbc{
+	float: left;
+	margin-left: 50px;
+}
+.gltanbc p{
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+}
+.gltanbc select{
+	width: 126px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+
+.gltanc{
+	overflow: hidden;
+}
+.gltanca{
+	float: left;
+}
+.gltanca p{
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+}
+.gltanca input{
+	width: 106px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gltancb{
+	float: left;
+	margin-left: 20px;
+}
+.gltancb p{
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+}
+.gltancb .gltancba{
+	width: 50px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gltancb em{
+	font-size: 14px;
+	color: #000;
+	float: left;	
+}
+.gltancb .gltancbb{
+	width: 50px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gltancb b{
+	font-size: 14px;
+	color: #000;
+	float: left;	
+}
+.gltancb .gltancbb{
+	width: 50px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gltancb .gltancbc{
+	width: 50px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gltancc{
+	float: left;
+	margin-left: 30px;
+}
+.gltancc p{
+	font-size: 14px;
+	color: #000;
+	float: left;
+	margin: 0;
+}
+.gltancc select{
+	width: 126px;
+	outline: 0;
+	font-size: 14px;
+	color: #000;
+	margin-top: 2px;
+	float: left;
+	height: 20px;
+}
+.gztanjgs{
+    overflow: hidden;
+}
+.gztanjgas{
+    margin-left: 20px;
+}
+.gztanjgas p {
+    width: 85px;
+    font-size: 14px;
+    color: #000;
+    float: left;
+    margin: 0;
+    text-align: right;
+}
+.gztanjgas input {
+    width: 200px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+.gztani{
+	width: 95%;
+	margin: 0 auto;
+	overflow: hidden;
+}
+.gztani fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.gztani legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 30px;
+}
+.xjglftan{
+	width: 860px;
+	height: 600px;
+	overflow: hidden;
+	background: #c6c6c6;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -430px;
+	margin-top: -300px;
+	display: none;
+}
+/*********************************************/
+.gztank{
+	width: 560px;
+	height: 306px;
+	overflow: hidden;
+	background: #eee;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -280px;
+	margin-top: -153px;
+	display: none;
+}
+.gztanktop{
+	font-size: 14px;
+	color: #000;
+	width: 100%;
+	height: 20px;
+	line-height: 20px;
+}
+.gztanka{
+	width: 95%;
+	margin: 0 auto;
+}
+.gztankle{
+	width: 400px;
+	float: left;
+}
+.gztankle fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+    height: 248px;
+}
+.gztankle legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.gztankri{
+	width: 100px;
+	float: left;
+	margin-left: 10px;
+}
+.gztankria{
+    font-size: 14px;
+    color: #000;
+    background: #999;
+    float: left;
+    width: 100px;
+    margin-left: 10px;
+    margin-top: 50px;
+    cursor: pointer;
+}
+.gztankrib{
+    font-size: 14px;
+    color: #000;
+    background: #999;
+    float: left;
+    width: 100px;
+    margin-left: 10px;
+    margin-top: 50px;
+    cursor: pointer;
+    text-align: center;
+}
+.gztankimg{
+	width: 200px;
+	margin: 0 auto;
+	height: 200px;
+}
+.gzclose{
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	right: 5px;
+	top: 0;
+	cursor: pointer;
+}
+/*****************************************************/
+.jcwtan{
+    width: 476px;
+    height: 292px;
+    overflow: hidden;
+    background: #c6c6c6;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -238px;
+    margin-top: -146px;
+}
+.jcwtantop{
+    font-size: 14px;
+    color: #000;
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+}
+.jcwtana{
+	width: 95%;
+	margin: 0 auto;
+	border: 1px solid #fff;
+}
+.jcwtana p {
+    font-size: 14px;
+    color: #0000ff;
+    margin: 0;
+    margin-left: 20px;
+    padding: 10px 0;
+}
+.jcwtanb{
+	overflow: hidden;
+}
+.jcwtanb div {
+    float: left;
+    background: #fff;
+    font-size: 14px;
+    color: #000;
+    margin-left: 50px;
+    margin-top: 20px;
+    padding: 0 5px;
+}
+.jcwtanc{
+	overflow: hidden;
+	border-top: 1px solid #000;
+	margin-top: 50px;
+}
+.jcwtanca{
+    font-size: 14px;
+    color: #000;
+    background: #999;
+    float: left;
+    width: 130px;
+    text-align: center;
+    margin-left: 100px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+.jcwtancb{
+    font-size: 14px;
+    color: #000;
+    background: #999;
+    float: left;
+    width: 130px;
+    text-align: center;
+    margin-left: 20px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.dgtan {
+    width: 860px;
+    height: 530px;
+    overflow: hidden;
+    background: #c6c6c6;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -430px;
+    margin-top: -265px;
+    display: none;
+}
+.dgtantop {
+    font-size: 14px;
+    color: #000;
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+}
+.dgtana {
+    width: 95%;
+    margin: 0 auto;
+}
+.dgtana fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.dgtana legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.dgtanb{
+	overflow: hidden;
+}
+.dgtanba {
+    float: left;
+}
+.dgtanba p {
+    font-size: 14px;
+    color: #000;
+    float: left;
+    margin: 0;
+}
+.dgtanba input {
+    width: 200px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+.dgtanbb {
+    float: left;
+    margin-left: 50px;
+}
+.dgtanbb p {
+    font-size: 14px;
+    color: #000;
+    float: left;
+    margin: 0;
+}
+.dgtanbb input {
+    width: 106px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+.dgtanbc {
+    float: left;
+    margin-left: 50px;
+}
+.dgtanbc p {
+    font-size: 14px;
+    color: #000;
+    float: left;
+    margin: 0;
+}
+.dgtanbc select {
+    width: 126px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+
+.dgtanc {
+    overflow: hidden;
+}
+.dgtanca {
+    float: left;
+    margin-left: 14px;
+}
+.dgtanca p {
+    font-size: 14px;
+    color: #000;
+    float: left;
+    margin: 0;
+}
+.dgtanca input {
+    width: 106px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+.dgtancb {
+    float: left;
+    margin-left: 84px;
+}
+.dgtancb p {
+    font-size: 14px;
+    color: #000;
+    float: left;
+    margin: 0;
+}
+.dgtancb .dgtancba {
+    width: 50px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+.dgtancb em {
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.dgtancb .dgtancbb {
+    width: 50px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+.dgtancb b {
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.dgtancb .dgtancbc {
+    width: 50px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+.dgtancc {
+    float: left;
+    margin-left: 50px;
+}
+.dgtancc p {
+    font-size: 14px;
+    color: #000;
+    float: left;
+    margin: 0;
+}
+.dgtancc select {
+    width: 126px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+
+.dgtand {
+    overflow: hidden;
+}
+.dgtanda {
+    float: left;
+    margin-left: 14px;
+}
+.dgtanda p {
+    font-size: 14px;
+    color: #000;
+    float: left;
+    margin: 0;
+}
+.dgtanda input {
+    width: 106px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+.dgtandb {
+    float: left;
+    margin-left: 208px;
+}
+.dgtandb p {
+    font-size: 14px;
+    color: #0000ff;
+    float: left;
+    margin: 0;
+}
+.dgtandc {
+    float: left;
+    margin-left: 50px;
+}
+.dgtandc p {
+    font-size: 14px;
+    color: #000;
+    float: left;
+    margin: 0;
+}
+.dgtandc select {
+    width: 126px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
 }

@@ -23,8 +23,8 @@ class Systems extends Root
     }
 
     //[id => title]
-    public function id8tit () {
-        return $this->where('type', $this->type)->order(ORDER, 'DESC')->field('id, title')->select();
+    public function id8tit ($id) {
+        return $this->where(['id'=>$id['id']])->field('id, title,')->select();
     }
 
     public function add ($title) {

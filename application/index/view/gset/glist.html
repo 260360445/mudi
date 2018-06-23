@@ -96,6 +96,7 @@
             </div>
             </div>
         </div>
+<script src="__JS__/layer/layer.js"></script>
 <script type="text/javascript">
   $("#addtrdel").click(function(){
        $(".check_alls").each(function(k,v){
@@ -120,6 +121,9 @@
         /*$(".sumprice").html(sum);*/
       }
     })
+    var index = layer.load(0, {
+          shade: [0.5] //0.1透明度的白色背景
+        });
     $.ajax({
         type        : 'post',
         url         : '{:url('glist_add')}',
@@ -131,6 +135,7 @@
         success     : function(e){
             //console.log(e); 
             if (e == '2') {
+                layer.close(index);
                 alt('添加成功');
             } else {
                 alt('添加失败');

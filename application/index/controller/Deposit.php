@@ -42,8 +42,11 @@ class Deposit extends Root {
         $this->assign('sysjcw', _Sysjcw::wlist($map));
         return $this->fetch();
     }
-    public function sysjcc_wlist ($cem_id) {
-        return _Systemt::wlists(['sysid' => $cem_id]);
+    public function deposit_set_sell ($id) {
+        return  _Sysjcw::deposit_set_sell($id);
+    }
+    public function deposit_set_sell_l ($id) {
+        return  _Sysjcw::deposit_set_sell_y($id);
     }
     public function sysjcw_wlist ($cem_id) {
         return _Systemc::wlists(['sysid_s' => $cem_id]);
@@ -90,8 +93,8 @@ class Deposit extends Root {
         return $this->error($e['msg']);
     }
 
-    public function add ($title, $discount) {
-        $e = _Role::add($title, $discount);
+    public function dep_sell_add () {
+        $e = _Deposit::dep_sell_set($_POST);
         if ($e['status']) {
             return $this->success($e['msg']);
         }

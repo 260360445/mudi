@@ -27,7 +27,194 @@ class Sysjcw extends Root {
         }
         return RE_ERROR;
     }
-
+    static public function deposit_set_sell ($id){
+        $arr=self::field('id,sysysid,money,syszt,long_title')->where(['id'=>$id['id']])->find();
+        if($arr['syszt'] == '2'){
+            $html='2';
+        }else{
+            $html='';
+            $html.='<div class="jcwtan">';
+              $html.='<div class="jcwtana">';
+                $html.='<p>您选择的是：'.$arr['long_title'].'</p>';
+              $html.='</div>';
+              $html.='<div class="jcwtanb">';
+                $html.='<div>价格：'.$arr['money'].'元</div>';
+                if($arr['syszt'] == '1'){//
+                    $html.='<div>寄存位状态：空闲</div>';
+                }else if($arr['syszt'] == '2'){//
+                    $html.='<div>寄存位状态：已订购</div>';
+                }else if($arr['syszt'] == '3'){//
+                    $html.='<div>寄存位状态：已安葬</div>';
+                }
+                $e = self::table('sys_list_y')->where('id', $arr['sysysid'])->field('title')->find();
+                $html.='<div>寄存位样式：'.$e['title'].'</div>';
+              $html.='</div>';
+              $html.='<div class="jcwtanc">';
+                $html.='<div class="jcwtanca" onclick="jcwdg('.$arr['id'].')">寄存位定购</div>';
+                $html.='<div class="jcwtancb" onclick="closelayer()">取消本次操作</div>';
+             $html.=' </div>';
+           $html.=' </div>';
+        }
+       return $html;
+    }
+    static public function deposit_set_sell_y ($id){
+        $arr=self::field('id,money,long_title,money')->where(['id'=>$id['id']])->find();
+        $user = self::table('role')->field('id,title')->select();
+        $html='';
+        $html.='<form class="add_row" method="post">';
+        $html.='<div class="dgtan" style="display:block;">';
+                $html.='<div class="dgtana">';
+                        $html.='<fieldset>';
+                            $html.='<legend>寄存位定购信息</legend>';
+                            $html.='<div class="dgtanb">';
+                                $html.='<div class="dgtanba">';
+                                    $html.='<p>寄存位全称：</p>';
+                                    $html.='<input type="hidden" name="eid" value="'.$arr['id'].'" />';
+                                    $html.='<input type="text" value="'.$arr['long_title'].'" name="long_title" readonly=＂readonly＂/>';
+                                $html.='</div>';
+                                $html.='<div class="dgtanbb">';
+                                    $html.='<p>原始价格：</p>';
+                                    $html.='<input type="text" value="'.$arr['money'].'" name="prcie" readonly=＂readonly＂/>';
+                                $html.='</div>';
+                                $html.='<div class="dgtanbc">';
+                                    $html.='<p>定购日期：</p>';
+                                    $html.='<input class="Wdate" name="settime" type="text" onClick="WdatePicker()">';
+                                $html.='</div>';
+                            $html.='</div>';
+                            $html.='<div class="dgtanc">';
+                                $html.='<div class="dgtanca">';
+                                    $html.='<p>寄存位费：</p>';
+                                    $html.='<input type="text" name="jcm" id="jcm" onblur="jcwf()"/>';
+                                $html.='</div>';
+                                $html.='<div class="dgtancb">';
+                                    $html.='<p>管理费：</p>';
+                                    $html.='<input type="text" class="dgtancba" name="glmo" id="glmo" onblur="glmone()">';
+                                    $html.='<em>X</em>';
+                                    $html.='<input type="text" class="dgtancbb" name="glmt" id="glmt" onchange="glmtwo()">';
+                                    $html.='<b>年=</b>';
+                                    $html.='<input type="text" class="dgtancbc" id="glms" name="glms" disabled>';
+                                $html.='</div>';
+                                $html.='<div class="dgtancc">';
+                                    $html.='<p>使用开始：</p>';
+                                    $html.='<input class="Wdate" name="starttime" type="text" onClick="WdatePicker()">';
+                                $html.='</div>';
+                            $html.='</div>';
+                            $html.='<div class="dgtand">';
+                                $html.='<div class="dgtanda">';
+                                    $html.='<p>应付总额：</p>';
+                                    $html.='<input type="text" name="summoney" id="summoney" disabled/>';
+                                $html.='</div>';
+                                $html.='<div class="dgtandb">';
+                                    $html.='<p>价格单位：（元）</p>';
+                                $html.='</div>';
+                                $html.='<div class="dgtandc">';
+                                    $html.='<p>使用结束：</p>';
+                                    $html.='<input class="Wdate" name="endtime" type="text" onClick="WdatePicker()">';
+                                $html.='</div>';
+                            $html.='</div>';
+                        $html.='</fieldset>';
+                $html.='</div>';
+                $html.='<div class="gztanj" style="margin: 30px auto;">';
+                    $html.='<div class="gztanjle">';
+                        $html.='<div class="gztanja">';
+                                $html.='<fieldset>';
+                                   $html.=' <legend>联系人信息</legend>';
+                                    $html.='<div class="gztanjc">';
+                                        $html.='<div class="gztanjca">';
+                                           $html.=' <p>联系人姓名：</p>';
+                                            $html.='<input type="text" name="uname" id="uname">';
+                                           $html.=' <i>*</i>';
+                                       $html.=' </div>';
+                                       $html.=' <div class="gztanjcb">';
+                                           $html.=' <p>故者关系：</p>';
+                                           $html.=' <select name="gzgx" id="gzgx">';
+                                               $html.=' <option value="其他">其他</option>';
+                                           $html.=' </select>';
+                                            $html.='<i>*</i>';
+                                        $html.='</div>';
+                                    $html.='</div>';
+                                    $html.='<div class="gztanjd">';
+                                        $html.='<div class="gztanjda">';
+                                           $html.=' <p>身份证号：</p>';
+                                            $html.='<input type="text" name="ucode" id="ucode" maxlenght="18">';
+                                           $html.=' <i>*</i>';
+                                       $html.=' </div>';
+                                       $html.=' <div class="gztanjdb">';
+                                            $html.='<p>性别：</p>';
+                                            $html.='<select name="sex" id="sex">';
+                                               $html.=' <option value="2">男</option>';
+                                               $html.=' <option value="3">女</option>';
+                                            $html.='</select>';
+                                            $html.='<i>*</i>';
+                                        $html.='</div>';
+                                   $html.=' </div>';
+                                    $html.='<div class="gztanje">';
+                                       $html.=' <div class="gztanjea">';
+                                           $html.=' <p>联系电话：</p>';
+                                           $html.='<input type="text" name="phone" id="phone">';
+                                            $html.='<i>*</i>';
+                                        $html.='</div>';
+                                        $html.='<div class="gztanjeb">';
+                                            $html.='<p>手机：</p>';
+                                            $html.='<input type="text" name="mobile" id="mobile" onblur="gmobile()"> '; 
+                                            $html.='<i></i>';
+                                        $html.='</div>';
+                                    $html.='</div>     ';                         
+                                    $html.='<div class="gztanjg">';
+                                        $html.='<div class="gztanjga">';
+                                           $html.=' <p>工作单位：</p>';
+                                           $html.=' <input type="text" name="gzdw" id="gzdw"> ';                                        
+                                      $html.=' </div>  ';                                    
+                                    $html.='</div>';
+                                    $html.='<div class="gztanjg">';
+                                       $html.=' <div class="gztanjga">';
+                                            $html.='<p>电子邮件：</p>';
+                                            $html.='<input type="text" name="email" id="email"> ';                                        
+                                        $html.='</div>  ';                                    
+                                    $html.='</div>';
+                                    $html.='<div class="gztanjh">';
+                                       $html.=' <div class="gztanjha">';
+                                            $html.='<p>家庭住址：</p>';
+                                           $html.=' <input type="text" name="home" id="home"> ';                                        
+                                        $html.='</div> ';                                     
+                                    $html.='</div>';
+                                $html.='</fieldset>';
+                        $html.='</div>';
+                        $html.='<div class="gztanjb">';
+                                $html.='<fieldset>';
+                                  $html.='  <legend>操作提示</legend>';
+                               $html.=' </fieldset>';
+                        $html.='</div>';
+                   $html.=' </div>';
+                   $html.=' <div class="gztanjri">';
+                          $html.='  <fieldset>';
+                               $html.=' <legend>故者落葬操作信息</legend>';
+                               $html.=' <div class="gztanjria">';
+                                 $html.='    <p>业务员：</p>';
+                                    $html.='<select name="roleid" id="roleid">';
+                                        foreach ($user as $key => $value) {
+                                            $html.=' <option value="'.$value['id'].'">'.$value['title'].'</option>';
+                                        }
+                                    $html.='</select>';
+                                  $html.='   <i>*</i>';
+                                $html.='</div>      ';                        
+                                $html.='<div class="gztanjric">';
+                                     $html.=' <p>备注：</p>';
+                                     $html.=' <textarea name="beizhu" id="beizhu"></textarea>';
+                                $html.='</div>';
+                                $html.='<div class="gztanjrid">';
+                                   $html.=' <button type="button" class="gztanjrida" onclick="subform()">保存</button>';
+                                   $html.=' <button type="button" class="gztanjrida" onclick="closeghtml">取消</button>';
+                               $html.='</div>';
+                               $html.=' <div class="gztanjrie">打印寄存位定购合同</div>';
+                               $html.=' <div class="gztanjrif">打印购墓合同（反）</div>';
+                           $html.='</fieldset>';
+                   $html.=' </div>';
+               $html.=' </div>';
+             $html.='</div>';
+             $html.=' </form>';
+       return $html;
+    }
     static public function edit ($id, $info) {
         if (!(int)$info['sysid']) {
             return ['status' => false, 'msg' => '请选择寄存厅'];

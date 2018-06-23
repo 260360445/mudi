@@ -8,7 +8,7 @@ class Glist extends Root {
     protected $table = 'glist';
     
     static public function wlist () {
-        return self::order('time', 'asc')->column('id, title, price, type ,cont,sn', 'id');
+        return self::order('time', 'asc')->column('id,price,sta,roleid,time', 'id');
     }
     static public function wlists ($sysid) {
         return self::order('sysid', 'asc')->where($sysid)->select();
@@ -20,12 +20,20 @@ class Glist extends Root {
         }
         return RE_ERROR;
     }
-
+    static public function set ($info) {
+        if (empty($info['id'])) {
+            return ['status' => false, 'msg' => '请选择信息'];
+        }
+        if (self::where('id', $info['id'])->update(['sta'=>2]) !== false) {
+            return RE_SUCCESS;
+        }
+        return RE_ERROR;
+    }
     static public function add ($info) {
         $data_list = [];
         foreach ($info['item'] as $key => $value) {
             $e = self::table('gset')->where('id', $value['id'])->find();
-            $data_list[] = ['title' => $e['title'], 'price' => $e['price'], 'sn' => $e['sn'], 'num' => $value['num'], 'roleid' => $info['roleid']];
+            $data_list[] = ['title' => $e['title'], 'price' => $e['price'], 'sn' => $e['sn'], 'num' => $value['num'], 'roleid' => $info['roleid'],'sta'=>3,'time'=>time()];
         }
         if (count($data_list) && self::insertAll($data_list) !== false) {
             return RE_SUCCESS;

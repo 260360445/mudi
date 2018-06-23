@@ -14,8 +14,6 @@ class Role extends Root {
     static public function wlist () {
         return self::select();
     }
-
-
     static public function id2sm () {
         return self::column('id, title, discount, sn', 'id');
     }
