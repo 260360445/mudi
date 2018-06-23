@@ -11,13 +11,70 @@ class Deposit extends Root {
     protected $table = 'dep_sell';
 
 
-    static public function wlist () {
-        return self::select();
+    static public function wlisty ($map) {
+        return self::field('id,sys_mw_id,long_title')->where($map)->order('id', 'desc')->column('*', 'id');
     }
 
 
-    static public function id2sm () {
-        return self::column('id, title, discount, sn', 'id');
+   static public function deposit_set_wh_sell ($id) {
+        $arr=self::field('id,long_title,jcm,summoney,sumgl,sta,settime,starttime,endtime,uname,ucode,mobile')->where(['id'=>$id['id']])->find();
+        if($arr){
+            $html='';
+                $html.='<div class="jwhtan">';
+                $html.='<div class="jwhtana">';
+                    $html.='<form>';
+                        $html.='<fieldset>';
+                            $html.='<legend>寄存位信息</legend>';
+                            $html.='<div class="jwhtanb">';
+                                $html.='<p>您选择的是：'.$arr['long_title'].'</p>';
+                            $html.='</div>  ';                        
+                        $html.='</fieldset>';
+                    $html.='</form>';
+               $html.=' </div>';
+                $html.='<div class="jwhtanc">';
+                   $html.=' <form>';
+                        $html.='<fieldset>';
+                           $html.=' <legend>寄存位定购信息</legend>';
+                            $html.='<div class="jwhtanca">';
+                                $html.='<div class="jwhtancb">';
+                                    $html.='<div>寄存位费：'.$arr['jcm'].'元</div>';
+                                    $html.='<div>应付（已付）管理费总额：'.$arr['sumgl'].'元</div>';
+                                    $html.='<div>应付（已付）款总额：'.$arr['summoney'].'元</div>';
+                                    if($arr['sta'] == '3'){//
+                                        $html.='<div>是否已交费：未付款</div>';
+                                    }else if($arr['sta'] == '2'){//
+                                        $html.='<div>是否已交费：已付款</div>';
+                                    }
+                                    $html.='<div>使用开始日期：'.date('Y-m-d',$arr['starttime']).'</div>   ';  
+                                $html.='</div>';
+                                $html.='<div class="jwhtancc">';
+                                    $html.='<div>联系人：'.$arr['uname'].'</div>';
+                                    $html.='<div>身份证：'.$arr['ucode'].'</div>';
+                                    $html.='<div>联系电话：'.$arr['mobile'].'</div>';
+                                    $html.='<div>定购日期：'.date('Y-m-d',$arr['settime']).'</div>';
+                                    $html.='<div>使用结束日期：'.date('Y-m-d',$arr['endtime']).'</div> ';    
+                                $html.='</div>';
+                            $html.='</div>';
+                        $html.='</fieldset>';
+                    $html.='</form>';
+                $html.='</div>';
+                $html.='<div class="jwhtand">';
+                    $html.='<div class="jwhtanda">';
+                        $html.='<div onclick="lzdj()">故者落葬登记</div>';
+                        $html.='<div>续交管理费</div>';
+                        $html.='<div>退定</div>';
+                    $html.='</div>';
+                    $html.='<div class="jwhtandb">';
+                        $html.='<div>打印寄存位定购合同</div>';
+                        $html.='<div>打印寄存位证</div>';
+                        $html.='<div>取消本次操作</div>';
+                   $html.=' </div>';
+                $html.='</div>';
+            $html.='</div>';
+        }else{
+            $html='no';
+        }
+       return $html;
     }
 
     static public function dep_sell_set ($info) {
@@ -39,9 +96,8 @@ class Deposit extends Root {
         $info['starttime']=strtotime($info['starttime']);
         $info['endtime']=strtotime($info['endtime']);
         $info['summoney']=$info['jcm']+$info['glmo']*$info['glmt'];
-        $info['sta']=2;
-        $user = self::table('sys_mw')->where(['id'=>$info['eid'])->field('sta')->find();
-        if($user['sta'] == 3){
+        $user = self::table('sys_mw')->where(['id'=>$info['eid']])->field('syszt')->find();
+        if($user['syszt'] == 1){
             Db::startTrans();
             try{
                 Db::table('dep_sell')->insert($info);
@@ -54,7 +110,7 @@ class Deposit extends Root {
                 Db::rollback();
                 return RE_ERROR;
             }
-        }else if($user['sta'] == 2){
+        }else if($user['syszt'] == 2){
             return ['status' => false, 'msg' => '该位置已预订'];
         }
     }

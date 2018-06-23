@@ -33,7 +33,7 @@
        </div>
     </fieldset>
     <div class="ding wlist">
-      {foreach $sysjcw as $k=>$vo}
+      {foreach $deplist as $k=>$vo}
             <div class="dinga"  class="tr_{$vo.id}" row_id = "{$vo.id}">
               <a href="javascript:open('{$vo.id}');">
                 <div class="dingimg">
@@ -60,19 +60,19 @@ function open(id){
             id : id
         },
         success     : function(e){
-          if(e != '2'){
+          if(e != 'no'){
             layer.close(ihtml);
              //页面层
             thtml=layer.open({
               type: 1,
-              title: '寄存位选定信息', //不显示标题
+              title: '寄存位定购信息维护', //不显示标题
               skin: 'layui-layer-rim', //加上边框
-              area: ['505px', '348px'], //宽高
+              area: ['612px', '51%'], //宽高
               content: e
             });
           }else{
             layer.close(ihtml);
-            layer.msg('该位置已预订');
+            layer.msg('系统错误，请从新设置');
           }
         },
         error       : function () {

@@ -60,6 +60,7 @@ class Deposit extends Root {
         $this->assign('sysjcc', _Systemc::wlist());
         $this->assign('sysys', _Systems::wlist());
         $this->assign('sysls', _Syslx::wlist());
+        $this->assign('sysjcw', _Sysjcw::wlisty());
         $request = Request::instance();
         $cem_id = $request->only(['cem_id']);
         $cem_area_id = $request->only(['cem_area_id']);
@@ -78,8 +79,7 @@ class Deposit extends Root {
         if ($sysysid['sysysid']) {
             $map['sysysid'] = $sysysid['sysysid'];
         }
-        
-        $this->assign('sysjcw', _Sysjcw::wlisty($map));
+        $this->assign('deplist', _Deposit::wlisty($map));
         return $this->fetch();
     }
     public function dep_tx () {

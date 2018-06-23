@@ -58,7 +58,7 @@ class Sysjcw extends Root {
        return $html;
     }
     static public function deposit_set_sell_y ($id){
-        $arr=self::field('id,money,long_title,money')->where(['id'=>$id['id']])->find();
+        $arr=self::field('id,sysid,sysid_s,sysid_c,sysysid,money,long_title')->where(['id'=>$id['id']])->find();
         $user = self::table('role')->field('id,title')->select();
         $html='';
         $html.='<form class="add_row" method="post">';
@@ -70,11 +70,15 @@ class Sysjcw extends Root {
                                 $html.='<div class="dgtanba">';
                                     $html.='<p>寄存位全称：</p>';
                                     $html.='<input type="hidden" name="eid" value="'.$arr['id'].'" />';
-                                    $html.='<input type="text" value="'.$arr['long_title'].'" name="long_title" readonly=＂readonly＂/>';
+                                    $html.='<input type="hidden" name="sysid" value="'.$arr['sysid'].'" />';
+                                    $html.='<input type="hidden" name="sysid_s" value="'.$arr['sysid_s'].'" />';
+                                    $html.='<input type="hidden" name="sysid_c" value="'.$arr['sysid_c'].'" />';
+                                    $html.='<input type="hidden" name="sysysid" value="'.$arr['sysysid'].'" />';
+                                    $html.='<input type="text" value="'.$arr['long_title'].'" name="long_title" readonly="readonly"/>';
                                 $html.='</div>';
                                 $html.='<div class="dgtanbb">';
                                     $html.='<p>原始价格：</p>';
-                                    $html.='<input type="text" value="'.$arr['money'].'" name="prcie" readonly=＂readonly＂/>';
+                                    $html.='<input type="text" value="'.$arr['money'].'" name="price" readonly="readonly"/>';
                                 $html.='</div>';
                                 $html.='<div class="dgtanbc">';
                                     $html.='<p>定购日期：</p>';
