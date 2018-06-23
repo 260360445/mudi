@@ -48,6 +48,9 @@ class Deposit extends Root {
     public function deposit_set_sell_l ($id) {
         return  _Sysjcw::deposit_set_sell_y($id);
     }
+    public function deposit_set_wh_sell ($id) {
+        return  _Deposit::deposit_set_wh_sell($id);
+    }
     public function sysjcw_wlist ($cem_id) {
         return _Systemc::wlists(['sysid_s' => $cem_id]);
     }
