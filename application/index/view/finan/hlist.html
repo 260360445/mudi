@@ -19,24 +19,66 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Cem2017010812355</td>
-                    <td>天祥园A区1排0009号</td>
-                    <td>已下葬</td>
-                    <td>刘丛礼</td>
-                         <td>Cem2017010812355</td>
-                    <td>天祥园A区1排0009号</td>
-                    <td>已下葬</td>
-                    <td>刘丛礼</td>
-                    <td>刘丛礼</td>
+                {volist name="hlist" id="list"}
+                  <tr onclick="set('{$list.id}')">
+                    <td>{$list.title}</td>
+                    <td>{$list.price}</td>
+                    <td>
+                      {if condition="$list['sta'] eq 2"}
+                        已付款
+                      {else /} 
+                        未付款
+                      {/if}
+                    </td>
+                    <td>{$list.time|date="Y-m-d",###}</td>
+                    <td>{$sysyst[$list['sysysid']]['title']}</td>
+                    <td>{$list.wd}</td>
+                    <td>{$list.cd}</td>
+                    <td>{$list.hd}</td>
+                    <td>{$row_role[$list['roleid']]['title']}</td>
                   </tr>
-                 
+                {/volist}
                 </tbody>
               </table>
              </div>
-             <div class="wupfeic">
-              <div class="wupfeid">退出</div>
-             </div>
            </div>
-           
         </div>
+<script src="__JS__/layer/layer.js"></script>
+<script type="text/javascript">
+function set(id){
+   var index=layer.confirm('是否确认该收费记录？', {
+      btn: ['确定','取消'] //按钮
+    }, function(){
+        layer.close(index);
+        var ihtml = layer.load(0, {
+          shade: [0.5] //0.1透明度的白色背景
+        });
+        $.ajax({
+            type        : 'post',
+            url         : '{:url('finan_set_hlist')}',
+            dataType    : 'json',
+            data        : {
+                id : id
+            },
+            success     : function(e){
+                if (e == '2') {
+                  layer.close(ihtml);
+                  layer.msg('设置成功',{offset: '300px',time: 2000,icon: 1},function () {
+                       window.location.reload();
+                    });
+                } else {
+                  layer.close(ihtml);
+                  layer.msg('设置失败',{offset: '300px',time: 2000,icon: 2},function () {
+                       window.location.reload();
+                    });
+                }
+            },
+            error       : function () {
+
+            },
+        });
+    }, function(){
+      layer.close(index);
+    });
+}
+</script>

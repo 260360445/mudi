@@ -32,12 +32,12 @@
                     {/foreach}
                 </select>
                 <select name="syszt" class="asdaasdas">
+                  <option value="">请选择</option>
                   <option value="1">空闲</option>
                   <option value="2">已订购</option>
                   <option value="3">已安葬</option>
                 </select>
                 <button type="button" class=" contc show_all">显示全部</button>
-                <div class="contc">退出</div>
            </div>
         </fieldset>
         
@@ -176,8 +176,8 @@
   }
  
   function jcwdg(id){
-      layer.close(thtml);
-     lhtml = layer.load(0, {
+    layer.close(thtml);
+    lhtml = layer.load(0, {
           shade: [0.5] //0.1透明度的白色背景
         });
     $.ajax({
@@ -256,7 +256,7 @@ function get_area (_this, _select_id) {
         if (cem_id) {
             $.ajax({
                 type        : 'GET',
-                url         : '{:url('sysjcc_wlist')}',
+                url         : '{:url('System/sysjcc_wlist')}',
                 dataType    : 'json',
                 data        : {
                     cem_id : cem_id
@@ -285,7 +285,7 @@ function get_area (_this, _select_id) {
         if (cem_id) {
             $.ajax({
                 type        : 'GET',
-                url         : '{:url('sysjcw_wlist')}',
+                url         : '{:url('System/sysjcw_wlist')}',
                 dataType    : 'json',
                 data        : {
                     cem_id : cem_id

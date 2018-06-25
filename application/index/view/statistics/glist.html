@@ -1,0 +1,75 @@
+<div class="cont">
+    <fieldset>
+       <legend>统计条件设置与结果打印</legend>             
+       <div class="conta">
+          <p>选择物品名称</p>
+                   
+       </div>
+       <div class="contb">
+        <select name="sysid" class="cem_id" >
+          {foreach $gset as $k => $vo}
+              <option value="{$vo.id}" {if condition="$vo['id'] eq $row_cem_id"}selected{/if}>{$vo.title}</option>
+          {/foreach}
+        </select>            
+          <button type="butten" class="contc row_seach">统计选中物品销售记录</button>
+          <button type="butten" class="contc ">打印统计结果</button>
+       </div>
+       <div class="xiaosye">
+          <p>统计开始时间：</p>
+          <p>统计结束时间：</p>
+         
+       </div>
+       <div class="xiaosyej">
+          <input class="Wdate" name="starttime" id="starttime" type="text" onClick="WdatePicker()">
+          <input class="Wdate" name="endtime" id="endtime" type="text" onClick="WdatePicker()">
+       </div>
+    </fieldset>
+    
+  <div class="conbiao">
+    <table class="table table-bordered">
+      <!--<caption>边框表格布局</caption>-->
+      <thead>
+        <tr>
+          <th>编号</th>
+          <th>物品名称</th>
+          <th>物品单价</th>
+          <th>购买数量</th>
+          <th>金额小计</th>
+          <th>物品销售员</th>
+          <th>定购日期</th>
+        </tr>
+      </thead>
+      <tbody>
+      {volist name="glist" id="list"}
+        <tr>
+          <td>{$list['sn']}</td>
+          <td>{$list['title']}</td>
+          <td>{$list['price']}</td>
+          <td>{$list['num']}</td>
+          <td>{$list['num']*$list['price']}</td>
+          <td>{$role[$list['roleid']]['title']}</td>
+          <td>{$list['time']|date="Y-m-d",###}</td>
+        </tr>
+      {/volist}
+      </tbody>
+    </table>
+  </div>
+</div>
+<script language="javascript" type="text/javascript" src="__JS__/My97DatePicker/WdatePicker.js"></script>
+<script>
+$('.row_seach').click(function(){
+    var cem_id = $('.cem_id option:selected').val();
+    var starttime = $('#starttime').val();
+    var endtime = $('#endtime').val();
+    if(cem_id && starttime && endtime){
+      window.location.href="{:url('/index/Statistics/glist/cem_id/"+cem_id+"/starttime/"+starttime+"/endtime/"+endtime+"')}";
+    }else if(cem_id && starttime && !endtime){
+      window.location.href="{:url('/index/Statistics/glist/cem_id/"+cem_id+"/starttime/"+starttime+"')}";
+    }else if(cem_id && !starttime && endtime){
+      window.location.href="{:url('/index/Statistics/glist/cem_id/"+cem_id+"/endtime/"+endtime+"')}";
+    }else if(cem_id && !starttime && !endtime){
+      window.location.href="{:url('/index/Statistics/glist/cem_id/"+cem_id+"')}";
+    }
+    
+});
+</script>

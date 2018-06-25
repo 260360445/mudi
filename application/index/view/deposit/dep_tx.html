@@ -1,84 +1,104 @@
-<form>
-                        <fieldset>
-                            <legend>提醒范围条件</legend>
-                            <div class="lxd">
-                                <p>提醒范围选择：</p>
-                                <div class="lxa">
-                                    <input type="radio" />一周内过期
-                                </div>
-                                <div class="lxa">
-                                    <input type="radio" />一个月内过期
-                                </div>
-                                <div class="lxa">
-                                    <input type="radio" />一个季度内过期
-                                </div>  
-                                <div class="lxa">
-                                    <input type="radio" />已过期
-                                </div>  
-                            </div>
-                            <div class="lxd">
-                                <p>提醒范围填写：</p>
-                                <div class="lxe">
-                                    <input type="text" />天内过期
-                                </div>
-                                <div class="lxb">查询</div>
-                               
-                            </div>
-                            <div class="lxd">
-                                <p>查询结果数量：</p>
-                                <i>0个</i>
-                            </div>
-                        </fieldset>
-                        
-                    </form>
-                    <div class="conbiao">
-                        <table class="table table-bordered">
-                          <!--<caption>边框表格布局</caption>-->
-                          <thead>
-                            <tr>
-                              <th>寄存位全称</th>
-                              <th>定购状态</th>
-                              <th>定购日期</th>
-                              <th>使用开始日期</th>
-                              <th>使用结束日期</th>
-                              <th>实际寄存日期</th>
-                              <th>年管理费</th>
-                              <th>管理费缴纳年数</th>
-                              <th>管理费缴纳总额</th>
-                              <th>联系人姓名</th>
-                              <th>故者关系名称</th>
-                              <th>性别</th>
-                              <th>联系电话</th>
-                              <th>家庭住址</th>
-                              <th>工作单位</th>
-                              <th>业务员</th>
-                              <th>备注</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>天福园</td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              
-                            
-                            </tr>
-                           
-                           
-                          </tbody>
-                        </table>
-                    </div>
+<form class="show_seach" >
+    <fieldset>
+        <legend>提醒范围条件</legend>
+        <div class="lxd">
+            <p>提醒范围选择：</p>
+            <div class="lxa">
+                <input type="radio" name="gtime" value="2" checked/>一周内过期
+            </div>
+            <div class="lxa">
+                <input type="radio" name="gtime" value="3"/>一个月内过期
+            </div>
+            <div class="lxa">
+                <input type="radio" name="gtime" value="4"/>一个季度内过期
+            </div>  
+            <div class="lxa">
+                <input type="radio" name="gtime" value="5"/>已过期
+            </div>  
+        </div>
+        <div class="lxd">
+            <p>提醒范围填写：</p>
+            <div class="lxe">
+                <input type="text" id="row_today"/>天内过期
+            </div>
+           <button type="button" class=" lxb show_all" >查询</button>
+        </div>
+        <div class="lxd">
+            <p>查询结果数量：</p>
+            <i>0个</i>
+        </div>
+    </fieldset>
+</form>
+<div class="conbiao">
+    <table class="table table-bordered">
+      <!--<caption>边框表格布局</caption>-->
+      <thead>
+        <tr>
+          <th>寄存位全称</th>
+          <th>定购状态</th>
+          <th>定购日期</th>
+          <th>使用开始日期</th>
+          <th>使用结束日期</th>
+          <th>实际寄存位费</th>
+          <th>年管理费</th>
+          <th>管理费缴纳年数</th>
+          <th>管理费缴纳总额</th>
+          <th>联系人姓名</th>
+          <th>故者关系名称</th>
+          <th>性别</th>
+          <th>联系电话</th>
+          <th>家庭住址</th>
+          <th>工作单位</th>
+          <th>业务员</th>
+          <th>备注</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+       {foreach $list as $k=>$vo}
+         <tr>
+          <td>{$vo.long_title}</td>
+          <td>
+            {if condition="($ltime egt $vo['starttime']) AND ($ltime elt $vo['endtime'])"}
+              未过期
+            {else /} 
+              已过期
+            {/if}
+          </td>
+          <td>{$vo.settime|date="Y-m-d",###}</td>
+          <td>{$vo.starttime|date="Y-m-d",###}</td>
+          <td>{$vo.endtime|date="Y-m-d",###}</td>
+          <td>{$vo.jcm}</td>
+          <td>{$vo.glmo}</td>
+          <td>{$vo.glmt}</td>
+          <td>{$vo.summoney}</td>
+          <td>{$vo.uname}</td>
+          <td>{$vo.gzgx}</td>
+          <td>
+            {if condition="$vo['sex'] eq 2"}
+              男
+            {else /} 
+              女
+            {/if}
+          </td>
+          <td>{$vo.phone}</td>
+          <td>{$vo.home}</td>
+          <td>{$vo.gzdw}</td>
+          <td>{$row_role[$vo['roleid']]['title']}</td>
+          <td>{$vo.beizhu}</td>
+        </tr>
+      {/foreach}
+      </tbody>
+    </table>
+</div>
+<script>
+    $('.show_all').click(function(){
+    var gtime =$("input[name='gtime']:checked").val();
+    var today = $('#row_today').val();
+    if(today){
+      window.location.href="{:url('/index/Deposit/dep_tx/gtime/"+gtime+"/today/"+today+"')}";
+    }else{
+      window.location.href="{:url('/index/Deposit/dep_tx/gtime/"+gtime+"')}";  
+    }
+});
+</script>

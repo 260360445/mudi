@@ -171,20 +171,6 @@
     var summoney=Number(zong)+Number(sum);
     $(".sumprice").text(summoney);
     $(".sumprice").val(summoney);
-    //sump();
     $("#addsettr").append('<tr class="trr_'+id+'" row_id = "'+id+'"><td class = "row_cont"><input type="checkbox" checked name="id[]" class="check_alls" value="'+id+'" row_sum = "'+sum+'"/></td><td class = "row_sn" >'+sn+'</td><td class = "row_title">'+title+'</td><td class = "row_price">'+price+'</td><td class = "row_num">'+num+'</td><td class = "row_sum">'+sum+'</td></tr>');
   })
-  function sump(){
-    
-    $(".check_alls").each(function(){
-       let tr = $(this);
-      if(tr.prop("checked")){  
-        var idstr=tr.val();
-        var sum='';
-        var sum=tr.attr('row_sum');console.log(sum);
-        /*$(".sumprice").html(sum);*/
-        alert(sum);
-      }
-    })
-  }
 </script>

@@ -8,6 +8,7 @@
                 <thead>
                   <tr>
                     <th>选择</th>
+                    <th>名称</th>
                     <th>是否已付款</th>
                     <th>定购总额</th>
                     <th>定购日期</th>
@@ -18,6 +19,7 @@
                  {foreach $glist as  $vo}
                         <tr class="tr_{$vo.id}" row_id = "{$vo.id}">
                           <td style="width:30px;"><input type="radio" class="fukuan_{$vo.id}" name="fukuan" value="{$vo.id}" /></td>
+                          <td class = "row_price">{$vo.title}</td>
                           <td class = "row_title">
                             {if condition="$vo['sta'] eq 2"}
                                <font style="color:green;">已付款</font>

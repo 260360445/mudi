@@ -6230,7 +6230,7 @@ html,body{width: 100%;height: 100%;}
     margin: 0;
     text-align: right;
 }
-.lztancb select {
+.lztancb input {
     width: 140px;
     outline: 0;
     font-size: 14px;
@@ -6301,7 +6301,7 @@ html,body{width: 100%;height: 100%;}
     margin: 0;
     text-align: right;
 }
-.lztandb select {
+.lztandb input {
     width: 140px;
     outline: 0;
     font-size: 14px;
@@ -6372,7 +6372,7 @@ html,body{width: 100%;height: 100%;}
     margin: 0;
     text-align: right;
 }
-.lztaneb select {
+.lztaneb input {
     width: 140px;
     outline: 0;
     font-size: 14px;

@@ -6,6 +6,7 @@
                 <!--<caption>边框表格布局</caption>-->
                 <thead>
                   <tr>
+                    <th>选择</th>
                     <th>骨灰盒名称</th>
                     <th>材质名称</th>
                     <th>长</th>
@@ -14,37 +15,87 @@
                     <th>价格</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>锦绣河山</td>
-                    <td>实木</td>
-                    <td>350</td>
-                    <td>250</td>
-                    <td>250</td>
-                    <td>580</td>
-                  </tr>
-                 
-                 
+                <tbody class="whlist">
+                {foreach $sysls as  $vo}
+                    <tr class="tr_{$vo.id}" row_id = "{$vo.id}">
+                      <td style="width:30px;"><input type="radio" class="fukuan_{$vo.id}" name="fukuan" value="{$vo.id}" /></td>
+                      <td class = "row_title">{$vo.title}</td>
+                      <td class = "row_cem_id"  val = "{$vo.sysysid}">{$sysyst[$vo['sysysid']]['title']}</td>
+                      <td ><font class = "row_cd">{$vo.cd}</font>mm</td>
+                      <td ><font class = "row_wd">{$vo.wd}</font>mm</td>
+                      <td ><font class = "row_hd">{$vo.hd}</font>mm</td>
+                      <td class = "row_price">{$vo.price}</td>
+                    </tr>
+                {/foreach}  
                 </tbody>
               </table>
-            </div>
-            <div class="wpmxd">
+            </div>          
+             <div class="wpmxd">
               <form>
                 <fieldset>
                   <legend>购买操作</legend>
                   <div class="wumxb">
                     <p>操作员：</p>
-                    <select>
-                      <option>芙米科技</option>
-                    </select>
-                                    <i>*</i>
+                     <select id="userid">
+                        {foreach $role as  $vo}
+                          <option value="{$vo.id}">{$vo.title}</option>
+                        {/foreach}
+                      </select>
+                      <i>*</i>
                     </div>
-                    <div class="wumxa">保存骨灰盒购买信息</div>
-                    <div class="wumxa">打印骨灰盒购买信息</div>
+                    <button  type="button" class="wumxa wupfeid">保存骨灰盒购买信息</button>
+                    <button  type="button" class="wumxa">打印骨灰盒购买信息</button>
                 </fieldset>
               </form>
               
             </div>
-            
             </div>
         </div>
+<script src="__JS__/layer/layer.js"></script>
+<script>
+$(function(){
+  $("input:radio").eq(0).attr("checked","checked");
+  $("tr").bind("click",function(){
+    $(this).find("input:radio").attr("checked","checked");
+  });
+})
+$(".wupfeid").click(function(){
+   var val=$('input:radio[name="fukuan"]:checked').val();
+   var role=$("#userid option:selected").val();
+   var index=layer.confirm('是否确认该保存骨灰盒购买信息？', {
+      btn: ['确定','取消'] //按钮
+    }, function(){
+        layer.close(index);
+        var ihtml = layer.load(0, {
+          shade: [0.5] //0.1透明度的白色背景
+        });
+        $.ajax({
+            type        : 'post',
+            url         : '{:url('gset_set_hlist')}',
+            dataType    : 'json',
+            data        : {
+                id : val,
+                role:role,
+            },
+            success     : function(e){
+                if (e == '2') {
+                  layer.close(ihtml);
+                  layer.msg('设置成功',{offset: '300px',time: 2000,icon: 1},function () {
+                       window.location.reload();
+                    });
+                } else {
+                  layer.close(ihtml);
+                  layer.msg('设置失败',{offset: '300px',time: 2000,icon: 2},function () {
+                       window.location.reload();
+                    });
+                }
+            },
+            error       : function () {
+
+            },
+        });
+    }, function(){
+      layer.close(index);
+    });
+})
+</script>

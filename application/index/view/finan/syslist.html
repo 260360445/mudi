@@ -1,92 +1,222 @@
 <div class="cont">
-          <form>
-            <fieldset>
-              <legend>寄存位定购</legend>
-              
-               <div class="conta">
-                  <p>选择寄存厅</p>
-                  <p>选择寄存室</p>
-                  <p>选择寄存层</p>
-                  
-                 
-               </div>
-               <div class="contb">
-                   <select>
-                  <option>天福园</option>
-                </select>
-                <select>
-                  <option>A区</option>
-                </select>
-                <select>
-                  <option>1排</option>
-                </select>               
-                <div class="contc">显示全部寄存位定购信息</div>
-                    <div class="contc">退出</div>
-               </div>
-            </fieldset>
-            
-          </form>
-          <div class="conbiao">
-            <table class="table table-bordered">
-              <!--<caption>边框表格布局</caption>-->
-              <thead>
-                <tr>
-                  <th>寄存位名称</th>
-                  <th>寄存位状态</th>
-                  <th>定购状态</th>
-                  <th>是否已付费</th>
-                  <th>定购日期</th>
-                  <th>使用开始日期</th>
-                  <th>使用结束日期</th>             
-                  <th>寄存位原价</th>
-                  <th>实际寄存位费</th>               
-                  <th>年管理费</th>
-                  <th>管理费缴纳年数</th>
-                  <th>管理费缴纳总额</th>
-                  <th>定购应付总额</th>
-                  <th>联系人姓名</th>
-                  <th>故者关系名称</th>             
-                  <th>性别</th>
-                  <th>身份证号</th>
-                  <th>联系电话</th>
-                  <th>手机</th>                
-                  <th>家庭住址</th>
-                  <th>工作单位</th>
-                  <th>电子邮件</th>
-                  <th>备注</th>  
-                  <th>业务员</th>  
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Cem2017010812355</td>
-                  <td>已下葬</td>
-                  <td>已下葬</td>
-                  <td>刘丛礼</td>
-                  <td>男</td>
-                  <td>2017-1-12</td>
-                  <td>已落葬</td>
-                  <td>购买家属</td> 
-                   <td>2017-1-12</td>
-                  <td>2017-1-12</td>
-                  <td>已下葬</td>
-                  <td>刘丛礼</td>
-                  <td>男</td>
-                  <td>2017-1-12</td>
-                  <td>已落葬</td>
-                  <td>购买家属</td> 
-                   <td>2017-1-12</td>
-                  <td>2017-1-12</td>
-                  <td>已下葬</td>
-                  <td>刘丛礼</td>
-                  <td>男</td>
-                  <td>2017-1-12</td>
-                  <td>已落葬</td>
-                  <td>购买家属</td> 
-                 
-                </tr>
-               
-              </tbody>
-            </table>
-          </div>
-        </div>
+  <form class="add_row">
+    <fieldset>
+      <legend>寄存位定购</legend>
+      
+       <div class="conta">
+          <p>选择寄存厅</p>
+          <p>选择寄存室</p>
+          <p>选择寄存层</p>
+          
+         
+       </div>
+       <div class="contb">
+           <select name="sysid" class="cem_id" >
+            <option >请选择</option>
+              {foreach $sys_list as $k => $vo}
+                  <option value="{$vo.id}">{$vo.title}</option>
+              {/foreach}
+            </select>
+             <select name="sysid_s" class="cem_area_id" id="cem_area_id_s">
+                    <option >请选择</option>
+              </select>
+             <select name="sysid_c" class="cem_area_id_c" id="cem_area_id_c">
+                    <option >请选择</option>
+              </select>         
+        <button type="button" class=" contc show_all">显示全部</button>
+       </div>
+    </fieldset>
+    
+  </form>
+  <div class="conbiao">
+    <table class="table table-bordered">
+      <!--<caption>边框表格布局</caption>-->
+      <thead>
+        <tr>
+          <th>寄存位名称</th>
+          <th>寄存位状态</th>
+          <th>定购状态</th>
+          <th>是否已付费</th>
+          <th>定购日期</th>
+          <th>使用开始日期</th>
+          <th>使用结束日期</th>             
+          <th>寄存位原价</th>
+          <th>实际寄存位费</th>   
+          <th>年管理费</th>
+          <th>管理费缴纳年数</th>
+          <th>管理费缴纳总额</th>
+          <th>定购应付总额</th>
+          <th>联系人姓名</th>
+          <th>故者关系名称</th>             
+          <th>性别</th>
+          <th>身份证号</th>
+          <th>联系电话</th>
+          <th>手机</th>                
+          <th>家庭住址</th>
+          <th>工作单位</th>
+          <th>电子邮件</th>
+          <th>备注</th>    
+          <th>业务员</th>  
+        </tr>
+      </thead>
+      <tbody>
+      {volist name="list" id="vo"}
+        <tr onclick="set('{$vo.id}')">
+          <td>{$vo.long_title}</td>
+          <td>已订购</td>
+          <td>
+            {if condition="($ltime egt $vo['starttime']) AND ($ltime elt $vo['endtime'])"}
+              未过期
+            {else /} 
+              已过期
+            {/if}
+          </td>
+          <td>
+            {if condition="$vo['sta'] eq 2"}
+              已付款
+            {else /} 
+              未付款
+            {/if}
+          </td>
+          <td>{$vo.settime|date="Y-m-d",###}</td>
+          <td>{$vo.starttime|date="Y-m-d",###}</td>
+          <td>{$vo.endtime|date="Y-m-d",###}</td>
+          <td>{$vo.price}</td>
+          <td>{$vo.jcm}</td> 
+          <td>{$vo.glmo}</td>
+          <td>{$vo.glmt}</td>
+          <td>{$vo.sumgl}</td>
+          <td>{$vo.summoney}</td>
+          <td>{$vo.uname}</td>
+          <td>{$vo.gzgx}</td>
+          <td>
+            {if condition="$vo['sex'] eq 2"}
+              男
+            {else /} 
+              女
+            {/if}
+          </td>
+          <td>{$vo.ucode}</td> 
+          <td>{$vo.phone}</td>
+          <td>{$vo.mobile}</td>
+          <td>{$vo.home}</td>
+          <td>{$vo.gzdw}</td>
+          <td>{$vo.email}</td>
+          <td>{$vo.beizhu}</td>
+          <td>{$role[$vo['roleid']]['title']}</td> 
+        </tr>
+      {/volist} 
+      </tbody>
+    </table>
+  </div>
+</div>
+<script src="__JS__/layer/layer.js"></script>
+<script type="text/javascript">
+function get_area (_this, _select_id) {
+        // var _select_id = _select_id ? _select_id : 0;
+        let cem_id = _this.val();
+        let form = _this.parents('form');
+        if (cem_id) {
+            $.ajax({
+                type        : 'GET',
+                url         : '{:url('System/sysjcc_wlist')}',
+                dataType    : 'json',
+                data        : {
+                    cem_id : cem_id
+                },
+                success     : function(e){
+                    let html = '<option >请选择</option>';
+                    for (i in e) {
+                        html += '<option ';
+                        if (_select_id == e[i]['id']) {
+                            html += 'selected';
+                        }
+                        html += ' value="'+e[i]['id']+'">'+e[i]['title']+'</option>';
+                    }
+                    form.find('.cem_area_id').html(html);
+                },
+                error       : function () {
+
+                },
+            });
+        }
+    }
+    function get_areas (_this, _select_id) {
+        // var _select_id = _select_id ? _select_id : 0;
+        let cem_id = _this.val();
+        let form = _this.parents('form');
+        if (cem_id) {
+            $.ajax({
+                type        : 'GET',
+                url         : '{:url('System/sysjcw_wlist')}',
+                dataType    : 'json',
+                data        : {
+                    cem_id : cem_id
+                },
+                success     : function(e){
+                    let html = '<option >请选择</option>';
+                    for (i in e) {
+                        html += '<option ';
+                        if (_select_id == e[i]['id']) {
+                            html += 'selected';
+                        }
+                        html += ' value="'+e[i]['id']+'">'+e[i]['title']+'</option>';
+                    }
+                    form.find('.cem_area_id_c').html(html);
+                },
+                error       : function () {
+
+                },
+            });
+        }
+    }
+    $('.cem_id').change(function(){
+        get_area($(this), '-1');
+    });
+    $(".cem_area_id").change(function(){
+        get_areas($(this), '-1');
+    });
+ $('.show_all').click(function(){
+    var cem_id = $('.add_row').find('.cem_id').val();
+    var cem_area_id = $('.add_row').find('.cem_area_id').val();
+    var cem_row_id = $('.add_row').find('.cem_area_id_c').val();
+    window.location.href="{:url('/index/Finan/syslist/cem_id/"+cem_id+"/cem_area_id/"+cem_area_id+"/cem_row_id/"+cem_row_id+"')}";
+
+});
+function set(id){
+   var index=layer.confirm('是否确认该收费记录？', {
+      btn: ['确定','取消'] //按钮
+    }, function(){
+        layer.close(index);
+        var ihtml = layer.load(0, {
+          shade: [0.5] //0.1透明度的白色背景
+        });
+        $.ajax({
+            type        : 'post',
+            url         : '{:url('finan_set_syslist')}',
+            dataType    : 'json',
+            data        : {
+                id : id
+            },
+            success     : function(e){
+                if (e == '2') {
+                  layer.close(ihtml);
+                  layer.msg('设置成功',{offset: '300px',time: 2000,icon: 1},function () {
+                       window.location.reload();
+                    });
+                } else {
+                  layer.close(ihtml);
+                  layer.msg('设置失败',{offset: '300px',time: 2000,icon: 2},function () {
+                       window.location.reload();
+                    });
+                }
+            },
+            error       : function () {
+
+            },
+        });
+    }, function(){
+      layer.close(index);
+    });
+}
+</script>

@@ -13,6 +13,9 @@ class Gset extends Root {
     static public function wlists ($sysid) {
         return self::order('sysid', 'asc')->where($sysid)->select();
     }
+    static public function wlist_hlist ($sysid) {
+        return self::table('gset_hlist')->order('id', 'desc')->select();
+    }
     static public function del ($id) {
 
         if (self::where('id', $id)->delete() !== false) {
@@ -63,4 +66,21 @@ class Gset extends Root {
         }
         return RE_ERROR;
     }
+    static public function gset_set_hlist($info){
+        $sys_list_l = self::table('sys_list_l')->where(['id'=>$info['id']])->find();
+        if (self::table('gset_hlist')->insert(['title' => $sys_list_l['title'], 'cd' => $sys_list_l['cd'], 'wd' => $sys_list_l['wd'], 'hd' => $sys_list_l['hd'], 'price' => $sys_list_l['price'], 'sysysid' => $sys_list_l['sysysid'], 'time' => time(), 'roleid' => $info['role'], 'sta' =>3]) !== false) {
+            return RE_SUCCESS;
+        }
+       return RE_ERROR;
+    }
+    static function finan_set_hlist($info){
+        if (empty($info['id'])) {
+            return ['status' => false, 'msg' => '请选择信息'];
+        }
+        if (self::table('gset_hlist')->where('id', $info['id'])->update(['sta'=>2]) !== false) {
+            return RE_SUCCESS;
+        }
+        return RE_ERROR;
+    }
+    
 }

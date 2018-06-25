@@ -8,7 +8,10 @@ class Glist extends Root {
     protected $table = 'glist';
     
     static public function wlist () {
-        return self::order('time', 'asc')->column('id,price,sta,roleid,time', 'id');
+        return self::order('time', 'asc')->column('id,title,price,sta,roleid,time', 'id');
+    }
+    static public function wlistf ($map) {
+        return self::where($map)->where(['sta'=>2])->order('time', 'asc')->column('*', 'id');
     }
     static public function wlists ($sysid) {
         return self::order('sysid', 'asc')->where($sysid)->select();
@@ -33,7 +36,7 @@ class Glist extends Root {
         $data_list = [];
         foreach ($info['item'] as $key => $value) {
             $e = self::table('gset')->where('id', $value['id'])->find();
-            $data_list[] = ['title' => $e['title'], 'price' => $e['price'], 'sn' => $e['sn'], 'num' => $value['num'], 'roleid' => $info['roleid'],'sta'=>3,'time'=>time()];
+            $data_list[] = ['gsetid'=>$value['id'],'title' => $e['title'], 'price' => $e['price'], 'sn' => $e['sn'], 'num' => $value['num'], 'roleid' => $info['roleid'],'sta'=>3,'time'=>time()];
         }
         if (count($data_list) && self::insertAll($data_list) !== false) {
             return RE_SUCCESS;

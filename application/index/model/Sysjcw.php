@@ -140,7 +140,7 @@ class Sysjcw extends Root {
                                     $html.='<div class="gztanjd">';
                                         $html.='<div class="gztanjda">';
                                            $html.=' <p>身份证号：</p>';
-                                            $html.='<input type="text" name="ucode" id="ucode" maxlenght="18">';
+                                            $html.='<input type="text" name="ucode" id="ucode" maxlength="18">';
                                            $html.=' <i>*</i>';
                                        $html.=' </div>';
                                        $html.=' <div class="gztanjdb">';
@@ -160,7 +160,7 @@ class Sysjcw extends Root {
                                         $html.='</div>';
                                         $html.='<div class="gztanjeb">';
                                             $html.='<p>手机：</p>';
-                                            $html.='<input type="text" name="mobile" id="mobile" onblur="gmobile()"> '; 
+                                            $html.='<input type="text" name="mobile" id="mobile" onblur="gmobile()" maxlength="11">'; 
                                             $html.='<i></i>';
                                         $html.='</div>';
                                     $html.='</div>     ';                         

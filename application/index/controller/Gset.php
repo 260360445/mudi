@@ -6,6 +6,8 @@ use app\index\model\Auth as _Auth;
 use app\index\model\Gset as _Gset;
 use app\index\model\Glist as _Glist;
 use app\index\model\Role as _Role;
+use app\index\model\Syslx as _Syslx;
+use app\index\model\Tpl as _Tpl;
 use think\Request;
 class Gset  extends Root {
 	//物品设置
@@ -50,22 +52,17 @@ class Gset  extends Root {
     }
     //骨灰盒销售
     public function hlist () {
-    	
+        $this->assign('sysyst', _Tpl::wlists());
+    	$this->assign('sysls', _Syslx::wlist());
+        $this->assign('role', _Role::wlist());
         return $this->fetch();
     }
-     public function hlist_edit () {
-        $e = _Systemc::edit($_POST['id'], $_POST);
+    public function gset_set_hlist () {
+        $e = _Gset::gset_set_hlist($_POST);
         if ($e['status']) {
-            return $this->success($e['msg']);
+            return '2';
         }
-        return $this->error($e['msg']);
-    }
-    public function hlist_add () {
-        $e = _Systemc::add($_POST);
-        if ($e['status']) {
-            return $this->success($e['msg']);
-        }
-        return $this->error($e['msg']);
+        return '3';
     }
     public function hlist_del ($id) {
         return _Systemc::del($id);
