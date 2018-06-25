@@ -1,7 +1,7 @@
 <div class="cont">
     <form class="add_row">
         <fieldset>
-            <legend>墓位预订</legend>
+            <legend>已购墓位管理</legend>
 
            <div class="conta">
               <p>选择墓园</p>
@@ -54,6 +54,33 @@
     </div>
 </div>
 </div>
+
+
+
+
+
+<iframe frameborder = "0" scrolling = "no" class="tanc tc1" src=""  ></iframe>
+<iframe frameborder = "0" scrolling = "no" class="bwtan tc2" src=""  ></iframe>
+
+
+
+
+
+
+    <script type="text/javascript">
+        var id;
+        $(document).on('click', '.wlist .dinga', function(){
+             id = $(this).attr('row_id');
+            $('.tc1').attr('src', "{:url('buyed_tc1', '', '')}/id/" + id);
+
+            $('.tc1').show();
+        });
+
+        function _tc2_show() {
+            $('.tc2').attr('src', "{:url('buyed_tc2', '', '')}/id/" + id);
+            $('.tc2').show();
+        }
+    </script>
 
 
 

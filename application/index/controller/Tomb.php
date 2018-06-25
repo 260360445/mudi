@@ -8,6 +8,8 @@ use app\index\model\Contacts as _Contacts;
 use app\index\model\Staff as _Staff;
 use app\index\model\Visit as _Visit;
 use app\index\model\Cem as _Cem;
+use app\index\model\CemInfo as _Info;
+use app\index\model\Dead as _Dead;
 
 class Tomb  extends Root {
 
@@ -18,7 +20,8 @@ class Tomb  extends Root {
         $this->assign('t3', _Channel::t3());
         $this->assign('cem_list', _Cem::wlist());
         $Tpl = new _Tpl(2);
-        $this->assign('cem_style', $Tpl->wlist());
+        $this->assign('cem_style', $Tpl->tlist(2));
+        $this->assign('cem_material', $Tpl->tlist(3));
         $this->assign('cem_status', $Tpl->tlist(9));
         $this->assign('come_num', $Tpl->tlist(13));
         $this->assign('come_fun', $Tpl->tlist(5));
@@ -50,10 +53,135 @@ class Tomb  extends Root {
         return $this->fetch();
     }
 
-    public function Tending ($wh = '') {
+    public function sale_info ($id = '') {
+        $data = _Info::get($id);
+        if ($data['contacts_id']) {
+            $contacts = Contacts::get($data['contacts_id']);
+        }
+
+        $this->assign('contacts', $contacts ?? []);
+        $this->assign('dead', _Dead::where('cem_info_id', $id)->select());
+        $this->assign('data', $data);
+        $this->assign('pay_status', _Info::pay_status());
+        $this->view->engine->layout(false);
+        return $this->fetch();
+    }
+
+    public function sale_sling_words ($id = '') {
+        $data = _Info::get($id);
+        if ($data['contacts_id']) {
+            $contacts = Contacts::get($data['contacts_id']);
+        }
+
+        $this->assign('contacts', $contacts ?? []);
+        $this->assign('dead', _Dead::where('cem_info_id', $id)->select());
+        $this->assign('data', $data);
+        $this->assign('pay_status', _Info::pay_status());
+        $this->view->engine->layout(false);
+        return $this->fetch();
+    }
+
+    public function tending ($wh = '') {
         $this->www_list($wh);
         return $this->fetch();
     }
+
+
+    public function  tending_tc1($id = '') {
+        $data = _Info::get($id);
+        if ($data['contacts_id']) {
+            $contacts = Contacts::get($data['contacts_id']);
+        }
+
+        $this->assign('contacts', $contacts ?? []);
+        $this->assign('dead', _Dead::where('cem_info_id', $id)->select());
+        $this->assign('data', $data);
+        $this->assign('pay_status', _Info::pay_status());
+        $this->view->engine->layout(false);
+        return $this->fetch();
+    }
+
+    public function  tending_tc2($id = '') {
+        $data = _Info::get($id);
+        if ($data['contacts_id']) {
+            $contacts = Contacts::get($data['contacts_id']);
+        }
+
+        $this->assign('contacts', $contacts ?? []);
+        $this->assign('dead', _Dead::where('cem_info_id', $id)->select());
+        $this->assign('data', $data);
+        $this->assign('pay_status', _Info::pay_status());
+        $this->view->engine->layout(false);
+        return $this->fetch();
+    }
+
+
+    public function buyed ($wh = '') {
+        $this->www_list($wh);
+        return $this->fetch();
+    }
+
+    public function  buyed_tc1($id = '') {
+        $data = _Info::get($id);
+        if ($data['contacts_id']) {
+            $contacts = Contacts::get($data['contacts_id']);
+        }
+
+        $this->assign('contacts', $contacts ?? []);
+        $this->assign('dead', _Dead::where('cem_info_id', $id)->select());
+        $this->assign('data', $data);
+        $this->assign('pay_status', _Info::pay_status());
+        $this->view->engine->layout(false);
+        return $this->fetch();
+    }
+
+    public function  buyed_tc2($id = '') {
+        $data = _Info::get($id);
+        if ($data['contacts_id']) {
+            $contacts = Contacts::get($data['contacts_id']);
+        }
+
+        $this->assign('contacts', $contacts ?? []);
+        $this->assign('dead', _Dead::where('cem_info_id', $id)->select());
+        $this->assign('data', $data);
+        $this->assign('pay_status', _Info::pay_status());
+        $this->view->engine->layout(false);
+        return $this->fetch();
+    }
+
+    public function used ($wh = '') {
+        $this->www_list($wh);
+        return $this->fetch();
+    }
+
+    public function  used_tc1($id = '') {
+        $data = _Info::get($id);
+        if ($data['contacts_id']) {
+            $contacts = Contacts::get($data['contacts_id']);
+        }
+
+        $this->assign('contacts', $contacts ?? []);
+        $this->assign('dead', _Dead::where('cem_info_id', $id)->select());
+        $this->assign('data', $data);
+        $this->assign('pay_status', _Info::pay_status());
+        $this->view->engine->layout(false);
+        return $this->fetch();
+    }
+
+    public function  used_tc2($id = '') {
+        $data = _Info::get($id);
+        if ($data['contacts_id']) {
+            $contacts = Contacts::get($data['contacts_id']);
+        }
+
+        $this->assign('contacts', $contacts ?? []);
+        $this->assign('dead', _Dead::where('cem_info_id', $id)->select());
+        $this->assign('data', $data);
+        $this->assign('pay_status', _Info::pay_status());
+        $this->view->engine->layout(false);
+        return $this->fetch();
+    }
+
 
     public function visit_push () {
         if ($_POST) {

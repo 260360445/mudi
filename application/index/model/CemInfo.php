@@ -160,4 +160,8 @@ class CemInfo extends Root {
             ->where('a.id', $id)->find();
     }
 
+    public function pay_status () {
+        return ['未付款', '已付款'];
+    }
+
 }

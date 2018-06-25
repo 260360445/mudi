@@ -1,14 +1,14 @@
 <div class="cont">
     <form class="add_row">
         <fieldset>
-            <legend>预定维护</legend>
+            <legend>已落葬墓位管理</legend>
 
            <div class="conta">
               <p>选择墓园</p>
               <p>选择墓区</p>
               <p>选择墓排</p>
               <p>墓位样式</p>
-
+              <p>墓位状态</p>
 
            </div>
            <div class="contb">
@@ -36,11 +36,14 @@
                         <option value="{$vo.id}">{$vo.title}</option>
                    {/foreach}
                       </select>
+                <select class="status_id">
+                    {foreach $cem_status as $k => $vo}
+                         <option value="{$vo.id}">{$vo.title}</option>
+                    {/foreach}
+                </select>
+                <button type="button" class="contc show_all">显示全部</button>
 
-                    <input value="{:cem_status(1)}" class="status_id" type="hidden" />
-
-                <button type="button" class="contc show_all">显示全部已预订墓位</button>
-
+                <div class="contc">退出</div>
            </div>
         </fieldset>
 
@@ -54,9 +57,10 @@
 
 
 
-<iframe frameborder = "0" scrolling = "no" class="ydtan tc1" src=""  ></iframe>
-<iframe frameborder = "0" scrolling = "no" class="whtan tc2" src=""  ></iframe>
 
+
+<iframe frameborder = "0" scrolling = "no" class="tanc tc1" src=""  ></iframe>
+<iframe frameborder = "0" scrolling = "no" class="bwtan tc2" src=""  ></iframe>
 
 
 
@@ -67,17 +71,16 @@
         var id;
         $(document).on('click', '.wlist .dinga', function(){
              id = $(this).attr('row_id');
-            $('.tc1').attr('src', "{:url('tending_tc1', '', '')}/id/" + id);
+            $('.tc1').attr('src', "{:url('used_tc1', '', '')}/id/" + id);
 
             $('.tc1').show();
         });
 
         function _tc2_show() {
-            $('.tc2').attr('src', "{:url('tending_tc2', '', '')}/id/" + id);
+            $('.tc2').attr('src', "{:url('used_tc2', '', '')}/id/" + id);
             $('.tc2').show();
         }
     </script>
-
 
 
 
@@ -231,7 +234,7 @@
                     cem_row_id : cem_row_id,
                     status_id : status_id,
                     style_id : style_id,
-                    mb:2,
+                    mb:1,
                 },
                 success     : function(e){
                     $('.wlist').html(e);

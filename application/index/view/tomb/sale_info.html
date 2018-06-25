@@ -1,0 +1,150 @@
+<link rel="stylesheet" href="__CSS__/bootstrap.min.css" />
+<link rel="stylesheet" href="__CSS__/style.css" />
+
+<div class="zftan">
+    <div class="zftantop">杂费票据信息设置</div>
+    <div class="tanfq">
+        <form>
+            <fieldset>
+                <legend>墓位信息</legend>
+                <div class="tanfqa">
+                    <p>您选择的是： {$data.long_title}|墓位样式：{$cem_style[$data['style']]['title']}</p>
+                    <div class="tanfqb">
+                        <div>墓位长：{$data.length}米</div>
+                        <div>墓位宽：{$data.width}米</div>
+                        <div>墓位面积：{$data.acreage}平方</div>
+                        <div>墓位材质：{$cem_material[$data['material']]['title']}</div>
+                        <div>墓位状态：{$cem_status[$data['status']]['title']}</div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="zftant">
+        <div class="zftanle">
+            <form>
+                <fieldset>
+                    <legend>墓位定购信息</legend>
+                    <div class="zftanlea">
+                        <div>联系人：{$contacts.name}</div>
+                        <div>故者姓名：
+                                {volist name = 'dead' id = 'vo'}
+                                    {$vo.name}
+                                {/volist}
+                        </div>
+                        <div>联系电话：{$contacts.tel}</div>
+                    </div>
+                    <div class="zftanlea">
+                        <div>墓位原价：{$data.price}元</div>
+                        <div>成交价格：{$data.pay_sum_money}元</div>
+                        <div>应付（已付）款总额：{$data.manage_money}元</div>
+                        <div>应付（已付）管理费总额：{$data.manage_money}元</div>
+                        <div>是否已付费：{$pay_status[$data['pay_status']]}</div>
+                    </div>
+                    <div class="zftanlea">
+                        <div>墓位原价：8，900.00元</div>
+                        <div>成交价格：6，500.00元</div>
+                        <div>应付（已付）款总额：6,500.00元</div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="zftanri">
+            <form>
+                <fieldset>
+                    <legend>票据信息</legend>
+                    <div class="zftanria">
+                        <div class="zftanrib">
+                            <p>收费金额：</p>
+                            <input type="text" />
+                            <div class="zftank" onclick="window.parent._tc2_show();">查看以往碑文计算单</div>
+                        </div>
+                        <div class="zftanric">
+                            <p>开票日期：</p>
+                            <select>
+                                <option>2018年6月15日</option>
+                            </select>
+                            <div class="zftanrica">
+                                <input type="radio"/>今天
+                                <input type="radio"/>定购日期
+                            </div>
+                        </div>
+                        <div class="zftanrid">
+                            <div class="zftanrida">
+                                <p>刻字：</p>
+                                <select>
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="zftanridb">
+                                <p>立碑封门：</p>
+                                <select>
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="zftanrid">
+                            <div class="zftanrida">
+                                <p>贴金箔：</p>
+                                <select>
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="zftanridb">
+                                <p>家族台阶：</p>
+                                <select>
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="zftanrid">
+                            <div class="zftanrida">
+                                <p>瓷像：</p>
+                                <select>
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="zftanridb">
+                                <p>墓穴装饰：</p>
+                                <select>
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="zftanrid">
+                            <div class="zftanrida">
+                                <p>不干胶：</p>
+                                <select>
+                                    <option></option>
+                                </select>
+                            </div>
+                            <div class="zftanridb">
+                                <p>礼仪服务：</p>
+                                <select>
+                                    <option></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="zftanbz">
+                            <p>备注：</p>
+                            <div class="beizhu">
+                                <textarea></textarea>
+                                <div class="bzmore">
+                                    <div class="bzmorea">保存</div>
+                                    <div class="bzmoreb" onclick="window.parent.hide_all_tc();">取消</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <div class="zftancz">
+        <form>
+            <fieldset>
+                <legend>操作提示</legend>
+            </fieldset>
+        </form>
+    </div>
+</div>

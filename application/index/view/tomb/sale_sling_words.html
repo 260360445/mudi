@@ -1,0 +1,305 @@
+<link rel="stylesheet" href="__CSS__/bootstrap.min.css" />
+<link rel="stylesheet" href="__CSS__/style.css" />
+
+
+<!--
+    作者：offline
+    时间：2018-06-15
+    描述：
+-->
+<div class="jsdtan"  style="display:block;">
+    <div class="jsdtantop">碑文计算单计算</div>
+    <div class="jsdtana">
+        <form>
+            <fieldset>
+                <legend>墓位信息</legend>
+                <div class="jsdtanb">
+                    <p>您选择的是： {$data.long_title}|墓位样式：{$cem_style[$data['style']]['title']}</p>
+                    <div class="jsdtanc">
+                        <div>墓位长：{$data.length}米</div>
+                        <div>墓位宽：{$data.width}米</div>
+                        <div>墓位面积：{$data.acreage}平方</div>
+                        <div>墓位材质：{$cem_material[$data['material']]['title']}</div>
+                        <div>墓位状态：{$cem_status[$data['status']]['title']}</div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="jsdtantable">
+                    <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>碑文计算单编号</th>
+                              <th>是否已付款</th>
+                              <th>刻字金额</th>
+                              <th>贴金箔金额</th>
+                              <th>瓷像数量</th>
+                              <th>瓷像费用</th>
+                              <th>封门立碑</th>
+                              <th>封门立碑费用</th>
+                              <th>家族台阶数</th>
+                              <th>家族台阶费用</th>
+                              <th>装饰材料费用</th>
+                              <th>不干胶费用</th>
+                              <th>费用总计</th>
+                              <th>杂费设置日期</th>
+                              <th>备注</th>
+
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>2</td>
+                              <td>已付款</td>
+                              <td>367</td>
+                              <td>0</td>
+                              <td>单人</td>
+                              <td>0</td>
+                              <td>首次</td>
+                              <td>50</td>
+                              <td>0</td>
+                              <td>0</td>
+                              <td></td>
+                              <td></td>
+                              <td>417</td>
+                              <td>2010-01-21...</td>
+                              <td></td>
+
+                            </tr>
+                          </tbody>
+                        </table>
+    </div>
+    <div class="jsdtanf">
+        <div class="jsdtanfle">
+            <form>
+                <fieldset>
+                    <legend>碑文费用计算单</legend>
+                    <div class="jsdtans">
+                        <div class="jsdsa">
+                            <p>收费项目</p>
+                        </div>
+                        <div class="jsdsb">
+                            <p>数量</p>
+                            <div class="jsdsbc">
+                                <div class="jsdsba">
+                                    <p>特大字</p>
+                                    <input type="text" value="0"/>
+                                </div>
+                                <div class="jsdsba">
+                                    <p>大字</p>
+                                    <input type="text" value="0"/>
+                                </div>
+                                <div class="jsdsba">
+                                    <p>中字</p>
+                                    <input type="text" value="0"/>
+                                </div>
+                                <div class="jsdsba">
+                                    <p>小字</p>
+                                    <input type="text" value="0"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="jsdsc">
+                            <p>单价</p>
+                            <div class="jsdsca">
+                                <div class="jsdscb">
+                                    <p>刻字单价（元/字）</p>
+                                    <input type="text" value="0"/>
+                                    <input type="text" value="0"/>
+                                    <input type="text" value="0"/>
+                                    <input type="text" value="0"/>
+                                </div>
+                                <div class="jsdscd">
+                                    <p>贴金箔单价（元/字）</p>
+                                    <input type="text" value="0"/>
+                                    <input type="text" value="0"/>
+                                    <input type="text" value="0"/>
+                                    <input type="text" value="0"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="jsdsd">
+                            <p>金额</p>
+                            <div class="jsdsca">
+                                <div class="jsdscb">
+                                    <p>刻字金额</p>
+                                    <input type="text" value="0"/>
+                                    <input type="text" value="0"/>
+                                    <input type="text" value="0"/>
+                                    <input type="text" value="0"/>
+                                </div>
+                                <div class="jsdscd">
+                                    <p>贴金箔金额</p>
+                                    <input type="text" value="0"/>
+                                    <input type="text" value="0"/>
+                                    <input type="text" value="0"/>
+                                    <input type="text" value="0"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="jsdse">
+                            <p>备注</p>
+                            <textarea></textarea>
+                        </div>
+                    </div>
+                    <div class="jsdxj">
+                        <p>小计</p>
+                        <input type="text" value="0"/>
+                        <input type="text" value="0"/>
+                    </div>
+                    <div class="jsdtansn">
+                        <div class="jsdsan">
+                            <input type="checkbox" /><label>瓷像</label>
+                        </div>
+                        <div class="jsdsbn">
+                            <div class="jsdsbnle">
+                                <p>单人</p>
+                                <p>双人</p>
+                            </div>
+                            <div class="jsdsbnri">
+                                <input type="radio" />
+                                <input type="radio" />
+                            </div>
+
+                        </div>
+                        <div class="jsdscn">
+                            <input type="text" value="0"/>
+                            <input type="text" value="0"/>
+                        </div>
+                        <div class="jsdsdn">
+                            <input type="text" value="0"/>
+                            <input type="text" value="0"/>
+                        </div>
+                        <div class="jsdsen">
+                            <textarea></textarea>
+                        </div>
+                    </div>
+                    <div class="jsdtansn">
+                        <div class="jsdsan">
+                            <input type="checkbox" /><label>封门立碑</label>
+                        </div>
+                        <div class="jsdsbn">
+                            <div class="jsdsbnle">
+                                <p>首次</p>
+                                <p>二次</p>
+                            </div>
+                            <div class="jsdsbnri">
+                                <input type="radio" />
+                                <input type="radio" />
+                            </div>
+
+                        </div>
+                        <div class="jsdscn">
+                            <input type="text" value="0"/>
+                            <input type="text" value="0"/>
+                        </div>
+                        <div class="jsdsdn">
+                            <input type="text" value="0"/>
+                            <input type="text" value="0"/>
+                        </div>
+                        <div class="jsdsen">
+                            <textarea></textarea>
+                        </div>
+                    </div>
+                    <div class="jsdtansn">
+                        <div class="jsdsan">
+                            <input type="checkbox" /><label>家族台阶</label>
+                        </div>
+                        <div class="jsdsbn">
+                            <div class="jsdsbnle">
+                            </div>
+                            <div class="jsdsbnri">
+                                <input type="text" value="0"/>
+                            </div>
+
+                        </div>
+                        <div class="jsdscn">
+                            <input type="text" value="0"/>
+                        </div>
+                        <div class="jsdsdn">
+                            <input type="text" value="0"/>
+                        </div>
+                        <div class="jsdsen">
+                            <textarea class="jztjtext"></textarea>
+                        </div>
+                    </div>
+                    <div class="jsdtansn">
+                        <div class="jsdsan">
+                            <input type="checkbox" /><label>墓穴装饰</label>
+                        </div>
+                        <div class="jsdsbn">
+                            <div class="jsdsbnle">
+                                <p>花岗岩</p>
+                                <p>黑理石</p>
+                            </div>
+                            <div class="jsdsbnri">
+                                <input type="radio" />
+                                <input type="radio" />
+                            </div>
+
+                        </div>
+                        <div class="jsdscn">
+                            <input type="text" value="0"/>
+                            <input type="text" value="0"/>
+                        </div>
+                        <div class="jsdsdn">
+                            <input type="text" value="0"/>
+                            <input type="text" value="0"/>
+                        </div>
+                        <div class="jsdsen">
+                            <textarea></textarea>
+                        </div>
+                    </div>
+                    <div class="jsdtansn">
+                        <div class="jsdsan">
+                            <input type="checkbox" /><label>不干胶</label>
+                        </div>
+                        <div class="jsdsbn">
+                            <div class="jsdsbnle">
+                                <p>单人</p>
+                                <p>双人</p>
+                            </div>
+                            <div class="jsdsbnri">
+                                <input type="radio" />
+                                <input type="radio" />
+                            </div>
+
+                        </div>
+                        <div class="jsdscn">
+                            <input type="text" value="0"/>
+                            <input type="text" value="0"/>
+                        </div>
+                        <div class="jsdsdn">
+                            <input type="text" value="0"/>
+                            <input type="text" value="0"/>
+                        </div>
+                        <div class="jsdsen">
+                            <textarea></textarea>
+                        </div>
+                    </div>
+                    <div class="hjtan">
+                        <div class="hjtana">合计金额</div>
+                        <div class="hjtanb">
+                            <p>小写：</p>
+                            <input type="text" />
+                        </div>
+                        <div class="hjtanb">
+                            <p>人民币大写：</p>
+                            <input type="text" />
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="jsdtanfri">
+            <div class="jsdanfria">保存碑文费用计算单</div>
+            <div class="jsdanfria">打印碑文费用计算单</div>
+        </div>
+    </div>
+</div>
+<!--
+    作者：offline
+    时间：2018-06-15
+    描述：
+-->
