@@ -161,10 +161,7 @@
       get_areas($(this), '-1');
   });
 function seveg(id){
-    layer.close(ghtml);
-    layer.load(0, {
-          shade: [0.5] //0.1透明度的白色背景
-        });
+    
     var gname=$("#gname").val();
     var address=$("#address").val();
     var gtime=$("#gtime").val();
@@ -225,6 +222,10 @@ function seveg(id){
       return false;
     }
     if(gname != '' && address != '' && gtime != '' && diestarttime != '' && dieendtime != '' && starttime != '' && endtime != '' && uname != '' && ucode != '' && phone != ''  && mobile != '' && gzgx != '' && sex != ''  && gsex != ''){
+      layer.close(ghtml);
+      layer.load(0, {
+          shade: [0.5] //0.1透明度的白色背景
+        });
      $('.add_row_wh').attr('action', "{:url('Deposit/dep_sell_wh_set')}").submit();
     }
 }
@@ -278,10 +279,10 @@ function open(id){
         success     : function(e){
           if(e == 'no'){
             layer.close(ihtml);
-            layer.msg('请先确认是否已交费');
+            layer.msg('系统错误，请从新设置');
           }else if(e == 'nom'){
             layer.close(ihtml);
-            layer.msg('系统错误，请从新设置');
+            layer.msg('请先确认是否已交费');
           }else{
             layer.close(ihtml);
              //页面层

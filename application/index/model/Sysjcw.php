@@ -60,6 +60,7 @@ class Sysjcw extends Root {
     static public function deposit_set_sell_y ($id){
         $arr=self::field('id,sysid,sysid_s,sysid_c,sysysid,money,long_title')->where(['id'=>$id['id']])->find();
         $user = self::table('role')->field('id,title')->select();
+        $tpl = self::table('tpl')->where(['type'=>4])->field('id,title')->select();
         $html='';
         $html.='<form class="add_row" method="post">';
         $html.='<div class="dgtan" style="display:block;">';
@@ -132,7 +133,9 @@ class Sysjcw extends Root {
                                        $html.=' <div class="gztanjcb">';
                                            $html.=' <p>故者关系：</p>';
                                            $html.=' <select name="gzgx" id="gzgx">';
-                                               $html.=' <option value="其他">其他</option>';
+                                               foreach ($tpl as $key => $value) {
+                                                    $html.=' <option value="'.$value['id'].'">'.$value['title'].'</option>';
+                                                }
                                            $html.=' </select>';
                                             $html.='<i>*</i>';
                                         $html.='</div>';

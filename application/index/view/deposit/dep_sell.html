@@ -58,6 +58,7 @@
 <script language="javascript" type="text/javascript" src="__JS__/My97DatePicker/WdatePicker.js"></script>
 <script>
   function subform(){
+
     var jcm=$("#jcm").val();
     var glmo=$("#glmo").val();
     var glmt=$("#glmt").val();
@@ -112,6 +113,10 @@
       return false;
     }
     if(jcm != '' && glmo != '' && glmt != '' && settime != '' && starttime != '' && endtime != '' && uname != '' && ucode != '' && phone != ''  && mobile != '' && gzgx != '' && sex != ''){
+      layer.close(ghtml);
+      lhtml = layer.load(0, {
+            shade: [0.5] //0.1透明度的白色背景
+          });
      $('.add_row').attr('action', "{:url('Deposit/dep_sell_add')}").submit();
     }
   }

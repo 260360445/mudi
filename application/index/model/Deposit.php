@@ -21,8 +21,8 @@ class Deposit extends Root {
       return self::where($map)->where(['syszt'=>3])->order('id', 'desc')->column('*', 'id');
     }
    static public function deposit_set_wh_sell ($id) {
-        $arr=self::field('id,sys_mw_id,long_title,jcm,summoney,sumgl,sta,settime,starttime,endtime,uname,ucode,mobile')->where(['id'=>$id['id']])->find();
-        if($arr){
+        $arr=self::field('id,sys_mw_id,long_title,jcm,summoney,sumgl,sta,settime,starttime,endtime,uname,ucode,mobile')->where(['id'=>$id])->find();
+        if($arr['id']){
             if($arr['sta'] == '2'){
               $html='';
                 $html.='<div class="jwhtan">';
@@ -85,8 +85,9 @@ class Deposit extends Root {
        return $html;
     }
     static public function deposit_set_wh_sell_l($id){
-        $arr=self::field('id,sys_mw_id,long_title,con,settime,starttime,endtime,uname,ucode,sex,phone,gzdw,email,home,mobile,beizhu,gname,gsex,address,work,gtime,diestarttime,dieendtime,roleid')->where(['id'=>$id['id']])->find();
+        $arr=self::field('id,sys_mw_id,long_title,con,settime,starttime,endtime,uname,ucode,sex,phone,gzdw,email,home,mobile,beizhu,gname,gsex,address,work,gtime,diestarttime,dieendtime,roleid')->where(['id'=>$id])->find();
         $user = self::table('role')->field('id,title')->select();
+        $tpl = self::table('tpl')->where(['type'=>4])->field('id,title')->select();
         if($arr){
             $html='';
             $html.='<form class="add_row_wh" method="post">';
@@ -182,7 +183,9 @@ class Deposit extends Root {
                                         $html.='<div class="gztanjcb">';
                                             $html.='<p>故者关系：</p>';
                                             $html.='<select name="gzgx" id="gzgx">';
-                                              $html.='  <option value="其他">其他</option>';
+                                              foreach ($tpl as $key => $value) {
+                                                    $html.=' <option value="'.$value['id'].'">'.$value['title'].'</option>';
+                                                }
                                             $html.='</select>';
                                             $html.='<i>*</i>';
                                         $html.='</div>';
