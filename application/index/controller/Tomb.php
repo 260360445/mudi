@@ -5,11 +5,11 @@ use app\index\controller\Root;
 use app\index\model\Tpl as _Tpl;
 use app\index\model\ComeChannel as _Channel;
 use app\index\model\Contacts as _Contacts;
+use app\index\model\Dead as _Dead;
 use app\index\model\Staff as _Staff;
 use app\index\model\Visit as _Visit;
 use app\index\model\Cem as _Cem;
 use app\index\model\CemInfo as _Info;
-use app\index\model\Dead as _Dead;
 
 class Tomb  extends Root {
 
@@ -22,6 +22,7 @@ class Tomb  extends Root {
         $Tpl = new _Tpl(2);
         $this->assign('cem_style', $Tpl->tlist(2));
         $this->assign('cem_material', $Tpl->tlist(3));
+        $this->assign('relationship', $Tpl->tlist(4));
         $this->assign('cem_status', $Tpl->tlist(9));
         $this->assign('come_num', $Tpl->tlist(13));
         $this->assign('come_fun', $Tpl->tlist(5));
@@ -66,6 +67,59 @@ class Tomb  extends Root {
         $this->view->engine->layout(false);
         return $this->fetch();
     }
+
+    public function reserve ($id) {
+        if ($_POST) {
+            $contacts = [];
+            $dead = [];
+            foreach ($_POST as $k => $v) {
+                if (strstr($k, 'contacts_')) {
+                    $contacts[str_replace('contacts_', '', $k)] = $v;
+                }
+
+                if (strstr($k, 'dead_')) {
+                    $dead[str_replace('dead_', '', $k)] = $v;
+                }
+            }
+            // 判断重复
+            $_POST['contacts_id'] = _Contacts::getLastInsID($contacts);
+            $_POST['pay_status']  = 2;
+            $_POST['status']  = 39;
+            _Info::where('id', $id)->update($_POST);
+            $dead['cem_info_id'] = $id;
+            _Dead::insert($dead);
+
+            // log
+
+            die('<script>alert("操作成功"); window.parent.hide_all_tc();</script>');
+        }
+        $data = _Info::get($id);
+        if ($data['contacts_id']) {
+            $contacts = _Contacts::get($data['contacts_id']);
+        }
+
+        $this->assign('contacts', $contacts ?? []);
+        $this->assign('dead', _Dead::where('cem_info_id', $id)->select());
+        $this->assign('data', $data);
+        $this->assign('pay_status', _Info::pay_status());
+        $this->view->engine->layout(false);
+        return $this->fetch();
+    }
+
+    public function select_buy_type ($id = '') {
+        $data = _Info::get($id);
+        if ($data['contacts_id']) {
+            $contacts = Contacts::get($data['contacts_id']);
+        }
+
+        $this->assign('contacts', $contacts ?? []);
+        $this->assign('dead', _Dead::where('cem_info_id', $id)->select());
+        $this->assign('data', $data);
+        $this->assign('pay_status', _Info::pay_status());
+        $this->view->engine->layout(false);
+        return $this->fetch();
+    }
+
 
     public function sale_sling_words ($id = '') {
         $data = _Info::get($id);

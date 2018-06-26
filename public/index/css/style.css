@@ -6230,7 +6230,7 @@ html,body{width: 100%;height: 100%;}
     margin: 0;
     text-align: right;
 }
-.lztancb input {
+.lztancb select {
     width: 140px;
     outline: 0;
     font-size: 14px;
@@ -6301,7 +6301,7 @@ html,body{width: 100%;height: 100%;}
     margin: 0;
     text-align: right;
 }
-.lztandb input {
+.lztandb select {
     width: 140px;
     outline: 0;
     font-size: 14px;
@@ -6372,7 +6372,7 @@ html,body{width: 100%;height: 100%;}
     margin: 0;
     text-align: right;
 }
-.lztaneb input {
+.lztaneb select {
     width: 140px;
     outline: 0;
     font-size: 14px;
@@ -6556,4 +6556,575 @@ html,body{width: 100%;height: 100%;}
     margin-left: 190px;
     margin-top: 20px;
 }
-
+/*******************************************/
+.lxtan {
+    width: 770px;
+    height: 450px;
+    overflow: hidden;
+    background: #c6c6c6;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -385px;
+    margin-top: -225px; 
+}
+.lxtantop {
+    font-size: 14px;
+    color: #000;
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+}
+.lxtana {
+    width: 95%;
+    margin: 0 auto;
+}
+.lxtana fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.lxtana legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.lxtancon{
+	overflow: hidden;
+}
+.lxtanconle{
+	overflow: hidden;
+	float: left;
+}
+.lxtanconri{
+	overflow: hidden;
+	float: left;
+	margin-left: 20px;
+}
+.lxtanb{
+	overflow: hidden;
+}
+.lxtanba{
+	float: left;
+	margin-left: 20px;
+}
+.lxtanba p {
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.lxtanba input {
+    width: 160px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+.lxtanba i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.lxtanbb{
+    float: left;
+    margin-left: 20px;
+}
+.lxtanbb p {
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.lxtanbb select {
+    width: 104px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+.lxtanbb i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.lxtanc{
+	overflow: hidden;
+}
+.lxtanca{
+	float: left;
+	margin-left: 34px;
+}
+.lxtanca p {
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.lxtanca input {
+    width: 160px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+.lxtanca i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.lxtancb{
+    float: left;
+    margin-left: 20px;
+}
+.lxtancb p {
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.lxtancb select {
+    width: 104px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+.lxtancb i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.lxtand{
+	overflow: hidden;
+}
+.lxtanda{
+	float: left;
+	margin-left: 34px;
+}
+.lxtanda p {
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.lxtanda input {
+    width: 160px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+.lxtanda i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.lxtandb{
+    float: left;
+    margin-left: 20px;
+}
+.lxtandb p {
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.lxtandb input{
+    width: 160px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+.lxtandb i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.lxtane{
+	overflow: hidden;
+}
+.lxtanea{
+	float: left;
+	margin-left: 34px;
+}
+.lxtanea p {
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.lxtanea input {
+    width: 160px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+.lxtanea i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.lxtanf{
+	overflow: hidden;
+}
+.lxtanfa{
+	float: left;
+	margin-left: 34px;
+}
+.lxtanfa p {
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.lxtanfa input {
+    width: 226px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+.lxtanfa i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.lxtang{
+	overflow: hidden;
+}
+.lxtanga{
+	float: left;
+	margin-left: 34px;
+}
+.lxtanga p {
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.lxtanga input {
+    width: 226px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+.lxtanga i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.lxtanh{
+	overflow: hidden;
+}
+.lxtanha{
+	float: left;
+	margin-left: 34px;
+}
+.lxtanha p {
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.lxtanha input {
+    width: 420px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    margin-top: 2px;
+    float: left;
+    height: 20px;
+}
+.lxtanha i {
+    font-size: 12px;
+    color: #ff0000;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+}
+.lxtanconri p{
+    font-size: 14px;
+    color: #000;
+    margin: 0;
+}
+.lxtanconri textarea{
+	width: 146px;
+    height: 122px;
+    outline: 0;
+    resize: none;
+}
+.lxtani{
+    width: 146px;
+    font-size: 14px;
+    color: #000;
+    background: #999;
+    text-align: center;
+    margin-top: 5px;
+    cursor: pointer;
+    overflow: hidden;
+}
+.lxtanj{
+	overflow: hidden;
+	margin-top: 10px;
+}
+.lxtanja{
+    width: 60px;
+    font-size: 14px;
+    color: #000;
+    float: left;
+    background: #999;
+    text-align: center;
+    cursor: pointer;
+}
+.lxtanjb{
+    width: 60px;
+    font-size: 14px;
+    color: #000;
+    float: left;
+    margin-left: 25px;
+    background: #999;
+    text-align: center;
+    cursor: pointer;
+}
+.lxtank{
+    width: 95%;
+    margin: 0 auto;
+}
+.lxtank fieldset {
+    border: 1px solid #fff;
+    padding: 0 5px;
+    padding-bottom: 30px;
+}
+.lxtank legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+/*********************************************/
+.ktan{
+    width: 476px;
+    height: 292px;
+    overflow: hidden;
+    background: #c6c6c6;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -238px;
+    margin-top: -146px;
+}
+.ktantop {
+    font-size: 14px;
+    color: #000;
+    width: 100%;
+    height: 20px;
+    line-height: 20px;
+}
+.ktana {
+    width: 95%;
+    margin: 0 auto;
+    border: 1px solid #fff;
+}
+.ktana p {
+    font-size: 14px;
+    color: #0000ff;
+    margin: 0;
+    margin-left: 20px;
+    padding: 10px 0;
+}
+.ktanb {
+    overflow: hidden;
+}
+.ktanb div {
+    float: left;
+    background: #fff;
+    font-size: 14px;
+    color: #000;
+    margin-left: 50px;
+    margin-top: 20px;
+    padding: 0 5px;
+}
+.ktanc{
+    overflow: hidden;
+    border-top: 1px solid #000;
+    margin-top: 50px;
+}
+.ktanc div{
+    font-size: 14px;
+    color: #000;
+    background: #999;
+    float: left;
+    width: 100px;
+    text-align: center;
+    margin-left: 30px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+.ktand {
+    overflow: hidden;
+    float: left;
+    margin-left: 100px;
+    height: 30px;
+    color: #0000ff;
+    font-size: 14px;
+}
+.ktane{
+    width: 90px;
+    font-size: 14px;
+    color: #000;
+    float: left;
+    margin-left: 100px;
+    background: #999;
+    text-align: center;
+    cursor: pointer;
+}
+.zktan{
+    width: 422px;
+    height: 222px;
+    overflow: hidden;
+    background: #eee;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -211px;
+    margin-top: -111px;
+    display: none;
+}
+.zktana{
+	width: 95%;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+.zktana fieldset {
+    border: 1px solid #000;
+    padding: 0 5px;
+    padding-bottom: 10px;
+}
+.zktana legend {
+    width: auto;
+    border: 0;
+    font-size: 14px;
+    color: #000;
+    margin-bottom: 0px;
+}
+.zktanba{
+	width: 122px;
+	float: left;
+}
+.zktanc{
+	float: left;
+}
+.zktanbb{
+	width: 50px;
+	height: 60px;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+.zktanbb img{
+	width: 100%;
+	height: 100%;
+}
+.zktanba p{
+	font-size: 14px;
+	color: #008400;
+	text-align: center;
+	margin-top: 30px;
+}
+.zktanca{
+	overflow: hidden;
+	margin-top: 20px;
+}
+.zktanca p{
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.zktanca input{
+	width: 140px;
+    height: 20px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.zktancb{
+	overflow: hidden;
+	margin-left: 41px;
+}
+.zktancb p{
+	font-size: 14px;
+	color: #000;
+	float: left;
+}
+.zktancb input{
+	width: 140px;
+    height: 20px;
+    outline: 0;
+    font-size: 14px;
+    color: #000;
+    float: left;
+}
+.zktand{
+	overflow: hidden;
+}
+.zktand div{
+    width: 80px;
+    font-size: 14px;
+    color: #000;
+    float: left;
+    background: #999;
+    text-align: center;
+    cursor: pointer;
+    margin-left: 32px;
+    margin-top: 30px;
+}
+.dgtanda.zjtana{
+	margin-left: 0;
+}
+.dgtandb.zjtanb{
+	margin-left: 18px;
+}
+.zjtanc{
+    width: 90px;
+    font-size: 14px;
+    color: #000;
+    float: left;
+    margin-left: 100px;
+    background: #999;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 2px;
+}

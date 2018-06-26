@@ -1,0 +1,22 @@
+<div class="ktan" style="display:block;" >
+   <div class="ktantop">购墓方式</div>
+   <div class="ktana">
+       <p>您选择的是：<span class="long_title"></span></p>
+   </div>
+   <div class="ktanb">
+       <div>墓位长：<span class="c_width">{$data.width}<span>米</div>
+       <div>墓位宽：<span class="c_height"> {$data.length} <span>米</div>
+       <div>价格：<span class="c_width"> {$data.price}<span></div>
+       <div>墓位材质：<span class="c_width">：{$cem_material[$data['material']]['title']}<span></div>
+       <div>墓位状态：<span class="c_width">{$cem_status[$data['status']]['title']}<span></div>
+   </div>
+   <div class="ktanc">
+       <div class="ktanca" onclick="window.parent.ydmw();">预订墓位</div>
+       <div class="ktancb" onclick="zjgm()">直接购墓</div>
+       <div class="ktancb" onclick="window.parent.hide_all_tc();">退出</div>
+   </div>
+</div>
+
+
+<link rel="stylesheet" href="__CSS__/bootstrap.min.css" />
+<link rel="stylesheet" href="__CSS__/style.css" />

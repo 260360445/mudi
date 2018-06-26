@@ -56,9 +56,12 @@
 </div>
 
 
-<iframe frameborder = "0" scrolling = "no" class="zftan tc1" src=""  ></iframe>
+<iframe frameborder = "0" scrolling = "no" class="whtan tc1" src=""  ></iframe>
 <iframe frameborder = "0" scrolling = "no" class="jsdtan tc2" src=""  ></iframe>
 
+
+
+<iframe frameborder = "0" scrolling = "no" class="ktan tc3" src=""  ></iframe>
 
 
 
@@ -66,17 +69,34 @@
 
 
     <script type="text/javascript">
-        var id;
-        $(document).on('click', '.wlist .dinga', function(){
-             id = $(this).attr('row_id');
-            $('.tc1').attr('src', "{:url('sale_info', '', '')}/id/" + id);
 
-            $('.tc1').show();
+        var id;
+        var row_status;
+        $(document).on('click', '.wlist .dinga', function(){
+
+            id = $(this).attr('row_id');
+            row_status = $(this).attr('row_status');
+
+            if (row_status == 38) {
+
+
+                $('.tc3').attr('src', "{:url('select_buy_type', '', '')}/id/" + id);
+                $('.tc3').show();
+            }
+            // $('.tc1').attr('src', "{:url('sale_info', '', '')}/id/" + id);
+            //
+            // $('.tc1').show();
         });
 
         function _tc2_show() {
             $('.tc2').attr('src', "{:url('sale_sling_words', '', '')}/id/" + id);
             $('.tc2').show();
+        }
+
+        function ydmw () {
+            hide_all_tc();
+            $('.tc1').attr('src', "{:url('reserve', '', '')}/id/" + id);
+            $('.tc1').show();
         }
     </script>
 

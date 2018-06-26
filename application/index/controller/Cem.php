@@ -139,6 +139,10 @@ class Cem  extends Root {
         return $this->fetch('cem/info');
     }
 
+    public function get_info ($id) {
+        return _Info::get($id);
+    }
+
     public function info_add () {
         // wcc($_POST);
         $e = _Info::add($_POST);

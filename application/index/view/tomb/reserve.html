@@ -1,0 +1,186 @@
+<div class="whtan" style="display:block;">
+   <div class="whtantop">墓位预订</div>
+   <div class="whtana">
+       <form method="post">
+           <fieldset>
+               <legend>墓位预订信息</legend>
+               <div class="whtanb">
+                   <div class="whtand">
+                       <p>墓位全称：</p>
+                       <input type="text" value=" {$data.long_title}" readonly />
+                       <i></i>
+                   </div>
+                   <div class="whtand">
+                       <p>预定日期：</p>
+                        <input name = "reserve_date" value="{:date('Y-m-d')}" />
+                       <i></i>
+                   </div>
+                   <div class="whtand">
+                       <p>提醒日期：</p>
+                     <input name = "remind_date" value="{:date('Y-m-d')}" />
+                       <i></i>
+                   </div>
+               </div>
+               <div class="whtanb">
+                   <div class="whtand">
+                       <p>原始价格：</p>
+                       <input type="text" value="{$data.price}" readonly />
+                       <i></i>
+                   </div>
+                   <div class="whtand">
+                       <p>成交价格：</p>
+                       <input type="text" value="{$data.price}" readonly />
+                       <i>*</i>
+                   </div>
+                   <div class="ktand">
+                       价格单位：（元）
+                   </div>
+               </div>
+               <div class="whtanb">
+                   <div class="whtand">
+                       <p>预订金额：</p>
+                       <input type="text" name="reserve_money"/>
+                       <i>*</i>
+                   </div>
+                   <div class="whtand">
+                       <p>余额：</p>
+                       <input type="text" value="0.00" name="unpaid_money" />
+                       <i>*</i>
+                   </div>
+                   <div class="ktane" onclick="zksq()">折扣授权</div>
+               </div>
+           </fieldset>
+
+   </div>
+   <div class="whtane">
+       <div class="whtanele">
+
+               <fieldset>
+                   <legend>联系人信息</legend>
+                   <div class="whlea">
+                       <div class="whleb">
+                           <p>故者姓名：</p>
+                           <input type="text" name="dead_name" />
+                           <i></i>
+                       </div>
+                       <div class="whlec">
+                           <p>故者关系：</p>
+                           <select name="dead_relationship">
+                               {volist name = 'relationship' id = 'vo'}
+
+
+                                    <option value="{$vo.id}">{$vo.title}</option>
+
+                               {/volist}
+                           </select>
+                           <i></i>
+                       </div>
+                   </div>
+                   <div class="whlea">
+                       <div class="whleb">
+                           <p>联系人姓名：</p>
+                           <input type="text" name="contacts_name" value=""/>
+                           <i>*</i>
+                       </div>
+                       <div class="whlec">
+                           <p>邮政编码：</p>
+                           <input type="text" value="150036" name="contacts_postcode"/>
+                           <i>*</i>
+                       </div>
+                   </div>
+                   <div class="whlea">
+                       <div class="whleb">
+                           <p>身份证号：</p>
+                           <input type="text" name="contacts_idcard"  />
+                           <i>*</i>
+                       </div>
+                       <div class="whlec">
+                           <p>性别：</p>
+                           <select name="contacts_sex">
+                               <option value="1">男</option>
+                               <option value="0">女</option>
+                           </select>
+                           <i>*</i>
+                       </div>
+                   </div>
+                   <div class="whlea">
+                       <div class="whleb">
+                           <p>联系电话：</p>
+                           <input type="text" value="" name="contacts_tel"/>
+                           <i>*</i>
+                       </div>
+                       <div class="whlec">
+                           <p>手机：</p>
+                           <input type="text" value=" " name="contacts_phone"  />
+                           <i></i>
+                       </div>
+                   </div>
+                   <div class="whlea">
+                       <div class="whleb">
+                           <p>工作单位：</p>
+                           <input type="text" name="contacts_workplace" />
+                           <i></i>
+                       </div>
+                   </div>
+                   <div class="whlea">
+                       <div class="whleb">
+                           <p>电子邮件：</p>
+                           <input type="text" name="contacts_email" />
+                           <i></i>
+                       </div>
+                   </div>
+                   <div class="whlea">
+                       <div class="whleb">
+                           <p>家庭住址：</p>
+                           <input type="text"  name="contacts_address" />
+                           <i></i>
+                       </div>
+                   </div>
+               </fieldset>
+
+       </div>
+       <div class="whtaneri">
+
+               <fieldset>
+                   <legend>墓位预订操作信息</legend>
+                   <div class="whtanyw">
+                       <p>操作员：</p>
+                       <input type="hidden" value="{:session('id')}" name="update_by" />
+                       <input type="text" value="{:session('nickname')}" readonly/>
+                       <i>*</i>
+                   </div>
+                   <div class="whtanyw">
+                       <p>业务员：</p>
+                       <select name="salesman">
+                           {foreach name = 'staff' item = 'vo'}
+
+
+                                <option value="{$key}">{$vo}</option>
+
+                           {/foreach}
+                       </select>
+                       <i>*</i>
+                   </div>
+                   <div class="whtanbz">
+                       <p>备注：</p>
+                       <textarea></textarea>
+                   </div>
+                   <div class="whtanbc">
+                       <button class="whtanbca" type="submit">保存</button>
+                       <div class="whtanbcb">取消</div>
+                   </div>
+                   <div class="whtandy">打印墓位预订单</div>
+               </fieldset>
+
+       </div>
+   </div>
+   <div class="whtancz">
+
+           <fieldset>
+               <legend>操作提示</legend>
+           </fieldset>
+       </form>
+   </div>
+
+<link rel="stylesheet" href="__CSS__/bootstrap.min.css" />
+<link rel="stylesheet" href="__CSS__/style.css" />

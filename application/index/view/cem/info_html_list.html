@@ -1,7 +1,7 @@
 
 {foreach $list as $k=>$vo}
 
-<tr class="tr_{$vo.id}" row_id = "{$vo.id}">
+<tr class="tr_{$vo.id}" row_id = "{$vo.id}" >
 
   <td class="row_cem_id"> <input type = "checkbox" name = "ids[]" value = "{$vo.id}"> </td>
   <td class="row_cem_id"> {$cem_list[$vo['cem_id']]['title']} </td>
