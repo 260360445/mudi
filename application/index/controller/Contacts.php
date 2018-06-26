@@ -69,9 +69,16 @@ class Contacts  extends Root {
         } else {
             $this->assign('list', _Visit::plist($map));
         }
+        //print_r( _Visit::plist($map));
         $this->assign('count', _Visit::cnt($map));
         $this->assign('wh', $wh);
         return $this->fetch();
+    }
+    public function set_visit_log($id){
+        return  _Visit::set_visit_log($id);
+    }
+    public function open_visit_log($id){
+        return  _Visit::open_visit_log($id);
     }
     public function t1 () {
         return $this->fetch();
