@@ -93,7 +93,8 @@ class Deposit extends Root {
         $request = Request::instance();
         $gtime = $request->only(['gtime']);
         $today = $request->only(['today']);
-        $map = '';
+        $map = [];
+        $map = ['syszt'=>2];
          //本周
         $time = time();
         $w_day=date("w",$time);
@@ -107,8 +108,8 @@ class Deposit extends Root {
         $weekstar = strtotime(date('Y-m-d',strtotime("$cflag week Monday", $time))); //本周一零点的时间戳
         $weekend = strtotime(date('Y-m-d',strtotime("$cflag week Monday", $time)))+604799;//本周末零点的时间戳
         //本月
-        $beginThismonth=mktime(0,0,0,date('m'),1,date('Y'));
-        $endThismonth=mktime(23,59,59,date('m'),date('t'),date('Y'));
+        $begmonth=mktime(0,0,0,date('m'),1,date('Y'));
+        $endmonth=mktime(23,59,59,date('m'),date('t'),date('Y'));
         //三个月之内
         $now = time();
         $time = strtotime('-2 month', $now);
@@ -118,24 +119,31 @@ class Deposit extends Root {
             $t = time()+3600*8;//这里和标准时间相差8小时需要补足
             $tget = $t+3600*24*$today['today'];//比如5天前的时间
             if($gtime['gtime']==2){//一周内过期
-                $map="endtime >='{$tget}' and endtime<='{$weekend}'";
+                $map="endtime >= ".$tget." and endtime<=".$weekend."";
             }else if($gtime['gtime']==3){//一个月内过期
-                $map="endtime >='{$tget}' and endtime<='{$endThismonth}'";
+                $map="endtime >=".$tget." and endtime<=".$endmonth."";
             }else if($gtime['gtime']==4){//一个季度内过期
-                $map="endtime >='{$tget}' and endtime<='{$endThismonth}'";
+                $map="endtime >=".$tget." and endtime<=".$endThismonth."";
             }else if($gtime['gtime']==5){//已过期
-                $map="endtime> '{$now}'";
+                $map="endtime> ".$now."";
             }
-        }else if($gtime['gtime'] && !$today['today']){
+            $count=count(_Deposit::wlist($map));
+            $this->assign('count', $count);
+        }else if($gtime['gtime'] && empty($today['today'])){
             if($gtime['gtime']==2){//一周内过期
-                $map="endtime >='{$weekstar}' and endtime<='{$weekend}'";
+                $map['endtime']=['egt',$weekstar];
+                $map['endtime']=['elt',$weekend];
             }else if($gtime['gtime']==3){//一个月内过期
-                $map="endtime >='{$beginThismonth}' and endtime<='{$endThismonth}'";
+                $map['endtime']=['egt',$begmonth];
+                $map['endtime']=['elt',$endmonth];
             }else if($gtime['gtime']==4){//一个季度内过期
-                $map="endtime >='{$beginThismonth}' and endtime<='{$endThismonth}'";
+                $map['endtime']=['egt',$beginThismonth];
+                $map['endtime']=['elt',$endThismonth];
             }else if($gtime['gtime']==5){//已过期
-                $map="endtime > '{$now}'";
+                $map['endtime']=['lt',$now];
             }
+            $count=count(_Deposit::wlist($map));
+            $this->assign('count', $count);
         }
         $this->assign('list', _Deposit::wlist($map));
         return $this->fetch();

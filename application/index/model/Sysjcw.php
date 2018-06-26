@@ -29,9 +29,7 @@ class Sysjcw extends Root {
     }
     static public function deposit_set_sell ($id){
         $arr=self::field('id,sysysid,money,syszt,long_title')->where(['id'=>$id['id']])->find();
-        if($arr['syszt'] == '2'){
-            $html='2';
-        }else{
+        if($arr['syszt'] == '1'){
             $html='';
             $html.='<div class="jcwtan">';
               $html.='<div class="jcwtana">';
@@ -54,6 +52,8 @@ class Sysjcw extends Root {
                 $html.='<div class="jcwtancb" onclick="closelayer()">取消本次操作</div>';
              $html.=' </div>';
            $html.=' </div>';
+        }else{
+            $html='2';
         }
        return $html;
     }

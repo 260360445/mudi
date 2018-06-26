@@ -15,7 +15,7 @@ class Deposit extends Root {
         return self::field('id,sys_mw_id,long_title')->where($map)->order('id', 'desc')->column('*', 'id');
     }
     static public function wlist ($map) {
-        return self::field('id,long_title,settime,starttime,endtime,jcm,glmo,glmt,summoney,uname,gzgx,sex,phone,home,gzdw,roleid,beizhu')->where($map)->where(['syszt'=>2])->order('id', 'desc')->column('*', 'id');
+        return self::field('id,long_title,settime,starttime,endtime,jcm,glmo,glmt,summoney,uname,gzgx,sex,phone,home,gzdw,roleid,beizhu')->where($map)->order('id', 'desc')->column('*', 'id');
     }
     static public function wlist_hlist($map){
       return self::where($map)->where(['syszt'=>3])->order('id', 'desc')->column('*', 'id');
