@@ -1,0 +1,79 @@
+<div class="cont">
+  <form>
+    <fieldset>
+      <legend>查询条件设置</legend>
+      <div class="lxd">
+        <p>查询条件：</p>
+        <div class="lxa">
+          <input type="radio" />来访时间
+        </div>
+        <div class="lxa">
+          <input type="radio" />全部来访信息
+        </div>
+                                    
+      </div>
+        <div class="lxd">
+          <p>条件填写：</p>
+            <input type="text" class="lxc"/>
+            <p>时间格式：2013-1-1</p>
+        <div class="lxb">查询</div>
+            <div class="lxb">退出</div>
+        </div>
+        <div class="lxd">
+          <p>查询结果数量：</p>
+            <i>0个</i>
+          
+        </div>
+    </fieldset>
+    
+  </form>
+  <div class="conbiao">
+    <table class="table table-bordered">
+      <!--<caption>边框表格布局</caption>-->
+      <thead>
+        <tr>
+          <th>祭扫安葬类型</th>
+          <th>安葬类型</th>                 
+          <th>来访份数</th>
+          <th>来访人数</th>
+          <th>微型车数量</th>
+          <th>小型车数量</th>
+          <th>中型车数量</th>
+          <th>大型车数量</th>
+          <th>祭扫安葬时间</th>
+          <th>备注</th>
+          <th>业务员</th>
+        </tr>
+      </thead>
+      <tbody>
+      {volist name="list" id="list"}
+        <tr>
+          <td>
+            {if condition="$list['djlx'] eq 2"}
+               祭扫
+            {elseif condition="$list['djlx'] eq 3" /} 
+               安葬
+            {/if}
+          </td>
+          <td>
+            {if condition="$list['status'] eq ''"}
+               祭扫
+            {else /} 
+              {$tlist[$list['status']]['title']}
+            {/if}
+          </td>
+          <td>{$list['num']}</td>
+          <td>{$list['prop']}</td>
+          <td>{$list['cart_w']}</td>
+          <td>{$list['cart_x']}</td>
+          <td>{$list['cart_z']}</td>
+          <td>{$list['cart_d']}</td>
+          <td>{$list['time']|date="Y-m-d",###}</td>
+          <td>{$list['cont']}</td>
+          <td>{$role[$list['roleid']]['title']}</td>
+        </tr>
+       {/volist}
+      </tbody>
+    </table>
+  </div>
+</div>  

@@ -1,0 +1,125 @@
+<div class="cont">
+  <form class="add_row" method="post">
+    <fieldset>
+      <legend>祭扫安葬信息</legend>
+      <div class="djxxa">
+        <div class="djlx">
+          <p>登记类型：</p>
+          <div class="djlxa">
+             <input type="radio" name="djlx" checked value="2"/>祭扫
+          </div>
+          <div class="djlxa">
+             <input type="radio" name="djlx" value="3"/>安葬
+          </div>
+        </div>
+        <div class="djfs">
+          <p>来访份数：</p>
+            <input type="text" name="num" id="num"/>
+            <i>*</i>
+        </div>
+        <div class="djfs">
+          <p>来访人数：</p>
+            <input type="text" name="prop" id="prop"/>
+            <i>*</i>
+        </div>
+        <div class="djrq">
+          <p>来访日期：</p>
+            <input class="Wdate" name="settime" id="settime" type="text" onClick="WdatePicker()"> <i>*</i>
+        </div>
+        <div class="djcl">
+          <p class="djclp">来访车辆：</p>
+          <div class="djcla">
+            <div class="djclc">
+              <div class="djclb">
+                <p>微型车</p>
+                <input type="text" name="cart_w"/>                      
+              </div>
+              <div class="djclb">
+                <p>小型车</p>
+                <input type="text" name="cart_x"/>                      
+              </div>
+            </div>
+            <div class="djclc">
+              <div class="djclb">
+                <p>中型车</p>
+                <input type="text" name="cart_z"/>                      
+              </div>
+              <div class="djclb">
+                <p>大型车</p>
+                <input type="text" name="cart_d"/>                      
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="djxxb">
+        <div class="azlxa">
+          <p>安葬类型：</p>
+          <select name="setsta" id="setsta">
+          {volist name="tlist" id="list"}
+            <option value="{$list.id}">{$list.title}</option>
+          {/volist}
+          </select>
+        </div>
+        <div class="azlxa">
+          <p>接  待  员：</p>
+          <select name="roleid">
+          {volist name="role" id="list"}
+            <option value="{$list.id}">{$list.title}</option>
+          {/volist}
+          </select>
+        </div>
+        <div class="azlxc">
+          <p>备注：</p>
+          <textarea name="cont"></textarea>
+        </div> 
+        <button type="button" url = "{:url('Grave/grave_add')}"   class="sbmt mwtxribricontc" style="margin-left: 50px;">保存祭扫、安葬信息</button>
+      </div>
+    </fieldset>
+  </form>
+</div>
+<script src="__JS__/layer/layer.js"></script>
+<script language="javascript" type="text/javascript" src="__JS__/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+$(function(){
+  var val=$('input:radio[name="djlx"]:checked').val();
+  if(val == '2'){
+    $("#setsta").attr("disabled","disabled");
+    $('#setsta').css('background-color','#c6c6c6');
+  }else{
+    $("#setsta").removeAttr("disabled");
+    $('#setsta').css('background-color','#ffffff');
+  }
+  $('input:radio[name="djlx"]').click(function(){
+    var djlx=$('input:radio[name="djlx"]:checked').val();
+    if(djlx == '2'){
+      $("#setsta").attr("disabled","disabled");
+      $('#setsta').css('background-color','#c6c6c6');
+    }else{
+      $("#setsta").removeAttr("disabled");
+      $('#setsta').css('background-color','#ffffff');
+    }
+  })
+})
+$('.sbmt').click(function(){
+  var num=$("#num").val();
+  var prop=$("#prop").val();
+  var settime=$("#settime").val();
+  if(num == ''){
+    layer.msg('请填写来访份数');
+    return false;
+  }
+  if(prop == ''){
+    layer.msg('请填写来访人数');
+    return false;
+  }
+  if(settime == ''){
+    layer.msg('请填选择来访时间');
+    return false;
+  }
+  if(num && prop && settime){
+    $('.add_row').attr('action', $(this).attr('url')).submit();
+  }
+
+});
+</script>
