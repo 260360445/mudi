@@ -83,7 +83,7 @@ class Tomb  extends Root {
             }
             // 判断重复
             $_POST['contacts_id'] = _Contacts::getLastInsID($contacts);
-            $_POST['pay_status']  = 2;
+            //$_POST['pay_status']  = 2;
             $_POST['status']  = 39;
             _Info::where('id', $id)->update($_POST);
             $dead['cem_info_id'] = $id;
@@ -140,7 +140,14 @@ class Tomb  extends Root {
         return $this->fetch();
     }
 
-
+    //取消墓位预订
+    public function ten_setqx(){
+        $e = _Info::ten_setqx($_POST);
+        if ($e['status']) {
+            return 'ok';
+        }
+        return 'no';
+    }
     public function  tending_tc1($id = '') {
         $data = _Info::get($id);
         if ($data['contacts_id']) {

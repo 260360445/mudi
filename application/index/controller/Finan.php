@@ -11,16 +11,64 @@ use app\index\model\System as _System;
 use app\index\model\Systemt as _Systemt;
 use app\index\model\Systemc as _Systemc;
 use app\index\model\Deposit as _Deposit;
+use app\index\model\CemInfo as _Info;
+use app\index\model\Cem as _Cem;
 use think\Request;
 class Finan  extends Root {
 	//墓位预订收费确认
     public function muwei () {
-        $this->assign('glist', _Gset::wlist());
+        $this->assign('role', _Role::wlist());
+        $this->assign('cem_list', _Cem::wlist());
+        $request = Request::instance();
+        $cem_id = $request->only(['cem_id']);
+        $cem_area_id = $request->only(['cem_area_id']);
+        $cem_row_id = $request->only(['cem_row_id']);
+        $map = ['status'=>39,'sta'=>3];
+        if ($cem_id['cem_id']) {
+            $map['cem_id'] = $cem_id['cem_id'];
+        }
+        if ($cem_area_id['cem_area_id']) {
+            $map['cem_area_id'] = $cem_area_id['cem_area_id'];
+        }
+        if ($cem_row_id['cem_row_id']) {
+            $map['cem_row_id'] = $cem_row_id['cem_row_id'];
+        }
+        $this->assign('list', _Info::wlist($map));
         return $this->fetch();
+    }
+    public function finan_set_muwei(){
+        $e = _Info::finan_set_muwei($_POST);
+        if ($e['status']) {
+            return '2';
+        }
+        return '3';
+    }
+    public function finan_set_muweit(){
+        $e = _Info::finan_set_muweit($_POST);
+        if ($e['status']) {
+            return '2';
+        }
+        return '3';
     }
     //墓位预订退订确认
     public function muweit () {
-        $this->assign('glist', _Gset::wlist());
+        $this->assign('role', _Role::wlist());
+        $this->assign('cem_list', _Cem::wlist());
+        $request = Request::instance();
+        $cem_id = $request->only(['cem_id']);
+        $cem_area_id = $request->only(['cem_area_id']);
+        $cem_row_id = $request->only(['cem_row_id']);
+        $map = ['status'=>39,'sta'=>2];
+        if ($cem_id['cem_id']) {
+            $map['cem_id'] = $cem_id['cem_id'];
+        }
+        if ($cem_area_id['cem_area_id']) {
+            $map['cem_area_id'] = $cem_area_id['cem_area_id'];
+        }
+        if ($cem_row_id['cem_row_id']) {
+            $map['cem_row_id'] = $cem_row_id['cem_row_id'];
+        }
+        $this->assign('list', _Info::wlist($map));
         return $this->fetch();
     }
     //墓位定购收费确认

@@ -55,7 +55,15 @@ class Contacts  extends Root {
 
         return $this->fetch();
     }
-
+    public function visit_edit(){
+        if ($_POST) {
+             $e = _Visit::visit_edit($_POST);
+            if ($e['status']) {
+                return $this->success($e['msg']);
+            }
+            return $this->error($e['msg']);
+        }
+    }
     public function visit_log ($wh = '') {
         $map = [];
         if ($wh) {

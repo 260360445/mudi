@@ -60,11 +60,11 @@
 							<div class="laifb">
 								<div class="laib difflaib">
 									<p>来访日期：</p>
-									<input type="text" name="come_date" class="kedinput"/>
+									<input class="Wdate kedinput" name="come_date" type="text" onClick="WdatePicker()">
 								</div>
 								<div class="laib">
 									<p>来访次数：</p>
-									<select>
+									<select name="come_num">
                                         {foreach $come_num as $k=>$vo}
 				                              <option value="{$vo.id}">{$vo.title}</option>
                                         {/foreach}
@@ -110,7 +110,7 @@
 							<div class="cjqk">
 								<div class="cja">
 									<p>成交情况</p>
-									<select name="transaction_status">
+									<select name="transaction_status" >
 										<option value="1">成交</option>
 										<option value="0">未成交</option>
 									</select>
@@ -128,7 +128,7 @@
 							</div>
 							<div class="cjrq">
 								<p>成交日期：</p>
-									<input type="text" name="transaction_suc_date" value=""/>
+									<input class="Wdate" name="transaction_suc_date" type="text" onClick="WdatePicker()">
 							</div>
 							<div class="cjjl">
 								<div class="cjjla">
@@ -151,8 +151,7 @@
 					</form>
 				</div>
 			</div>
-
-
+<script language="javascript" type="text/javascript" src="__JS__/My97DatePicker/WdatePicker.js"></script>
 <script type="text/javascript">
 
     $(".from").validate({

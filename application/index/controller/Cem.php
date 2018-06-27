@@ -178,7 +178,7 @@ class Cem  extends Root {
         $this->assign('row_list', _Row::wlist());
         $this->assign('staff_list', _Staff::id2tit());
 
-        $map = [];
+        $map = ['sta'=>3];
         if ($cem_id) {
             $map['cem_id'] = $cem_id;
         }

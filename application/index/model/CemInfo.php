@@ -25,7 +25,33 @@ class CemInfo extends Root {
         }
         return RE_ERROR;
     }
-
+    //预订墓位 退订
+    static public function ten_setqx($info){
+        if (self::where('id', $info['id'])->update(['sta'=>2]) !== false) {
+            return RE_SUCCESS;
+        }
+        return $info;
+    }
+    //确认墓位预订收费
+    static public function finan_set_muwei($info){
+        if (empty($info['id'])) {
+            return ['status' => false, 'msg' => '请选择信息'];
+        }
+        if (self::where('id', $info['id'])->update(['pay_status'=>2]) !== false) {
+            return RE_SUCCESS;
+        }
+        return RE_ERROR;
+    }
+    //确认墓位预订退订收费
+    static public function finan_set_muweit($info){
+        if (empty($info['id'])) {
+            return ['status' => false, 'msg' => '请选择信息'];
+        }
+        if (self::where('id', $info['id'])->update(['pay_status'=>3]) !== false) {
+            return RE_SUCCESS;
+        }
+        return RE_ERROR;
+    }
     static public function edit ($info) {
         if (empty($info['ids']) || !count($info['ids']) ) {
             return ['status' => false, 'msg' => '请选择要修改的墓位'];

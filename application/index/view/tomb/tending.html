@@ -51,7 +51,7 @@
     </div>
 </div>
 </div>
-
+<script src="__JS__/layer/layer.js"></script>
 
 
 <iframe frameborder = "0" scrolling = "no" class="ydtan tc1" src=""  ></iframe>
@@ -75,6 +75,29 @@
         function _tc2_show() {
             $('.tc2').attr('src', "{:url('tending_tc2', '', '')}/id/" + id);
             $('.tc2').show();
+        }
+        function setqx(){
+            alert(id);
+            $.ajax({
+                type        : 'post',
+                url         : '{:url('Tomb/ten_setqx')}',
+                dataType    : 'json',
+                data        : {id : id},
+                success     : function(e){
+                    if (e == 'ok') {
+                      layer.msg('设置成功',{offset: '300px',time: 2000,icon: 1},function () {
+                               window.location.reload();
+                            });
+                    } else {
+                      layer.msg('设置失败',{offset: '300px',time: 2000,icon: 2},function () {
+                               window.location.reload();
+                            });
+                    }
+                },
+                error       : function () {
+
+                },
+            });
         }
     </script>
 
