@@ -82,6 +82,33 @@ class Contacts  extends Root {
         $this->assign('wh', $wh);
         return $this->fetch();
     }
+    public function setopen_visit_log(){
+        $map= [];
+        $map= ['sta'=>3];
+        if ($_POST['cem_id']) {
+            $map['cem_id'] = $_POST['cem_id'];
+        }
+        if ($_POST['cem_area_id_row'] && $_POST['cem_area_id_row'] != '0') {
+            $map['cem_area_id'] = $_POST['cem_area_id_row'];
+        }
+        if ($_POST['cem_row_id_row'] && $_POST['cem_row_id_row'] != '0') {
+            $map['cem_row_id'] = $_POST['cem_row_id_row'];
+        }
+        if ($_POST['row_style'] && $_POST['row_style'] != '0') {
+            $map['style'] = $_POST['row_style'];
+        }
+        return  _Visit::setopen_visit_log($map,$_POST['id']);
+    }
+    public function set_visit_img_mw(){
+        $e = _Visit::set_visit_img_mw($_POST);
+        if ($e['status']) {
+            return 'ok';
+        }
+        return 'no';
+    }
+    public function set_visit_img(){
+        return  _Visit::set_visit_img($_POST);
+    }
     public function set_visit_log($id){
         return  _Visit::set_visit_log($id);
     }

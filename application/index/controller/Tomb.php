@@ -10,7 +10,7 @@ use app\index\model\Staff as _Staff;
 use app\index\model\Visit as _Visit;
 use app\index\model\Cem as _Cem;
 use app\index\model\CemInfo as _Info;
-
+use think\Db;
 class Tomb  extends Root {
 
     public function _initialize() {
@@ -68,33 +68,50 @@ class Tomb  extends Root {
         return $this->fetch();
     }
 
-    public function reserve ($id) {
-        if ($_POST) {
+    public function reserve () {
+        /*if ($_POST) {
             $contacts = [];
             $dead = [];
             foreach ($_POST as $k => $v) {
-                if (strstr($k, 'contacts_')) {
-                    $contacts[str_replace('contacts_', '', $k)] = $v;
-                }
-
                 if (strstr($k, 'dead_')) {
                     $dead[str_replace('dead_', '', $k)] = $v;
                 }
             }
             // 判断重复
-            $_POST['contacts_id'] = _Contacts::getLastInsID($contacts);
-            //$_POST['pay_status']  = 2;
-            $_POST['status']  = 39;
-            _Info::where('id', $id)->update($_POST);
-            $dead['cem_info_id'] = $id;
-            _Dead::insert($dead);
-
-            // log
-
-            die('<script>alert("操作成功"); window.parent.hide_all_tc();</script>');
-        }
-        $data = _Info::get($id);
-        if ($data['contacts_id']) {
+            $user=DB::table('contacts')->field('id')->where(['name'=>$_POST['contacts_name'],'tel'=>$_POST['contacts_tel']])->find();
+            if($user){
+                $_POST['contacts_id']=$user['id'];
+                DB::table('contacts')->where('id', $user['id'])->update(['idcard'=>$_POST['contacts_idcard']]);
+                //$_POST['pay_status']  = 2;
+                $_POST['status']  = 39;
+                _Info::where('id', $id)->update($_POST);
+                $dead['cem_info_id'] = $id;
+                _Dead::insert($dead);
+                die('<script>alert("操作成功"); window.parent.hide_all_tc();</script>');
+            }else{
+                Db::startTrans();
+                try{
+                    $aid=Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
+                    $LastInsID =Db::table('contacts')->getLastInsID();
+                    Db::table('visit_log')->insert(['contacts_id'=>$LastInsID,'transaction_status'=>1,'transaction_suc_date'=>time(),'receiver'=>$_POST['salesman']]);
+                    // 提交事务
+                    Db::commit();
+                    $_POST['contacts_id'] = $LastInsID;
+                    //$_POST['pay_status']  = 2;
+                    $_POST['status']  = 39;
+                    _Info::where('id', $id)->update($_POST);
+                    $dead['cem_info_id'] = $id;
+                    _Dead::insert($dead);
+                    die('<script>alert("操作成功"); window.parent.hide_all_tc();</script>');
+                } catch (\Exception $e) {
+                    // 回滚事务
+                    Db::rollback();
+                    die('<script>alert("操作失败"); window.parent.hide_all_tc();</script>');
+                }
+            }
+        }*/
+        $data = _Info::reserve($_POST);
+        /*if ($data['contacts_id']) {
             $contacts = _Contacts::get($data['contacts_id']);
         }
 
@@ -102,13 +119,69 @@ class Tomb  extends Root {
         $this->assign('dead', _Dead::where('cem_info_id', $id)->select());
         $this->assign('data', $data);
         $this->assign('pay_status', _Info::pay_status());
-        $this->view->engine->layout(false);
-        return $this->fetch();
+        $this->view->engine->layout(false);*/
+        return $data;
     }
-
-    public function select_buy_type ($id = '') {
-        $data = _Info::get($id);
-        if ($data['contacts_id']) {
+    public function reserve_add(){
+        
+        // 判断重复
+        $user=Db::table('contacts')->field('id')->where(['name'=>$_POST['contacts_name'],'tel'=>$_POST['contacts_tel']])->find();
+        //print_r($user);exit;
+        if($user){
+            Db::startTrans();
+            try{
+                Db::table('contacts')->where(['id'=>$user['id']])->update(['idcard'=>$_POST['contacts_idcard']]); 
+                $data['status']  = 39;
+                $data['reserve_date']=strtotime($_POST['reserve_date']);
+                $data['remind_date']=strtotime($_POST['remind_date']);
+                $data['reserve_money']=$_POST['reserve_money'];
+                $data['unpaid_money']=$_POST['unpaid_money'];
+                $data['salesman']=$_POST['salesman'];
+                $data['update_by']=session('id');
+                $data['create_time']=$_POST['create_time'];
+                $data['contacts_id']=$user['id'];
+                $ss=Db::table('cem_info')->where(['id'=>$_POST['seid']])->update($data);
+                $dead['cem_info_id'] = $_POST['seid'];
+                Db::table('dead')->insert($dead);
+                // 提交事务
+                Db::commit();
+                return 'ok';
+            } catch (\Exception $e) {
+                // 回滚事务
+                Db::rollback();
+                return 'no';
+            }
+        }else{
+            Db::startTrans();
+            try{
+                Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
+                $LastInsID =Db::table('contacts')->getLastInsID();
+                Db::table('visit_log')->insert(['contacts_id'=>$LastInsID,'transaction_status'=>1,'transaction_suc_date'=>time(),'receiver'=>$_POST['salesman']]);
+                $data['status']  = 39;
+                $data['reserve_date']=strtotime($_POST['reserve_date']);
+                $data['remind_date']=strtotime($_POST['remind_date']);
+                $data['reserve_money']=$_POST['reserve_money'];
+                $data['unpaid_money']=$_POST['unpaid_money'];
+                $data['salesman']=$_POST['salesman'];
+                $data['update_by']=session('id');
+                $data['create_time']=$_POST['create_time'];
+                $data['contacts_id'] = $LastInsID;
+                _Info::where('id', $_POST['seid'])->update($data);
+                $dead['cem_info_id'] = $_POST['seid'];
+                _Dead::insert($dead);
+                // 提交事务
+                Db::commit();
+                return 'ok';
+            } catch (\Exception $e) {
+                // 回滚事务
+                Db::rollback();
+                return 'no';
+            }
+        }
+    }
+    public function select_buy_type () {
+        $data = _Info::select_buy_type($_POST);
+        /*if ($data['contacts_id']) {
             $contacts = Contacts::get($data['contacts_id']);
         }
 
@@ -116,8 +189,8 @@ class Tomb  extends Root {
         $this->assign('dead', _Dead::where('cem_info_id', $id)->select());
         $this->assign('data', $data);
         $this->assign('pay_status', _Info::pay_status());
-        $this->view->engine->layout(false);
-        return $this->fetch();
+        $this->view->engine->layout(false);*/
+        return $data;
     }
 
 

@@ -1,3 +1,8 @@
+<style type="text/css">
+    .ktanc div{
+        margin-left: 82px;
+    }
+</style>
 <div class="cont">
     <form class="add_row">
         <fieldset>
@@ -43,7 +48,6 @@
                 </select>
                 <button type="button" class="contc show_all">显示全部</button>
 
-                <div class="contc">退出</div>
            </div>
         </fieldset>
 
@@ -54,20 +58,11 @@
     </div>
 </div>
 </div>
-
-
-<iframe frameborder = "0" scrolling = "no" class="whtan tc1" src=""  ></iframe>
+<!-- <iframe frameborder = "0" scrolling = "no" class="whtan tc1" src=""  ></iframe>
 <iframe frameborder = "0" scrolling = "no" class="jsdtan tc2" src=""  ></iframe>
-
-
-
-<iframe frameborder = "0" scrolling = "no" class="ktan tc3" src=""  ></iframe>
-
-
-
-
-
-
+<iframe frameborder = "0" scrolling = "no" class="ktan tc3" src=""  ></iframe> -->
+<script src="__JS__/layer/layer.js"></script>
+<script language="javascript" type="text/javascript" src="__JS__/My97DatePicker/WdatePicker.js"></script>
     <script type="text/javascript">
 
         var id;
@@ -78,10 +73,29 @@
             row_status = $(this).attr('row_status');
 
             if (row_status == 38) {
-
-
-                $('.tc3').attr('src', "{:url('select_buy_type', '', '')}/id/" + id);
-                $('.tc3').show();
+                imghtml = layer.load(0, {
+                  shade: [0.5] //0.1透明度的白色背景
+                });
+                $.ajax({
+                    type        : 'post',
+                    url         : '{:url('select_buy_type')}',
+                    dataType    : 'json',
+                    data        : {
+                        id : id,
+                    },
+                    success     : function(g){
+                        layer.close(imghtml);
+                         //页面层
+                        imhtml=layer.open({
+                          type: 1,
+                          title: '购墓方式', //不显示标题
+                          skin: 'layui-layer-rim', //加上边框
+                          area: ['490px', '365px'], //宽高
+                          content: g
+                        });
+                    }
+                });
+               
             }
             // $('.tc1').attr('src', "{:url('sale_info', '', '')}/id/" + id);
             //
@@ -94,9 +108,119 @@
         }
 
         function ydmw () {
-            hide_all_tc();
-            $('.tc1').attr('src', "{:url('reserve', '', '')}/id/" + id);
-            $('.tc1').show();
+            var html = layer.load(0, {
+              shade: [0.5] //0.1透明度的白色背景
+            });
+            layer.close(imhtml);
+            $.ajax({
+                type        : 'post',
+                url         : '{:url('reserve')}',
+                dataType    : 'json',
+                data        : {
+                    id : id,
+                },
+                success     : function(g){
+                    layer.close(html);
+                     //页面层
+                    vhtml=layer.open({
+                      type: 1,
+                      title: '墓位预订', //不显示标题
+                      skin: 'layui-layer-rim', //加上边框
+                      area: ['858px', '608px'], //宽高
+                      content: g
+                    });
+                }
+            });
+            /*$('.tc1').attr('src', "{:url('reserve', '', '')}/id/" + id);
+            $('.tc1').show();*/
+        }
+        function closeres(){
+            layer.close(vhtml);
+        }
+        function subres(){
+            layer.close(vhtml);
+            var html = layer.load(0, {
+              shade: [0.5] //0.1透明度的白色背景
+            });
+            var seid=$("#seid").val();
+            var reserve_date=$("input[name='reserve_date']").val();
+            var remind_date=$("input[name='remind_date']").val();
+            var money=$("input[name='money']").val();
+            var reserve_money=$("input[name='reserve_money']").val();
+            var unpaid_money=$("input[name='unpaid_money']").val();
+            var dead_name=$("input[name='dead_name']").val();
+            var dead_relationship=$("#dead_relationship option:selected").val();
+            var contacts_name=$("input[name='contacts_name']").val();
+            var contacts_postcode=$("input[name='contacts_postcode']").val();
+            var contacts_idcard=$("input[name='contacts_idcard']").val();
+            var contacts_sex=$("#contacts_sex option:selected").val();
+            var contacts_tel=$("input[name='contacts_tel']").val();
+            var contacts_phone=$("input[name='contacts_phone']").val();
+            var contacts_workplace=$("input[name='contacts_workplace']").val();
+            var contacts_email=$("input[name='contacts_email']").val();
+            var contacts_address=$("input[name='contacts_address']").val();
+            var salesman=$("#salesman option:selected").val();
+            var beizhu=$("input[name='beizhu']").val();
+            $.ajax({
+                type        : 'post',
+                url         : '{:url('reserve_add')}',
+                dataType    : 'json',
+                data        : {
+                    seid : seid,
+                    reserve_date : reserve_date,
+                    remind_date : remind_date,
+                    money : money,
+                    reserve_money : reserve_money,
+                    unpaid_money : unpaid_money,
+                    dead_name : dead_name,
+                    dead_relationship : dead_relationship,
+                    contacts_name : contacts_name,
+                    contacts_postcode : contacts_postcode,
+                    contacts_idcard : contacts_idcard,
+                    contacts_sex : contacts_sex,
+                    contacts_tel : contacts_tel,
+                    contacts_phone : contacts_phone,
+                    contacts_workplace : contacts_workplace,
+                    contacts_email : contacts_email,
+                    contacts_address : contacts_address,
+                    salesman : salesman,
+                    beizhu : beizhu,
+                },
+                success     : function(g){
+                    if(g == 'ok'){
+                        layer.close(html);
+                        layer.msg('设置成功');
+                    }else{
+                        layer.close(html);
+                        layer.msg('设置失败');
+                    }
+                }
+            });
+        }
+        function zjgm(){
+            var html = layer.load(0, {
+              shade: [0.5] //0.1透明度的白色背景
+            });
+            layer.close(imhtml);
+            $.ajax({
+                type        : 'post',
+                url         : '{:url('reserve')}',
+                dataType    : 'json',
+                data        : {
+                    id : id,
+                },
+                success     : function(g){
+                    layer.close(html);
+                     //页面层
+                    vhtml=layer.open({
+                      type: 1,
+                      title: '墓位预订', //不显示标题
+                      skin: 'layui-layer-rim', //加上边框
+                      area: ['858px', '608px'], //宽高
+                      content: g
+                    });
+                }
+            });
         }
     </script>
 

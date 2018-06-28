@@ -56,7 +56,7 @@
 
 <iframe frameborder = "0" scrolling = "no" class="ydtan tc1" src=""  ></iframe>
 <iframe frameborder = "0" scrolling = "no" class="whtan tc2" src=""  ></iframe>
-
+<script src="__JS__/layer/layer.js"></script>
 
 
 
@@ -77,7 +77,10 @@
             $('.tc2').show();
         }
         function setqx(){
-            alert(id);
+            //loading层
+              var index = layer.load(1, {
+                shade: [0.1,'#fff'] //0.1透明度的白色背景
+              });
             $.ajax({
                 type        : 'post',
                 url         : '{:url('Tomb/ten_setqx')}',
@@ -85,10 +88,12 @@
                 data        : {id : id},
                 success     : function(e){
                     if (e == 'ok') {
+                        layer.close(index);
                       layer.msg('设置成功',{offset: '300px',time: 2000,icon: 1},function () {
                                window.location.reload();
                             });
                     } else {
+                        layer.close(index);
                       layer.msg('设置失败',{offset: '300px',time: 2000,icon: 2},function () {
                                window.location.reload();
                             });

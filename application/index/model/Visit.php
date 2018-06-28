@@ -6,6 +6,7 @@ use app\index\model\Contacts;
 use app\index\model\Tpl as _Tpl;
 use app\index\model\ComeChannel as _Channel;
 use app\index\model\Staff as _Staff;
+use app\index\model\Cem as _Cem;
 use think\Db;
 class Visit extends Root {
 
@@ -19,6 +20,13 @@ class Visit extends Root {
         return self::alias('a')->join('contacts b','a.contacts_id = b.id')->where($map)->paginate(20);
     }
     static public function open_visit_log($info){
+        $arr=self::alias('a')->join('contacts b','a.contacts_id = b.id')->join('cem_info c','a.contacts_id = c.contacts_id')->where(['a.contacts_id'=>$info])->select();
+        $staff=_Staff::wlistf();
+        $cem_model=_Tpl::tlist(8);//墓位类型
+        $cem_status=_Tpl::tlist(9);//墓位状态
+        $cem_sty=_Tpl::tlist(2);//墓位样式
+        $cem_mat=_Tpl::tlist(3);//墓位材料
+        $cem_list= _Cem::wlist();
         $html='';
         $html.='<div class="yjtan" style="display: block;">';
                 $html.='<div class="yjtana">';
@@ -41,19 +49,21 @@ class Visit extends Root {
                                 $html.='</tr>';
                             $html.='</thead>';
                             $html.='<tbody>';
+                            foreach ($arr as $key => $v) {
                                 $html.='<tr>';
-                                    $html.='<td>杨先生</td>';
-                                    $html.='<td>陈丽波</td>';
-                                    $html.='<td>崇安园B区3排0020号</td>';
-                                    $html.='<td>0.84</td>';
-                                    $html.='<td>0.62</td>';
-                                    $html.='<td>0.5208</td>';
-                                    $html.='<td>12800</td>';
-                                    $html.='<td>传统-01</td>';
-                                    $html.='<td>已定购</td>';
-                                   $html.=' <td>山西黑 G654</td>';
-                                    $html.='<td>双人墓</td>';
+                                    $html.='<td>'.$v['name'].'</td>';
+                                    $html.='<td>'.$staff[$v['receiver']]['nickname'].'</td>';
+                                    $html.='<td>'.$v['long_title'].'</td>';
+                                    $html.='<td>'.$v['width'].'</td>';
+                                    $html.='<td>'.$v['length'].'</td>';
+                                    $html.='<td>'.$v['acreage'].'</td>';
+                                    $html.='<td>'.$v['price'].'</td>';
+                                    $html.='<td>'.$cem_model[$v['model']]['title'].'</td>';
+                                    $html.='<td>'.$cem_status[$v['status']]['title'].'</td>';
+                                    $html.=' <td>'.$cem_mat[$v['material']]['title'].'</td>';
+                                    $html.='<td>'.$cem_sty[$v['style']]['title'].'</td>';
                                 $html.='</tr>';
+                            }
                             $html.='</tbody>';
                         $html.='</table>';
                     $html.='</div>';
@@ -69,38 +79,32 @@ class Visit extends Root {
                               $html.='<p>墓位样式</p>';
                             $html.='</div>';
                             $html.='<div class="yjtanbb">';
-                               $html.='<select>';
-                                   $html.=' <option>天福园</option>';
+                                $html.='<select name="cem_id" class="cem_id_row">';
+                                   $html.='<option value="">请选择</option>';
+                                   foreach ($cem_list as $key => $vo) {
+                                       $html.='<option value="'.$vo['id'].'">'.$vo['title'].'</option>';
+                                   }
                                 $html.='</select>';
-                                $html.='<select>';
-                                    $html.='<option>A区</option>';
+                                $html.='<select name="cem_area_id" class="cem_area_id_row">';
+                                    $html.='<option value="0">请选择</option>';
                                 $html.='</select>';
-                                $html.='<select>';
-                                    $html.='<option>1排</option>';
+                                $html.='<select name="cem_row_id" class="cem_row_id_row">';
+                                    $html.='<option value="0">请选择</option>';
                                 $html.='</select>';
-                                $html.='<select>';
-                                    $html.='<option>单人墓</option>';
+                                $html.='<select name = "style" class="row_style">';
+                                    $html.='<option value="0">请选择</option>';
+                                    foreach ($cem_sty as $key => $vo) {
+                                        $html.='<option value="'.$vo['id'].'">'.$vo['title'].'</option>';
+                                    }
                                 $html.='</select>';
-                                $html.='<div class="yjtanbc">显示全部墓位</div>';
-                                $html.='<div class="yjtanbc">刷新</div>';
-                                $html.='<div class="yjtanbc">退出</div>';
+                                $html.='<div class="yjtanbc" onclick="setopen('.$info.')" style="cursor:pointer">显示墓位</div>';
+                                $html.='<div class="yjtanbc" onclick="setreload()" style="cursor:pointer">刷新</div>';
                             $html.='</div>';
                         $html.='</fieldset>';
                     $html.='</form>';
                 $html.='</div>';
-                $html.='<div class="yjtanc">';
-                    $html.='<div class="yjtanca" onclick="ydjtan()">';
-                        $html.='<div class="yjtancb">';
-                            $html.='<img src="../images/ding_03.png">';
-                        $html.='</div>';
-                        $html.='<p>崇安园A区1排0003号</p>';
-                    $html.='</div>';
-                    $html.='<div class="yjtanca" onclick="ydjtan()">';
-                        $html.='<div class="yjtancb">';
-                            $html.='<img src="../images/ding_03.png">';
-                        $html.='</div>';
-                        $html.='<p>崇安园A区1排0003号</p>';
-                    $html.='</div>  ';                
+                $html.='<div class="yjtanc" id="xianshi">';
+                               
                 $html.='</div>';
                 $html.='<div class="yjtand">';
                     $html.='<div class="yjtanda">墓位当前销售数量总览：空墓：3476</div>';
@@ -110,6 +114,98 @@ class Visit extends Root {
                $html.=' </div>';
            $html.=' </div>';
         return $html;
+    }
+    static public function setopen_visit_log($map,$id){
+        $arr=self::table('cem_info')->field('id,long_title,status')->where($map)->order('cem_id', 'asc')->column('*', 'id');
+        foreach ($arr as $key => $value) {
+            if($value['status'] != '38'){
+                $html.='<div class="yjtanca" onclick="set_img('.$value['id'].','.$id.')" style="cursor:pointer">';
+            }else{
+                $html.='<div class="yjtanca">';
+            }
+                $html.='<div class="yjtancb">';
+                if($value['status'] == '38'){
+                    $html.='<img src="/index/images/kong.png">';
+                }else if($value['status'] == '40'){
+                    $html.='<img src="/index/images/ding_03.png">';
+                }else if($value['status'] == '39'){
+                    $html.='<img src="/index/images/yu_03.png">';
+                }else if($value['status'] == '41'){
+                    $html.='<img src="/index/images/zang_03.png">';
+                }
+                $html.='</div>';
+                $html.='<p>'.$value['long_title'].'</p>';
+            $html.='</div>';
+        }
+        return $html;
+    }
+    static public function set_visit_img_mw($info){
+        if (Db::table('cem_info')->where('id', $info['id'])->update(['contacts_id'=>$info['cid']]) !== false) {
+            return RE_SUCCESS;
+        }
+        return RE_ERROR;
+    }
+    static public function set_visit_img($info){
+        $cem_sty=_Tpl::tlist(2);//墓位样式
+        $cem_mat=_Tpl::tlist(3);//墓位材料
+        $arr=self::table('cem_info')->where(['id'=>$info['id']])->find();
+        $contacts=self::table('contacts')->where(['id'=>$info['cid']])->find();
+            $html='';
+            $html.='<div class="ydjtan" style="display:block;">';
+                $html.='<div class="tanf">';
+                   $html.=' <form>';
+                        $html.='<fieldset>';
+                            $html.='<legend>墓位信息</legend>';
+                            $html.='<div class="tanfa">';
+                                $html.='<p>您选择的是：'.$arr['long_title'].' | 墓位样式：'.$cem_sty[$arr['style']]['title'].'</p>';
+                                $html.='<div class="tanfb">';
+                                    $html.='<div>墓位长：'.$arr['width'].'米</div>';
+                                    $html.='<div>墓位宽：'.$arr['length'].'米</div>';
+                                    $html.='<div>墓位面积：'.$arr['acreage'].'平方</div>';
+                                    $html.='<div>墓位材质：'.$cem_mat[$arr['material']]['title'].'</div>';
+                                    $html.='<div>墓位状态：已定购</div>';
+                                $html.='</div>';
+                            $html.='</div>';
+                        $html.='</fieldset>';
+                    $html.='</form>';
+                $html.='</div>';
+                $html.='<div class="tang">';
+                    $html.='<form>';
+                        $html.='<fieldset>';
+                            $html.='<legend>墓位定购信息</legend>';
+                            $html.='<div class="tanga">';
+                                $html.='<div class="tangb">';
+                                    $html.='<div>墓位费：111元</div>';
+                                    $html.='<div>应付（已付）管理费总额：0.00元</div>';
+                                    $html.='<div>应付（已付）款总额：8,900.00元</div>';
+                                    $html.='<div>是否已交费：已付款</div>';
+                                    $html.='<div>使用开始日期：2009-03-28</div>';
+                                $html.='</div>';
+                                $html.='<div class="tangc">';
+                                    $html.='<div>联系人：'.$contacts['name'].'</div>';
+                                    $html.='<div>身份证：'.$contacts['idcard'].'</div>';
+                                    $html.='<div>联系电话：'.$contacts['tel'].'</div>';
+                                    $html.='<div>购墓日期：</div>';
+                                    $html.='<div>使用结束日期：2029-03-28</div>';
+                                $html.='</div>';
+                                $html.='<div class="tangd">';
+                                    $html.='<div class="tanfgda">';
+                                        $html.='<p>备注：</p>';
+                                        
+                                    $html.='</div>';
+                                    $html.='<textarea></textarea>';
+                                $html.='</div>  ';                            
+                            $html.='</div>';
+                        $html.='</fieldset>';
+                    $html.='</form>';
+                $html.='</div>';
+                $html.='<div class="ydjtanbot">';
+                    $html.='<div class="ydjtand">';
+                        $html.='<div class="ydjtanbota" onclick="setmw('.$info['id'].','.$info['cid'].')" style="cursor:pointer">选定此墓位信息</div>';
+                   $html.=' </div>';
+                $html.='</div>';
+           $html.=' </div>';
+       return $html;
     }
     static public function set_visit_log($info){
         $arr=self::alias('a')->join('contacts b','a.contacts_id = b.id')->where(['a.contacts_id'=>$info])->find();

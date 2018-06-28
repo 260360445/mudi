@@ -34,7 +34,9 @@ class Staff extends Root {
     static public function wlist () {
         return self::select();
     }
-
+    static public function wlistf () {
+        return self::column('*', 'id');
+    }
     static public function edit ($id, $info) {
         // wcc($info);
         if (isset($info['pwd']) && $info['pwd']) {
