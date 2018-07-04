@@ -78,12 +78,46 @@ class Finan  extends Root {
     }
     //墓位定购收费确认
     public function muweis () {
-        $this->assign('glist', _Gset::wlist());
+        $this->assign('row_staff', _Staff::wlistf());
+        $this->assign('cem_list', _Cem::wlist());
+        $this->assign('sysyst', _Tpl::wlists());
+        $request = Request::instance();
+        $cem_id = $request->only(['cem_id']);
+        $cem_area_id = $request->only(['cem_area_id']);
+        $cem_row_id = $request->only(['cem_row_id']);
+        $map = ['a.status'=>44,'a.sta'=>3];
+        if ($cem_id['cem_id']) {
+            $map['a.cem_id'] = $cem_id['cem_id'];
+        }
+        if ($cem_area_id['cem_area_id']) {
+            $map['a.cem_area_id'] = $cem_area_id['cem_area_id'];
+        }
+        if ($cem_row_id['cem_row_id']) {
+            $map['a.cem_row_id'] = $cem_row_id['cem_row_id'];
+        }
+        $this->assign('list', _Info::wlistt($map));
         return $this->fetch();
     }
     //墓位定购退购确认
     public function muweist () {
-        $this->assign('glist', _Gset::wlist());
+        $this->assign('row_staff', _Staff::wlistf());
+        $this->assign('cem_list', _Cem::wlist());
+        $this->assign('sysyst', _Tpl::wlists());
+        $request = Request::instance();
+        $cem_id = $request->only(['cem_id']);
+        $cem_area_id = $request->only(['cem_area_id']);
+        $cem_row_id = $request->only(['cem_row_id']);
+        $map = ['a.status'=>44,'a.sta'=>4];
+        if ($cem_id['cem_id']) {
+            $map['a.cem_id'] = $cem_id['cem_id'];
+        }
+        if ($cem_area_id['cem_area_id']) {
+            $map['a.cem_area_id'] = $cem_area_id['cem_area_id'];
+        }
+        if ($cem_row_id['cem_row_id']) {
+            $map['a.cem_row_id'] = $cem_row_id['cem_row_id'];
+        }
+        $this->assign('list', _Info::wlistt($map));
         return $this->fetch();
     }
     //碑文杂费收费确认

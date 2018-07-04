@@ -130,7 +130,7 @@ class Visit extends Root {
                     $html.='<img src="/index/images/ding_03.png">';
                 }else if($value['status'] == '39'){
                     $html.='<img src="/index/images/yu_03.png">';
-                }else if($value['status'] == '41'){
+                }else if($value['status'] == '44'){
                     $html.='<img src="/index/images/zang_03.png">';
                 }
                 $html.='</div>';

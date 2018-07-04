@@ -1,111 +1,196 @@
 <div class="cont">
-          <form>
-            <fieldset>
-              <legend>墓位预订</legend>
-              
-               <div class="conta">
-                  <p>选择墓园</p>
-                  <p>选择墓区</p>
-                  <p>选择墓排</p>
-                  
-                 
-               </div>
-               <div class="contb">
-                   <select>
-                  <option>天福园</option>
-                </select>
-                <select>
-                  <option>A区</option>
-                </select>
-                <select>
-                  <option>1排</option>
-                </select>               
-                <div class="contc">显示全部墓位退购信息</div>
-                    <div class="contc">退出</div>
-               </div>
-            </fieldset>
-            
-          </form>
-          <div class="conbiao">
-            <table class="table table-bordered">
-              <!--<caption>边框表格布局</caption>-->
-              <thead>
-                <tr>
-                  <th>墓位全称</th>
-                  <th>墓位状态</th>
-                  <th>购墓状态</th>
-                  <th>是否已付费</th>
-                  <th>购墓日期</th>
-                  <th>使用开始日期</th>
-                  <th>使用结束日期</th>             
-                  <th>墓位原价</th>
-                  <th>实际墓位费</th>
-                  <th>预订金额</th>
-                  <th>定购应付总额</th>
-                  <th>年管理费</th>
-                  <th>管理费缴纳年数</th>
-                  <th>管理费缴纳总额</th>
-                  <th>联系人姓名</th>
-                  <th>故者关系名称</th>             
-                  <th>性别</th>
-                  <th>身份证号</th>
-                  <th>联系电话</th>
-                  <th>手机</th>
-                  <th>邮政编码</th>
-                  <th>家庭住址</th>
-                  <th>工作单位</th>
-                  <th>电子邮件</th>
-                  <th>备注</th>
-                  <th>操作员</th>  
-                  <th>操作员姓名</th>
-                  <th>业务员</th>
-                  <th>业务员姓名</th>
-                  <th>墓位号</th>  
-                  <th>当日销售流水号</th>
-                  <th>合同编号</th>
-                
-                  
-                 
-                  
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Cem2017010812355</td>
-                  <td>已下葬</td>
-                  <td>已下葬</td>
-                  <td>刘丛礼</td>
-                  <td>男</td>
-                  <td>2017-1-12</td>
-                  <td>已落葬</td>
-                  <td>购买家属</td> 
-                  <td>2017-1-12</td>
-                  <td>2017-1-12</td>
-                  <td>已下葬</td>
-                  <td>刘丛礼</td>
-                  <td>男</td>
-                  <td>2017-1-12</td>
-                  <td>已落葬</td>
-                  <td>购买家属</td> 
-                   <td>2017-1-12</td>
-                  <td>2017-1-12</td>
-                  <td>已下葬</td>
-                  <td>刘丛礼</td>
-                  <td>男</td>
-                  <td>2017-1-12</td>
-                  <td>已落葬</td>
-                  <td>购买家属</td> 
-                   <td>2017-1-12</td>
-                  <td>2017-1-12</td>
-                  <td>已下葬</td>
-                  <td>刘丛礼</td>
-                  <td>男</td>
-                 <td>2017-1-12</td>
-                  <td>已下葬</td>
-                  <td>刘丛礼</td>
-                </tr>
-               
-              </tbody>
-            </table>
-          </div>
-        </div>
+  <form class="add_row">
+    <fieldset>
+      <legend>墓位范围</legend>
+      
+       <div class="conta">
+          <p>选择墓园</p>
+          <p>选择墓区</p>
+          <p>选择墓排</p>
+          
+         
+       </div>
+       <div class="contb">
+          <select name="cem_id" class="cem_id">
+             <option value="">请选择</option>
+             {foreach $cem_list as $k => $vo}
+                  <option value="{$vo.id}">{$vo.title}</option>
+             {/foreach}
+          </select>
+         <select name="cem_area_id" class="cem_area_id">
+               <option value="0">请选择</option>
+          </select>
+          <select name="cem_row_id" class="cem_row_id">
+             <option value="0">请选择</option>
+          </select>               
+        <button type="button" class="contc show_all">显示全部墓位定购信息</button>
+       </div>
+    </fieldset>
+    
+  </form>
+  <div class="conbiao">
+    <table class="table table-bordered">
+      <!--<caption>边框表格布局</caption>-->
+      <thead>
+        <tr>
+          <th>墓位全称</th>
+          <th>墓位状态</th>
+          <th>购墓状态</th>
+          <th>是否已付费</th>
+          <th>购墓日期</th>
+          <th>使用开始日期</th>
+          <th>使用结束日期</th>             
+          <th>墓位原价</th>
+          <th>实际墓位费</th>
+          <th>预订金额</th>
+          <th>定购应付总额</th>
+          <th>年管理费</th>
+          <th>管理费缴纳年数</th>
+          <th>管理费缴纳总额</th>
+          <th>联系人姓名</th>
+          <th>故者关系名称</th>             
+          <th>性别</th>
+          <th>身份证号</th>
+          <th>联系电话</th>
+          <th>手机</th>
+          <th>邮政编码</th>
+          <th>家庭住址</th>
+          <th>工作单位</th>
+          <th>电子邮件</th>
+          <th>备注</th>
+          <th>操作员</th>  
+          <th>操作员姓名</th>
+          <th>业务员</th>
+          <th>业务员姓名</th>
+          <th>墓位号</th>  
+          <th>当日销售流水号</th>
+          <th>合同编号</th>
+        </tr>
+      </thead>
+      <tbody>
+      {volist name="list" id="vo"}
+        <tr>
+          <td>{$vo['long_title']}</td>
+          <td>已预订</td>
+          <td>
+            {if condition="$vo['pay_status'] eq 1"}
+              已购墓
+            {else/} 
+              已预订
+            {/if}
+          </td>
+          <td>已付款</td>
+          <td>{$vo['settime']|date="Y-m-d",###}</td>
+          <td>{$vo['starttime']|date="Y-m-d",###}</td>
+          <td>{$vo['endtime']|date="Y-m-d",###}</td>
+          <td>{$vo['price']}</td> 
+          <td>{$vo['money']}</td>
+          <td>{$vo['reserve_money']}</td>
+          <td>{$vo['pay_sum_money']}</td>
+          <td>{$vo['manage_money']}</td>
+          <td>{$vo['manage_year']}</td>
+          <td>{$vo['manage_sum_money']}</td>
+          <td>{$vo['name']}</td>
+          <td>{$sysyst[$vo['relationship']]['title']}</td> 
+          <td>
+            {if condition="$vo['sex'] eq 1"}
+              男
+            {else/} 
+              女
+            {/if}
+          </td>
+          <td>{$vo['idcard']}</td>
+          <td>{$vo['tel']}</td>
+          <td>{$vo['phone']}</td>
+          <td>{$vo['workplace']}</td>
+          <td>{$vo['address']}</td>
+          <td>{$vo['postcode']}</td>
+          <td>{$vo['email']}</td>
+          <td>{$vo['beizhu']}</td>
+          <td>{$row_staff[$vo['update_by']]['nickname']}</td>
+          <td>{$row_staff[$vo['update_by']]['nickname']}</td>
+          <td>{$row_staff[$vo['salesman']]['nickname']}</td>
+          <td>{$row_staff[$vo['salesman']]['nickname']}</td>
+          <td>{$vo['mwnum']}</td>
+          <td>{$vo['lnum']}</td>
+          <td>{$vo['hnum']}</td>
+        </tr>
+      {/volist} 
+      </tbody>
+    </table>
+  </div>
+</div>
+<script type="text/javascript">
+$('.show_all').click(function(){
+var cem_id = $('.add_row').find('.cem_id').val();
+var cem_area_id = $('.add_row').find('.cem_area_id').val();
+var cem_row_id = $('.add_row').find('.cem_row_id').val();
+window.location.href="{:url('/index/Finan/muweist/cem_id/"+cem_id+"/cem_area_id/"+cem_area_id+"/cem_row_id/"+cem_row_id+"')}";
+});
+function get_row (_this, _select_id) {
+  // var _select_id = _select_id ? _select_id : 0;
+  let cem_area_id = _this.val();
+  let form = _this.parents('form');
+  if (cem_area_id) {
+      $.ajax({
+          type        : 'GET',
+          url         : '{:url('Cem/row_wlist')}',
+          dataType    : 'json',
+          data        : {
+              cem_area_id : cem_area_id
+          },
+          success     : function(e){
+              let html = '<option value = "0">请选择</option>';
+              for (i in e) {
+                  html += '<option ';
+                  if (_select_id == e[i]['id']) {
+                      html += 'selected';
+                  }
+                  html += ' value="'+e[i]['id']+'">'+e[i]['title']+'</option>';
+              }
+              form.find('.cem_row_id').html(html);
+          },
+          error       : function () {
+
+          },
+      });
+  }
+}
+function get_area (_this, _select_id) {
+  // var _select_id = _select_id ? _select_id : 0;
+  let cem_id = _this.val();
+  let form = _this.parents('form');
+  if (cem_id) {
+      $.ajax({
+          type        : 'GET',
+          url         : '{:url('Cem/area_wlist')}',
+          dataType    : 'json',
+          data        : {
+              cem_id : cem_id
+          },
+          success     : function(e){
+              let html = '<option value = "0">请选择</option>';
+              for (i in e) {
+                  html += '<option ';
+                  if (_select_id == e[i]['id']) {
+                      html += 'selected';
+                  }
+                  html += ' value="'+e[i]['id']+'">'+e[i]['title']+'</option>';
+              }
+              form.find('.cem_area_id').html(html);
+          },
+          error       : function () {
+
+          },
+      });
+  }
+}
+
+$('.cem_id').change(function(){
+  get_area($(this), '-1');
+});
+
+$('.cem_area_id').change(function(){
+  get_row($(this), '-1');
+});
+</script>

@@ -72,7 +72,7 @@ class Tomb  extends Root {
         $data = _Info::reserve($_POST);
         return $data;
     }
-    public function reserve_add(){
+    public function reserve_add(){//预订墓位
         
         // 判断重复
         $user=Db::table('contacts')->field('id')->where(['name'=>$_POST['contacts_name'],'tel'=>$_POST['contacts_tel']])->find();
@@ -92,6 +92,9 @@ class Tomb  extends Root {
                 $data['create_time']=$_POST['create_time'];
                 $data['contacts_id']=$user['id'];
                 $data['beizhu']=$_POST['beizhu'];
+                $data['mwnum']=$_POST['seid'];
+                $data['lnum']=date('YmdHis',time());
+                $data['hnum']='TQ'.date('YmdHis',time());
                 $ss=Db::table('cem_info')->where(['id'=>$_POST['seid']])->update($data);
                 $dead['cem_info_id'] = $_POST['seid'];
                 $dead['relationship'] = $_POST['dead_relationship'];
@@ -121,6 +124,9 @@ class Tomb  extends Root {
                 $data['update_by']=session('id');
                 $data['create_time']=$_POST['create_time'];
                 $data['beizhu']=$_POST['beizhu'];
+                $data['mwnum']=$_POST['seid'];
+                $data['lnum']=date('YmdHis',time());
+                $data['hnum']='TQ'.date('YmdHis',time());
                 $data['contacts_id'] = $LastInsID;
                 _Info::where('id', $_POST['seid'])->update($data);
                 $dead['cem_info_id'] = $_POST['seid'];
@@ -145,7 +151,7 @@ class Tomb  extends Root {
             Db::startTrans();
             try{
                 $sss=Db::table('contacts')->where(['id'=>$user['id']])->update(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]); 
-                $data['status']  = 40;
+                $data['status']  = 44;
                 $data['settime']=strtotime($_POST['settime']);
                 $data['starttime']=strtotime($_POST['starttime']);
                 $data['endtime']=strtotime($_POST['endtime']);
@@ -174,7 +180,7 @@ class Tomb  extends Root {
                 Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
                 $LastInsID =Db::table('contacts')->getLastInsID();
                 Db::table('visit_log')->insert(['contacts_id'=>$LastInsID,'transaction_status'=>1,'transaction_suc_date'=>time(),'receiver'=>$_POST['salesman']]);
-                $data['status']  = 40;
+                $data['status']  = 44;
                 $data['settime']=strtotime($_POST['settime']);
                 $data['starttime']=strtotime($_POST['starttime']);
                 $data['endtime']=strtotime($_POST['endtime']);
@@ -206,7 +212,7 @@ class Tomb  extends Root {
             Db::startTrans();
             try{
                 $sss=Db::table('contacts')->where(['id'=>$user['id']])->update(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]); 
-                $data['status']  = 40;
+                $data['status']  = 44;
                 $data['settime']=strtotime($_POST['settime']);
                 $data['starttime']=strtotime($_POST['starttime']);
                 $data['endtime']=strtotime($_POST['endtime']);
@@ -214,6 +220,9 @@ class Tomb  extends Root {
                 $data['manage_money']=$_POST['manage_money'];
                 $data['manage_year']=$_POST['manage_year'];
                 $data['pay_status']=1;
+                $data['mwnum']=$_POST['seid'];
+                $data['lnum']=date('YmdHis',time());
+                $data['hnum']='TQ'.date('YmdHis',time());
                 $data['salesman']=$_POST['salesman'];
                 $data['beizhu']=$_POST['beizhu'];
                 $data['pay_sum_money']=$_POST['mw_price']+$_POST['manage_money']*$_POST['manage_year'];
@@ -236,12 +245,15 @@ class Tomb  extends Root {
                 Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
                 $LastInsID =Db::table('contacts')->getLastInsID();
                 Db::table('visit_log')->insert(['contacts_id'=>$LastInsID,'transaction_status'=>1,'transaction_suc_date'=>time(),'receiver'=>$_POST['salesman']]);
-                $data['status']  = 40;
+                $data['status']  = 44;
                 $data['settime']=strtotime($_POST['settime']);
                 $data['starttime']=strtotime($_POST['starttime']);
                 $data['endtime']=strtotime($_POST['endtime']);
                 $data['money']=$_POST['mw_price'];
                 $data['pay_status']=1;
+                $data['mwnum']=$_POST['seid'];
+                $data['lnum']=date('YmdHis',time());
+                $data['hnum']='TQ'.date('YmdHis',time());
                 $data['manage_money']=$_POST['manage_money'];
                 $data['manage_year']=$_POST['manage_year'];
                 $data['pay_sum_money']=$_POST['mw_price']+$_POST['manage_money']*$_POST['manage_year'];
@@ -261,7 +273,7 @@ class Tomb  extends Root {
             }
         }
     }
-    public function reserve_ding_add(){
+    public function reserve_ding_add(){//墓位预订维护
         $user=Db::table('contacts')->field('id')->where(['name'=>$_POST['contacts_name'],'tel'=>$_POST['contacts_tel']])->find();
         if($user){
             Db::startTrans();
@@ -316,6 +328,36 @@ class Tomb  extends Root {
                 return 'no';
             }
         }
+    }
+    public function set_huanyuan(){
+        $e = _Info::set_huanyuan($_POST);
+        if ($e['status']) {
+            return 'ok';
+        }
+        return 'no';
+    }
+    public function set_beizhu(){//设置备注
+        $e = _Info::set_beizhu($_POST);
+        if ($e['status']) {
+            return 'ok';
+        }
+        return 'no';
+    }
+    public function tuiding(){//已购墓位 退订
+        $e = _Info::tuiding($_POST);
+        if ($e['status']) {
+            return 'ok';
+        }
+        return 'no';
+    }
+    public function reserve_buyed(){//已购墓位 墓位定购信息维护
+        return _Info::reserve_buyed($_POST);
+    }
+    public function reserve_jsdtc(){//碑文计算单计算
+        return _Info::reserve_jsdtc($_POST);
+    }
+    public function select_buy_type_yu(){//墓位预定--杂费
+        return _Info::select_buy_type_yu($_POST);
     }
     public function reserve_zjgm(){
         return _Info::reserve_zjgm($_POST);

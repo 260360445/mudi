@@ -3,7 +3,15 @@
 
     <div class="dinga"  class="tr_{$vo.id}" row_id = "{$vo.id}" row_status = "{$vo.status}" style="cursor:pointer">
         <div class="dingimg">
-           <img src="__IMG__/ding_03.png" />
+        	{if condition="$vo['status'] eq 38"}
+              <img src="__IMG__/kong.png">
+            {elseif condition="$vo['status'] eq 39" /} 
+               <img src="__IMG__/yu_03.png">
+            {elseif condition="$vo['status'] eq 44" /} 
+               <img src="__IMG__/ding_03.png">
+            {elseif condition="$vo['status'] eq 41" /} 
+               <img src="__IMG__/zang_03.png">
+            {/if}
         </div>
         <p>{$vo.long_title}</p>
     </div>
