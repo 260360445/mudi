@@ -6,6 +6,7 @@ use app\index\model\Auth as _Auth;
 use app\index\model\Gset as _Gset;
 use app\index\model\Glist as _Glist;
 use app\index\model\Role as _Role;
+use app\index\model\Staff as _Staff;
 use app\index\model\Syslx as _Syslx;
 use app\index\model\Tpl as _Tpl;
 use think\Request;
@@ -37,7 +38,7 @@ class Gset  extends Root {
     //物品销售
     public function glist () {
     	$this->assign('glist', _Gset::wlist());
-        $this->assign('role', _Role::wlist());
+        $this->assign('row_staff', _Staff::wlistf());
         return $this->fetch();
     }
     public function glist_add () {
@@ -54,7 +55,7 @@ class Gset  extends Root {
     public function hlist () {
         $this->assign('sysyst', _Tpl::wlists());
     	$this->assign('sysls', _Syslx::wlist());
-        $this->assign('role', _Role::wlist());
+        $this->assign('row_staff', _Staff::wlistf());
         return $this->fetch();
     }
     public function gset_set_hlist () {

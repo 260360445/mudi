@@ -136,7 +136,7 @@
     var jcm=$("#jcm").val();
     var reg=/^(0|[1-9][0-9]*)$/;
     if (!reg.test(jcm)) {
-        layer.msg('请填写数字');
+        layer.msg('请填写数字'); 
         $('#jcm').focus();
       return false;
     }
@@ -167,7 +167,7 @@
       }
       if (!reg.test(two)) {
           layer.msg('请填写数字');
-          $('#glmo').focus();
+          $('#glmt').focus();
         return false;
       }
       if(two && two != 0 && two != null && two != undefined){
@@ -232,7 +232,7 @@
               type: 1,
               title: '寄存位选定信息', //不显示标题
               skin: 'layui-layer-rim', //加上边框
-              area: ['505px', '348px'], //宽高
+              area: ['490px', '363px'], //宽高
               content: e
             });
           }else{

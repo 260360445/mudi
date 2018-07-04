@@ -47,7 +47,7 @@
           <td>{$list['price']}</td>
           <td>{$list['num']}</td>
           <td>{$list['num']*$list['price']}</td>
-          <td>{$role[$list['roleid']]['title']}</td>
+          <td>{$row_staff[$list['staffid']]['nickname']}</td>
           <td>{$list['time']|date="Y-m-d",###}</td>
         </tr>
       {/volist}

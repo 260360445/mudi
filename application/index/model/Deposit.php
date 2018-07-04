@@ -15,7 +15,7 @@ class Deposit extends Root {
         return self::field('id,sys_mw_id,long_title')->where($map)->order('id', 'desc')->column('*', 'id');
     }
     static public function wlist ($map) {
-        return self::field('id,long_title,settime,starttime,endtime,jcm,glmo,glmt,summoney,uname,gzgx,sex,phone,home,gzdw,roleid,beizhu')->where($map)->order('id', 'desc')->column('*', 'id');
+        return self::field('id,long_title,settime,starttime,endtime,jcm,glmo,glmt,summoney,uname,gzgx,sex,phone,home,gzdw,staffidid,beizhu')->where($map)->order('id', 'desc')->column('*', 'id');
     }
     static public function wlist_hlist($map){
       return self::where($map)->where(['syszt'=>3])->order('id', 'desc')->column('*', 'id');
@@ -85,8 +85,9 @@ class Deposit extends Root {
        return $html;
     }
     static public function deposit_set_wh_sell_l($id){
-        $arr=self::field('id,sys_mw_id,long_title,con,settime,starttime,endtime,uname,ucode,sex,phone,gzdw,email,home,mobile,beizhu,gname,gsex,address,work,gtime,diestarttime,dieendtime,roleid')->where(['id'=>$id])->find();
-        $user = self::table('role')->field('id,title')->select();
+        $arr=self::field('id,sys_mw_id,long_title,con,settime,starttime,endtime,uname,ucode,sex,phone,gzdw,email,home,mobile,beizhu,gname,gsex,address,work,gtime,diestarttime,dieendtime,staffid')->where(['id'=>$id])->find();
+       /* $user = self::table('role')->field('id,title')->select();*/
+        $user = self::table('staff')->field('id,nickname')->select();
         $tpl = self::table('tpl')->where(['type'=>4])->field('id,title')->select();
         if($arr){
             $html='';
@@ -255,10 +256,10 @@ class Deposit extends Root {
                                     $html.=' <p>业务员：</p>';
                                     $html.='<select disabled style="color:#C6C6C6;">';
                                         foreach ($user as $key => $value) {
-                                            if($value['id'] == $arr['roleid']){
-                                                $html.=' <option value="'.$value['id'].'" selected>'.$value['title'].'</option>';
+                                            if($value['id'] == $arr['staffid']){
+                                                $html.=' <option value="'.$value['id'].'" selected>'.$value['nickname'].'</option>';
                                             }else{
-                                                $html.=' <option value="'.$value['id'].'">'.$value['title'].'</option>';
+                                                $html.=' <option value="'.$value['id'].'">'.$value['nickname'].'</option>';
                                             }
                                         }
                                     $html.='</select>';

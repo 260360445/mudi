@@ -37,8 +37,8 @@
                   <div class="wumxb">
                     <p>操作员：</p>
                      <select id="userid">
-                        {foreach $role as  $vo}
-                          <option value="{$vo.id}">{$vo.title}</option>
+                        {foreach $row_staff as  $vo}
+                          <option value="{$vo.id}">{$vo.nickname}</option>
                         {/foreach}
                       </select>
                       <i>*</i>
@@ -75,7 +75,7 @@ $(".wupfeid").click(function(){
             dataType    : 'json',
             data        : {
                 id : val,
-                role:role,
+                staffid:role,
             },
             success     : function(e){
                 if (e == '2') {

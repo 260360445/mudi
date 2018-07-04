@@ -9,6 +9,7 @@ use app\index\model\Systems as _Systems;
 use app\index\model\Syslx as _Syslx;
 use app\index\model\Sysjcw as _Sysjcw;
 use app\index\model\Role as _Role;
+use app\index\model\Staff as _Staff;
 use think\Request;
 class Deposit extends Root {
 
@@ -87,7 +88,7 @@ class Deposit extends Root {
         return _Deposit::dep_wh_del($_POST);
     }
     public function dep_tx () {
-        $this->assign('row_role', _Role::id2sm());
+        $this->assign('row_staff', _Staff::wlistf());
         $time=time();
         $this->assign('ltime', $time);
         $request = Request::instance();
@@ -148,14 +149,14 @@ class Deposit extends Root {
         $this->assign('list', _Deposit::wlist($map));
         return $this->fetch();
     }
-
+/*
     public function edit ($id, $title, $sn = '', $discount, $auth) {
         $e = _Role::edit($id, $title, $sn, $discount, $auth);
         if ($e['status']) {
             return $this->success($e['msg']);
         }
         return $this->error($e['msg']);
-    }
+    }*/
 
     public function dep_sell_add () {
         $e = _Deposit::dep_sell_set($_POST);

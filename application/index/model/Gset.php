@@ -68,7 +68,7 @@ class Gset extends Root {
     }
     static public function gset_set_hlist($info){
         $sys_list_l = self::table('sys_list_l')->where(['id'=>$info['id']])->find();
-        if (self::table('gset_hlist')->insert(['title' => $sys_list_l['title'], 'cd' => $sys_list_l['cd'], 'wd' => $sys_list_l['wd'], 'hd' => $sys_list_l['hd'], 'price' => $sys_list_l['price'], 'sysysid' => $sys_list_l['sysysid'], 'time' => time(), 'roleid' => $info['role'], 'sta' =>3]) !== false) {
+        if (self::table('gset_hlist')->insert(['title' => $sys_list_l['title'], 'cd' => $sys_list_l['cd'], 'wd' => $sys_list_l['wd'], 'hd' => $sys_list_l['hd'], 'price' => $sys_list_l['price'], 'sysysid' => $sys_list_l['sysysid'], 'time' => time(), 'staffid' => $info['staffid'], 'sta' =>3]) !== false) {
             return RE_SUCCESS;
         }
        return RE_ERROR;

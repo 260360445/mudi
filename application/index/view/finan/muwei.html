@@ -55,10 +55,8 @@
           <th>与故者关系</th>
           <th>操作员</th>              
           <th>最后修改人</th>
-          <th>最后修改时间</th>
           <th>备注</th>
-          <th>逝者姓名</th>             
-          <th>故者关系编号</th>
+          <th>逝者姓名</th>   
           <th>操作员姓名</th>
           <th>业务员姓名</th>
           <th>业务员</th>
@@ -77,7 +75,7 @@
             {/if}
           </td>
           <td>{$list['price']}</td>
-          <td></td>
+          <td>{$list['money']}</td>
           <td>{$list['reserve_money']}</td>
           <td>{$list['unpaid_money']}</td>
           <td>
@@ -87,27 +85,31 @@
               已支付定金
             {/if}
           </td> 
-          <td>{$list['reserve_date']}</td>
-          <td>{$list['remind_date']}</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td> 
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td> 
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>{$role[$list['salesman']]['title']}</td>
-          <td>{$role[$list['salesman']]['title']}</td>
+          <td>{$list['reserve_date']|date="Y-m-d",###}</td>
+          <td>{$list['remind_date']|date="Y-m-d",###}</td>
+          <td>{$list['name']}</td>
+          <td>
+            {if condition="$list['sex'] eq 1"}
+              男
+            {else/} 
+              女
+            {/if}
+          </td>
+          <td>{$list['idcard']}</td>
+          <td>{$list['tel']}</td>
+          <td>{$list['phone']}</td>
+          <td>{$list['postcode']}</td> 
+          <td>{$list['address']}</td>
+          <td>{$list['workplace']}</td>
+          <td>{$list['email']}</td>
+          <td>{$sysyst[$list['relationship']]['title']}</td>
+          <td>{$row_staff[$list['update_by']]['nickname']}</td>
+          <td>{$row_staff[$list['update_by']]['nickname']}</td>
+          <td>{$list['beizhu']}</td> 
+          <td>{$list['dead_name']}</td>
+          <td>{$row_staff[$list['update_by']]['nickname']}</td>
+          <td>{$row_staff[$list['salesman']]['nickname']}</td>
+          <td>{$row_staff[$list['salesman']]['nickname']}</td>
         </tr>
       {/volist} 
       </tbody>

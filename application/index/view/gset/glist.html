@@ -81,8 +81,8 @@
                     <div class="wupy">
                       <p>操作员：</p>
                       <select id="userid">
-                        {foreach $role as  $vo}
-                          <option value="{$vo.id}">{$vo.title}</option>
+                        {foreach $row_staff as  $vo}
+                          <option value="{$vo.id}">{$vo.nickname}</option>
                         {/foreach}
                       </select>
                       <i>*</i>
@@ -115,7 +115,7 @@
        let tr = $(this);
       if(tr.prop("checked")){  
         var idstr=tr.val();
-        var num=$('.tr_'+idstr+'').find('.row_num').text();
+        var num=tr.attr('row_num');
         d.push({id: idstr,num:num});
         //console.log(d); 
         /*$(".sumprice").html(sum);*/
@@ -130,15 +130,16 @@
         dataType    : 'json',
         data        : {
             item : d,
-            roleid:seluser,
+            staffid:seluser,
         },
         success     : function(e){
             //console.log(e); 
             if (e == '2') {
                 layer.close(index);
-                alt('添加成功');
+                layer.msg('添加成功');
             } else {
-                alt('添加失败');
+                layer.close(index);
+                layer.msg('添加失败');
             }
 
 
@@ -171,6 +172,6 @@
     var summoney=Number(zong)+Number(sum);
     $(".sumprice").text(summoney);
     $(".sumprice").val(summoney);
-    $("#addsettr").append('<tr class="trr_'+id+'" row_id = "'+id+'"><td class = "row_cont"><input type="checkbox" checked name="id[]" class="check_alls" value="'+id+'" row_sum = "'+sum+'"/></td><td class = "row_sn" >'+sn+'</td><td class = "row_title">'+title+'</td><td class = "row_price">'+price+'</td><td class = "row_num">'+num+'</td><td class = "row_sum">'+sum+'</td></tr>');
+    $("#addsettr").append('<tr class="trr_'+id+'" row_id = "'+id+'" ><td class = "row_cont"><input type="checkbox" checked name="id[]" class="check_alls" value="'+id+'" row_sum = "'+sum+'" row_num="'+num+'"/></td><td class = "row_sn" >'+sn+'</td><td class = "row_title">'+title+'</td><td class = "row_price">'+price+'</td><td class = "row_num">'+num+'</td><td class = "row_sum">'+sum+'</td></tr>');
   })
 </script>

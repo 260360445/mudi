@@ -29,7 +29,7 @@
                           </td>
                           <td class = "row_price">{$vo.price}</td>
                           <td class = "row_type">{$vo.time|date='Y-m-d H:i:s',###}</td>
-                          <td class = "row_cont">{$role[$vo['roleid']]['title']}</td>
+                          <td class = "row_cont">{$row_staff[$vo['staffid']]['nickname']}</td>
                         </tr>
                   {/foreach}
                 </tbody>

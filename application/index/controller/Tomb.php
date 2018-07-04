@@ -69,57 +69,7 @@ class Tomb  extends Root {
     }
 
     public function reserve () {
-        /*if ($_POST) {
-            $contacts = [];
-            $dead = [];
-            foreach ($_POST as $k => $v) {
-                if (strstr($k, 'dead_')) {
-                    $dead[str_replace('dead_', '', $k)] = $v;
-                }
-            }
-            // 判断重复
-            $user=DB::table('contacts')->field('id')->where(['name'=>$_POST['contacts_name'],'tel'=>$_POST['contacts_tel']])->find();
-            if($user){
-                $_POST['contacts_id']=$user['id'];
-                DB::table('contacts')->where('id', $user['id'])->update(['idcard'=>$_POST['contacts_idcard']]);
-                //$_POST['pay_status']  = 2;
-                $_POST['status']  = 39;
-                _Info::where('id', $id)->update($_POST);
-                $dead['cem_info_id'] = $id;
-                _Dead::insert($dead);
-                die('<script>alert("操作成功"); window.parent.hide_all_tc();</script>');
-            }else{
-                Db::startTrans();
-                try{
-                    $aid=Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
-                    $LastInsID =Db::table('contacts')->getLastInsID();
-                    Db::table('visit_log')->insert(['contacts_id'=>$LastInsID,'transaction_status'=>1,'transaction_suc_date'=>time(),'receiver'=>$_POST['salesman']]);
-                    // 提交事务
-                    Db::commit();
-                    $_POST['contacts_id'] = $LastInsID;
-                    //$_POST['pay_status']  = 2;
-                    $_POST['status']  = 39;
-                    _Info::where('id', $id)->update($_POST);
-                    $dead['cem_info_id'] = $id;
-                    _Dead::insert($dead);
-                    die('<script>alert("操作成功"); window.parent.hide_all_tc();</script>');
-                } catch (\Exception $e) {
-                    // 回滚事务
-                    Db::rollback();
-                    die('<script>alert("操作失败"); window.parent.hide_all_tc();</script>');
-                }
-            }
-        }*/
         $data = _Info::reserve($_POST);
-        /*if ($data['contacts_id']) {
-            $contacts = _Contacts::get($data['contacts_id']);
-        }
-
-        $this->assign('contacts', $contacts ?? []);
-        $this->assign('dead', _Dead::where('cem_info_id', $id)->select());
-        $this->assign('data', $data);
-        $this->assign('pay_status', _Info::pay_status());
-        $this->view->engine->layout(false);*/
         return $data;
     }
     public function reserve_add(){
@@ -130,18 +80,22 @@ class Tomb  extends Root {
         if($user){
             Db::startTrans();
             try{
-                Db::table('contacts')->where(['id'=>$user['id']])->update(['idcard'=>$_POST['contacts_idcard']]); 
+                Db::table('contacts')->where(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]); 
                 $data['status']  = 39;
                 $data['reserve_date']=strtotime($_POST['reserve_date']);
                 $data['remind_date']=strtotime($_POST['remind_date']);
                 $data['reserve_money']=$_POST['reserve_money'];
                 $data['unpaid_money']=$_POST['unpaid_money'];
+                $data['money']=$_POST['money'];
                 $data['salesman']=$_POST['salesman'];
                 $data['update_by']=session('id');
                 $data['create_time']=$_POST['create_time'];
                 $data['contacts_id']=$user['id'];
+                $data['beizhu']=$_POST['beizhu'];
                 $ss=Db::table('cem_info')->where(['id'=>$_POST['seid']])->update($data);
                 $dead['cem_info_id'] = $_POST['seid'];
+                $dead['relationship'] = $_POST['dead_relationship'];
+                $dead['dead_name'] = $_POST['dead_name'];
                 Db::table('dead')->insert($dead);
                 // 提交事务
                 Db::commit();
@@ -154,7 +108,7 @@ class Tomb  extends Root {
         }else{
             Db::startTrans();
             try{
-                Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
+                Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
                 $LastInsID =Db::table('contacts')->getLastInsID();
                 Db::table('visit_log')->insert(['contacts_id'=>$LastInsID,'transaction_status'=>1,'transaction_suc_date'=>time(),'receiver'=>$_POST['salesman']]);
                 $data['status']  = 39;
@@ -162,12 +116,16 @@ class Tomb  extends Root {
                 $data['remind_date']=strtotime($_POST['remind_date']);
                 $data['reserve_money']=$_POST['reserve_money'];
                 $data['unpaid_money']=$_POST['unpaid_money'];
+                $data['money']=$_POST['money'];
                 $data['salesman']=$_POST['salesman'];
                 $data['update_by']=session('id');
                 $data['create_time']=$_POST['create_time'];
+                $data['beizhu']=$_POST['beizhu'];
                 $data['contacts_id'] = $LastInsID;
                 _Info::where('id', $_POST['seid'])->update($data);
                 $dead['cem_info_id'] = $_POST['seid'];
+                $dead['dead_name'] = $_POST['dead_name'];
+                $dead['relationship'] = $_POST['dead_relationship'];
                 _Dead::insert($dead);
                 // 提交事务
                 Db::commit();
@@ -179,21 +137,202 @@ class Tomb  extends Root {
             }
         }
     }
+    public function reserve_dg_adds(){//结清尾款
+         // 判断重复
+        $user=Db::table('contacts')->field('id')->where(['name'=>$_POST['contacts_name'],'tel'=>$_POST['contacts_tel']])->find();
+       
+        if($user){
+            Db::startTrans();
+            try{
+                $sss=Db::table('contacts')->where(['id'=>$user['id']])->update(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]); 
+                $data['status']  = 40;
+                $data['settime']=strtotime($_POST['settime']);
+                $data['starttime']=strtotime($_POST['starttime']);
+                $data['endtime']=strtotime($_POST['endtime']);
+                $data['manage_money']=$_POST['manage_money'];
+                $data['manage_year']=$_POST['manage_year'];
+                $data['pay_status']=1;
+                $data['salesman']=$_POST['salesman'];
+                $data['beizhu']=$_POST['beizhu'];
+                $data['pay_sum_money']=$_POST['yuee']+$_POST['manage_money']*$_POST['manage_year'];
+                $data['manage_sum_money']=$_POST['manage_money']*$_POST['manage_year'];
+                $data['update_by']=session('id');
+                $data['create_time']=$_POST['create_time'];
+                $data['contacts_id']=$user['id'];
+                $ss=Db::table('cem_info')->where(['id'=>$_POST['seid']])->update($data);
+                // 提交事务
+                Db::commit();
+                return 'ok';
+            } catch (\Exception $e) {
+                // 回滚事务
+                Db::rollback();
+                return 'no';
+            }
+        }else{
+            Db::startTrans();
+            try{
+                Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
+                $LastInsID =Db::table('contacts')->getLastInsID();
+                Db::table('visit_log')->insert(['contacts_id'=>$LastInsID,'transaction_status'=>1,'transaction_suc_date'=>time(),'receiver'=>$_POST['salesman']]);
+                $data['status']  = 40;
+                $data['settime']=strtotime($_POST['settime']);
+                $data['starttime']=strtotime($_POST['starttime']);
+                $data['endtime']=strtotime($_POST['endtime']);
+                $data['pay_status']=1;
+                $data['manage_money']=$_POST['manage_money'];
+                $data['manage_year']=$_POST['manage_year'];
+                $data['pay_sum_money']=$_POST['yuee']+$_POST['manage_money']*$_POST['manage_year'];
+                $data['manage_sum_money']=$_POST['manage_money']*$_POST['manage_year'];
+                $data['salesman']=$_POST['salesman'];
+                $data['update_by']=session('id');
+                $data['create_time']=$_POST['create_time'];
+                $data['contacts_id'] = $LastInsID;
+                _Info::where('id', $_POST['seid'])->update($data);
+                // 提交事务
+                Db::commit();
+                return 'ok';
+            } catch (\Exception $e) {
+                // 回滚事务
+                Db::rollback();
+                return 'no';
+            }
+        }
+    }
+    public function reserve_dg_add(){//墓位直接定够
+         // 判断重复
+        $user=Db::table('contacts')->field('id')->where(['name'=>$_POST['contacts_name'],'tel'=>$_POST['contacts_tel']])->find();
+       
+        if($user){
+            Db::startTrans();
+            try{
+                $sss=Db::table('contacts')->where(['id'=>$user['id']])->update(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]); 
+                $data['status']  = 40;
+                $data['settime']=strtotime($_POST['settime']);
+                $data['starttime']=strtotime($_POST['starttime']);
+                $data['endtime']=strtotime($_POST['endtime']);
+                $data['money']=$_POST['mw_price'];
+                $data['manage_money']=$_POST['manage_money'];
+                $data['manage_year']=$_POST['manage_year'];
+                $data['pay_status']=1;
+                $data['salesman']=$_POST['salesman'];
+                $data['beizhu']=$_POST['beizhu'];
+                $data['pay_sum_money']=$_POST['mw_price']+$_POST['manage_money']*$_POST['manage_year'];
+                $data['manage_sum_money']=$_POST['manage_money']*$_POST['manage_year'];
+                $data['update_by']=session('id');
+                $data['create_time']=$_POST['create_time'];
+                $data['contacts_id']=$user['id'];
+                $ss=Db::table('cem_info')->where(['id'=>$_POST['seid']])->update($data);
+                // 提交事务
+                Db::commit();
+                return 'ok';
+            } catch (\Exception $e) {
+                // 回滚事务
+                Db::rollback();
+                return 'no';
+            }
+        }else{
+            Db::startTrans();
+            try{
+                Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
+                $LastInsID =Db::table('contacts')->getLastInsID();
+                Db::table('visit_log')->insert(['contacts_id'=>$LastInsID,'transaction_status'=>1,'transaction_suc_date'=>time(),'receiver'=>$_POST['salesman']]);
+                $data['status']  = 40;
+                $data['settime']=strtotime($_POST['settime']);
+                $data['starttime']=strtotime($_POST['starttime']);
+                $data['endtime']=strtotime($_POST['endtime']);
+                $data['money']=$_POST['mw_price'];
+                $data['pay_status']=1;
+                $data['manage_money']=$_POST['manage_money'];
+                $data['manage_year']=$_POST['manage_year'];
+                $data['pay_sum_money']=$_POST['mw_price']+$_POST['manage_money']*$_POST['manage_year'];
+                $data['manage_sum_money']=$_POST['manage_money']*$_POST['manage_year'];
+                $data['salesman']=$_POST['salesman'];
+                $data['update_by']=session('id');
+                $data['create_time']=$_POST['create_time'];
+                $data['contacts_id'] = $LastInsID;
+                _Info::where('id', $_POST['seid'])->update($data);
+                // 提交事务
+                Db::commit();
+                return 'ok';
+            } catch (\Exception $e) {
+                // 回滚事务
+                Db::rollback();
+                return 'no';
+            }
+        }
+    }
+    public function reserve_ding_add(){
+        $user=Db::table('contacts')->field('id')->where(['name'=>$_POST['contacts_name'],'tel'=>$_POST['contacts_tel']])->find();
+        if($user){
+            Db::startTrans();
+            try{
+                Db::table('contacts')->where(['id'=>$user['id']])->update(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]); 
+                $data['status']  = 39;
+                $data['reserve_date']=strtotime($_POST['reserve_date']);
+                $data['remind_date']=strtotime($_POST['remind_date']);
+                $data['salesman']=$_POST['salesman'];
+                $data['update_by']=session('id');
+                $data['create_time']=$_POST['create_time'];
+                $data['contacts_id']=$user['id'];
+                $data['beizhu']=$_POST['beizhu'];
+                $ss=Db::table('cem_info')->where(['id'=>$_POST['seid']])->update($data);
+                $dead['cem_info_id'] = $_POST['seid'];
+                $dead['relationship'] = $_POST['dead_relationship'];
+                $dead['dead_name'] = $_POST['dead_name'];
+                Db::table('dead')->where(['cem_info_id'=>$_POST['seid']])->update($dead);
+                // 提交事务
+                Db::commit();
+                return 'ok';
+            } catch (\Exception $e) {
+                // 回滚事务
+                Db::rollback();
+                return 'no';
+            }
+        }else{
+            Db::startTrans();
+            try{
+                Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
+                $LastInsID =Db::table('contacts')->getLastInsID();
+                Db::table('visit_log')->insert(['contacts_id'=>$LastInsID,'transaction_status'=>1,'transaction_suc_date'=>time(),'receiver'=>$_POST['salesman']]);
+                $data['status']  = 39;
+                $data['reserve_date']=strtotime($_POST['reserve_date']);
+                $data['remind_date']=strtotime($_POST['remind_date']);
+                $data['salesman']=$_POST['salesman'];
+                $data['update_by']=session('id');
+                $data['create_time']=$_POST['create_time'];
+                $data['beizhu']=$_POST['beizhu'];
+                $data['contacts_id'] = $LastInsID;
+                _Info::where('id', $_POST['seid'])->update($data);
+                $dead['cem_info_id'] = $_POST['seid'];
+                $dead['dead_name'] = $_POST['dead_name'];
+                $dead['relationship'] = $_POST['dead_relationship'];
+                _Dead::insert($dead);
+                // 提交事务
+                Db::commit();
+                return 'ok';
+            } catch (\Exception $e) {
+                // 回滚事务
+                Db::rollback();
+                return 'no';
+            }
+        }
+    }
+    public function reserve_zjgm(){
+        return _Info::reserve_zjgm($_POST);
+    }
     public function select_buy_type () {
         $data = _Info::select_buy_type($_POST);
-        /*if ($data['contacts_id']) {
-            $contacts = Contacts::get($data['contacts_id']);
-        }
-
-        $this->assign('contacts', $contacts ?? []);
-        $this->assign('dead', _Dead::where('cem_info_id', $id)->select());
-        $this->assign('data', $data);
-        $this->assign('pay_status', _Info::pay_status());
-        $this->view->engine->layout(false);*/
         return $data;
     }
-
-
+    public function select_buy_ding(){
+        return _Info::select_buy_ding($_POST);
+    }
+    public function select_buy_ding_buy(){
+        return _Info::select_buy_ding_buy($_POST);
+    }
+    public function reserve_zjgm_jie(){
+        return _Info::reserve_zjgm_jie($_POST);
+    }
     public function sale_sling_words ($id = '') {
         $data = _Info::get($id);
         if ($data['contacts_id']) {

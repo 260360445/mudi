@@ -59,8 +59,9 @@ class Sysjcw extends Root {
     }
     static public function deposit_set_sell_y ($id){
         $arr=self::field('id,sysid,sysid_s,sysid_c,sysysid,money,long_title')->where(['id'=>$id['id']])->find();
-        $user = self::table('role')->field('id,title')->select();
+        /*$user = self::table('role')->field('id,title')->select();*/
         $tpl = self::table('tpl')->where(['type'=>4])->field('id,title')->select();
+        $user = self::table('staff')->field('id,nickname')->select();
         $html='';
         $html.='<form class="add_row" method="post">';
         $html.='<div class="dgtan" style="display:block;">';
@@ -198,9 +199,9 @@ class Sysjcw extends Root {
                                $html.=' <legend>故者落葬操作信息</legend>';
                                $html.=' <div class="gztanjria">';
                                  $html.='    <p>业务员：</p>';
-                                    $html.='<select name="roleid" id="roleid">';
+                                    $html.='<select name="staffid" id="staffid">';
                                         foreach ($user as $key => $value) {
-                                            $html.=' <option value="'.$value['id'].'">'.$value['title'].'</option>';
+                                            $html.=' <option value="'.$value['id'].'">'.$value['nickname'].'</option>';
                                         }
                                     $html.='</select>';
                                   $html.='   <i>*</i>';
@@ -211,7 +212,7 @@ class Sysjcw extends Root {
                                 $html.='</div>';
                                 $html.='<div class="gztanjrid">';
                                    $html.=' <button type="button" class="gztanjrida" onclick="subform()">保存</button>';
-                                   $html.=' <button type="button" class="gztanjrida" onclick="closeghtml">取消</button>';
+                                   $html.=' <button type="button" class="gztanjrida" onclick="closeghtml()">取消</button>';
                                $html.='</div>';
                                $html.=' <div class="gztanjrie">打印寄存位定购合同</div>';
                                $html.=' <div class="gztanjrif">打印购墓合同（反）</div>';
