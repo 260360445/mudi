@@ -11,6 +11,7 @@ use app\index\model\Visit as _Visit;
 use app\index\model\Cem as _Cem;
 use app\index\model\CemInfo as _Info;
 use think\Db;
+use think\Request;
 class Tomb  extends Root {
 
     public function _initialize() {
@@ -157,7 +158,8 @@ class Tomb  extends Root {
                 $data['endtime']=strtotime($_POST['endtime']);
                 $data['manage_money']=$_POST['manage_money'];
                 $data['manage_year']=$_POST['manage_year'];
-                $data['pay_status']=1;
+                $data['manage_time']= time()+3600*8+3600*24*36*$_POST['manage_year'];//比如5天前的时间
+                $data['pay_status']=0;
                 $data['salesman']=$_POST['salesman'];
                 $data['beizhu']=$_POST['beizhu'];
                 $data['pay_sum_money']=$_POST['yuee']+$_POST['manage_money']*$_POST['manage_year'];
@@ -166,6 +168,10 @@ class Tomb  extends Root {
                 $data['create_time']=$_POST['create_time'];
                 $data['contacts_id']=$user['id'];
                 $ss=Db::table('cem_info')->where(['id'=>$_POST['seid']])->update($data);
+                $dead['cem_info_id'] = $_POST['seid'];
+                $dead['relationship'] = $_POST['dead_relationship'];
+                $dead['dead_name'] = $_POST['dead_name'];
+                Db::table('dead')->where(['cem_info_id'=>$_POST['seid']])->update($dead);
                 // 提交事务
                 Db::commit();
                 return 'ok';
@@ -184,9 +190,10 @@ class Tomb  extends Root {
                 $data['settime']=strtotime($_POST['settime']);
                 $data['starttime']=strtotime($_POST['starttime']);
                 $data['endtime']=strtotime($_POST['endtime']);
-                $data['pay_status']=1;
+                $data['pay_status']=0;
                 $data['manage_money']=$_POST['manage_money'];
                 $data['manage_year']=$_POST['manage_year'];
+                $data['manage_time']= time()+3600*8+3600*24*36*$_POST['manage_year'];//比如5天前的时间
                 $data['pay_sum_money']=$_POST['yuee']+$_POST['manage_money']*$_POST['manage_year'];
                 $data['manage_sum_money']=$_POST['manage_money']*$_POST['manage_year'];
                 $data['salesman']=$_POST['salesman'];
@@ -194,6 +201,9 @@ class Tomb  extends Root {
                 $data['create_time']=$_POST['create_time'];
                 $data['contacts_id'] = $LastInsID;
                 _Info::where('id', $_POST['seid'])->update($data);
+                $dead['relationship'] = $_POST['dead_relationship'];
+                $dead['dead_name'] = $_POST['dead_name'];
+                Db::table('dead')->insert($dead);
                 // 提交事务
                 Db::commit();
                 return 'ok';
@@ -216,10 +226,11 @@ class Tomb  extends Root {
                 $data['settime']=strtotime($_POST['settime']);
                 $data['starttime']=strtotime($_POST['starttime']);
                 $data['endtime']=strtotime($_POST['endtime']);
+                $data['manage_time']= time()+3600*8+3600*24*36*$_POST['manage_year'];//比如5天前的时间
                 $data['money']=$_POST['mw_price'];
                 $data['manage_money']=$_POST['manage_money'];
                 $data['manage_year']=$_POST['manage_year'];
-                $data['pay_status']=1;
+                $data['pay_status']=0;
                 $data['mwnum']=$_POST['seid'];
                 $data['lnum']=date('YmdHis',time());
                 $data['hnum']='TQ'.date('YmdHis',time());
@@ -231,6 +242,10 @@ class Tomb  extends Root {
                 $data['create_time']=$_POST['create_time'];
                 $data['contacts_id']=$user['id'];
                 $ss=Db::table('cem_info')->where(['id'=>$_POST['seid']])->update($data);
+                $dead['cem_info_id'] = $_POST['seid'];
+                $dead['relationship'] = $_POST['dead_relationship'];
+                $dead['dead_name'] = $_POST['dead_name'];
+                Db::table('dead')->where(['cem_info_id'=>$_POST['seid']])->update($dead);
                 // 提交事务
                 Db::commit();
                 return 'ok';
@@ -250,7 +265,8 @@ class Tomb  extends Root {
                 $data['starttime']=strtotime($_POST['starttime']);
                 $data['endtime']=strtotime($_POST['endtime']);
                 $data['money']=$_POST['mw_price'];
-                $data['pay_status']=1;
+                $data['manage_time']= time()+3600*8+3600*24*36*$_POST['manage_year'];//比如5天前的时间
+                $data['pay_status']=0;
                 $data['mwnum']=$_POST['seid'];
                 $data['lnum']=date('YmdHis',time());
                 $data['hnum']='TQ'.date('YmdHis',time());
@@ -263,6 +279,9 @@ class Tomb  extends Root {
                 $data['create_time']=$_POST['create_time'];
                 $data['contacts_id'] = $LastInsID;
                 _Info::where('id', $_POST['seid'])->update($data);
+                $dead['relationship'] = $_POST['dead_relationship'];
+                $dead['dead_name'] = $_POST['dead_name'];
+                Db::table('dead')->insert($dead);
                 // 提交事务
                 Db::commit();
                 return 'ok';
@@ -329,6 +348,7 @@ class Tomb  extends Root {
             }
         }
     }
+
     public function set_huanyuan(){
         $e = _Info::set_huanyuan($_POST);
         if ($e['status']) {
@@ -349,6 +369,22 @@ class Tomb  extends Root {
             return 'ok';
         }
         return 'no';
+    }
+    public function reserve_xujiao_set(){//续交管理费
+        $e = _Info::reserve_xujiao_set($_POST);
+        if ($e['status']) {
+            return 'ok';
+        }
+        return 'no';
+    }
+    public function reserve_bwtc(){//碑文设置
+        return _Info::reserve_bwtc($_POST);
+    }
+    public function reserve_gzdj(){//故者落葬登
+        return _Info::reserve_gzdj($_POST);
+    }
+    public function reserve_xjglf(){//续交管理费
+        return _Info::reserve_xjglf($_POST);
     }
     public function reserve_buyed(){//已购墓位 墓位定购信息维护
         return _Info::reserve_buyed($_POST);
@@ -572,5 +608,143 @@ class Tomb  extends Root {
     public function set_status ($id, $val) {
         return _Channel::set_status($id, $val);
     }
+    //预定过期提醒
+    public function sysyd(){
+        $this->assign('row_staff', _Staff::wlistf());
+        $time=time();
+        $this->assign('ltime', $time);
+        $request = Request::instance();
+        $gtime = $request->only(['gtime']);
+        $today = $request->only(['today']);
+        $map =[];
+        $map = ['a.pay_status'=>2,'a.status'=>39,'a.sta'=>3];
+         //本周
+        $time = time();
+        $w_day=date("w",$time);
+        if($w_day=='1'){
+            $cflag = '+0';
+            $lflag = '-1';
+        }else{
+            $cflag = '-1';
+            $lflag = '-2';
+        }
+        $weekstar = strtotime(date('Y-m-d',strtotime("$cflag week Monday", $time))); //本周一零点的时间戳
+        $weekend = strtotime(date('Y-m-d',strtotime("$cflag week Monday", $time)))+604799;//本周末零点的时间戳
+        //本月
+        $begmonth=mktime(0,0,0,date('m'),1,date('Y'));
+        $endmonth=mktime(23,59,59,date('m'),date('t'),date('Y'));
+        
+        $now = time();
+        if ($gtime['gtime'] && $today['today']) {
+            $t = time()+3600*8;//这里和标准时间相差8小时需要补足
+            $tget = $t+3600*24*$today['today'];//比如5天前的时间
+            if($gtime['gtime']==2){//一周内过期
+                //$map="endtime >= ".$tget." and endtime<=".$weekend."";
+                //$map['a.remind_date']=['egt',$tget];
+                //$map['a.remind_date']=['elt',$weekend];
+                $map="a.pay_status=2 and a.status = 39 and a.sta = 3 and a.remind_date >= ".$tget." and a.remind_date<=".$weekend."";
+            }else if($gtime['gtime']==3){//一个月内过期
+                //$map="endtime >=".$tget." and endtime<=".$endmonth."";
+                //$map['a.remind_date']=['egt',$tget];
+                //$map['a.remind_date']=['elt',$endmonth];
+                $map="a.pay_status=2 and a.status = 39 and a.sta = 3 and a.remind_date >= ".$tget." and a.remind_date<=".$endmonth."";
+            }else if($gtime['gtime']==5){//已过期
+                $map="a.pay_status=2 and a.status = 39 and a.sta = 3 and a.remind_date < ".$now;
+            }
+            $this->assign('gtime', $gtime['gtime']);
+            $this->assign('today', $today['today']);
+            $count=count(_Info::wlists($map));
+            $this->assign('count', $count);
+        }else if($gtime['gtime'] && empty($today['today'])){
+            if($gtime['gtime']==2){//一周内过期
+                $map="a.pay_status=2 and a.status = 39 and a.sta = 3 and a.remind_date >= ".$weekstar." and a.remind_date<=".$weekend."";
+            }else if($gtime['gtime']==3){//一个月内过期
+                $map="a.pay_status=2 and a.status = 39 and a.sta = 3 and a.remind_date >= ".$begmonth." and a.remind_date<=".$endmonth."";
+            }else if($gtime['gtime']==5){//已过期
+                //$map['a.remind_date']=['lt',$now];
+                $map="a.pay_status=2 and a.status = 39 and a.sta = 3 and a.remind_date < ".$now;
+            }
+            $this->assign('gtime', $gtime['gtime']);
+            $this->assign('today', $today['today']);
+            $count=count(_Info::wlists($map));
+            $this->assign('count', $count);
+        }
 
+        $this->assign('list', _Info::wlists($map));
+       // print_r(_Info::getLastSql());
+        return $this->fetch();
+    }
+    //管理费过期提醒
+    public function glprice(){
+        $this->assign('row_staff', _Staff::wlistf());
+        $this->assign('sysyst', _Tpl::wlists());
+        $time=time();
+        $this->assign('ltime', $time);
+        $request = Request::instance();
+        $gtime = $request->only(['gtime']);
+        $today = $request->only(['today']);
+        $map =[];
+        $map = ['a.pay_status'=>1,'a.status'=>44,'a.sta'=>3];
+         //本周
+        $time = time();
+        $w_day=date("w",$time);
+        if($w_day=='1'){
+            $cflag = '+0';
+            $lflag = '-1';
+        }else{
+            $cflag = '-1';
+            $lflag = '-2';
+        }
+        $weekstar = strtotime(date('Y-m-d',strtotime("$cflag week Monday", $time))); //本周一零点的时间戳
+        $weekend = strtotime(date('Y-m-d',strtotime("$cflag week Monday", $time)))+604799;//本周末零点的时间戳
+        //本月
+        $begmonth=mktime(0,0,0,date('m'),1,date('Y'));
+        $endmonth=mktime(23,59,59,date('m'),date('t'),date('Y'));
+        //三个月之内
+        $now = time();
+        $time = strtotime('-2 month', $now);
+        $beginThismonth=mktime(0,0,0,date('m',$time),1,date('Y',$time));
+        $endThismonth = mktime(0, 0, 0, date('m', $now), date('t', $now), date('Y', $now));
+        if ($gtime['gtime'] && $today['today']) {
+            $t = time()+3600*8;//这里和标准时间相差8小时需要补足
+            $tget = $t+3600*24*$today['today'];//比如5天前的时间
+            if($gtime['gtime']==2){//一周内过期
+                //$map="endtime >= ".$tget." and endtime<=".$weekend."";
+                //$map['a.remind_date']=['egt',$tget];
+                //$map['a.remind_date']=['elt',$weekend];
+                $map="a.pay_status=1 and a.status = 44 and a.sta = 3 and a.remind_date >= ".$tget." and a.remind_date<=".$weekend."";
+            }else if($gtime['gtime']==3){//一个月内过期
+                //$map="endtime >=".$tget." and endtime<=".$endmonth."";
+                //$map['a.remind_date']=['egt',$tget];
+                //$map['a.remind_date']=['elt',$endmonth];
+                $map="a.pay_status=1 and a.status = 44 and a.sta = 3 and a.remind_date >= ".$tget." and a.remind_date<=".$endmonth."";
+            }else if($gtime['gtime']==4){//一个季度内过期
+                $map="a.pay_status=1 and a.status = 44 and a.sta = 3 and a.remind_date >= ".$tget." and a.remind_date<=".$endThismonth."";
+            }else if($gtime['gtime']==5){//已过期
+                $map="a.pay_status=1 and a.status = 44 and a.sta = 3 and a.remind_date < ".$now;
+            }
+            $this->assign('gtime', $gtime['gtime']);
+            $this->assign('today', $today['today']);
+            $count=count(_Info::wlists($map));
+            $this->assign('count', $count);
+        }else if($gtime['gtime'] && empty($today['today'])){
+            if($gtime['gtime']==2){//一周内过期
+                $map="a.pay_status=1 and a.status = 44 and a.sta = 3 and a.remind_date >= ".$weekstar." and a.remind_date<=".$weekend."";
+            }else if($gtime['gtime']==3){//一个月内过期
+                $map="a.pay_status=1 and a.status = 44 and a.sta = 3 and a.remind_date >= ".$begmonth." and a.remind_date<=".$endmonth."";
+            }else if($gtime['gtime']==4){//一个季度内过期
+                $map="a.pay_status=1 and a.status = 44 and a.sta = 3 and a.remind_date >= ".$beginThismonth." and a.remind_date<=".$endThismonth."";
+            }else if($gtime['gtime']==5){//已过期
+                //$map['a.remind_date']=['lt',$now];
+                $map="a.pay_status=1 and a.status = 44 and a.sta = 3 and a.remind_date < ".$now;
+            }
+            $this->assign('gtime', $gtime['gtime']);
+            $this->assign('today', $today['today']);
+            $count=count(_Info::wlists($map));
+            $this->assign('count', $count);
+        }
+        $this->assign('list', _Info::wlists($map));
+        //print_r(_Info::getLastSql());
+        return $this->fetch();
+    }
 }

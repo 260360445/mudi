@@ -26,7 +26,7 @@ class Finan  extends Root {
         $cem_id = $request->only(['cem_id']);
         $cem_area_id = $request->only(['cem_area_id']);
         $cem_row_id = $request->only(['cem_row_id']);
-        $map = ['a.status'=>39,'a.sta'=>3];
+        $map = ['a.status'=>39,'a.sta'=>3,'a.pay_status'=>0];
         if ($cem_id['cem_id']) {
             $map['a.cem_id'] = $cem_id['cem_id'];
         }
@@ -41,6 +41,13 @@ class Finan  extends Root {
     }
     public function finan_set_muwei(){
         $e = _Info::finan_set_muwei($_POST);
+        if ($e['status']) {
+            return '2';
+        }
+        return '3';
+    }
+    public function finan_set_muweis(){
+        $e = _Info::finan_set_muweis($_POST);
         if ($e['status']) {
             return '2';
         }

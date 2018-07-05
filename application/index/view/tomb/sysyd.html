@@ -1,0 +1,97 @@
+<div class="cont">
+  <form>
+    <fieldset>
+      <legend>提醒范围条件</legend>
+      <div class="lxd">
+        <p>提醒范围选择：</p>
+        <div class="lxa">
+          <input type="radio" name="gtime" value="5" {if condition="$gtime eq 5"}checked{/if}/>已过期
+        </div>
+        <div class="lxa">
+          <input type="radio" name="gtime" value="2" {if condition="$gtime eq 2"}checked{/if}/>7天内过期
+        </div>
+        <div class="lxa">
+          <input type="radio" name="gtime" value="3" {if condition="$gtime eq 3"}checked{/if}/>一个月内过期
+        </div>                                              
+      </div>
+        <div class="lxd">
+          <p>提醒范围填写：</p>
+            <div class="lxe">
+              <input type="text" id="row_today" value="{$today}"/>天内过期
+            </div>
+        <button type="button" class=" lxb show_all" >查询</button>
+        </div>
+        <div class="lxd">
+          <p>查询结果数量：</p>
+            <i>{$count}个</i>
+        </div>
+    </fieldset>
+    
+  </form>
+  <div class="conbiao">
+    <table class="table table-bordered">
+      <!--<caption>边框表格布局</caption>-->
+      <thead>
+        <tr>
+          <th>墓位全称</th>
+          <th>联系人</th>
+          <th>性别</th>
+          <th>联系电话</th>
+          <th>手机</th>
+          <th>家庭住址</th>
+          <th>工作单位</th>
+          <th>成交价格</th>
+          <th>预交金额</th>
+          <th>余额</th>
+          <th>预定时间</th>
+          <th>提醒时间</th>
+          <th>预定状态</th>
+          <th>业务员</th>
+        </tr>
+      </thead>
+      <tbody>
+      {volist name="list" id="vo"}
+        <tr>
+          <td>{$vo['long_title']}</td>
+          <td>{$vo['name']}</td>
+          <td>
+            {if condition="$vo['sex'] eq 2"}
+              男
+            {else /} 
+              女
+            {/if}
+          </td>
+          <td>{$vo['tel']}</td>
+          <td>{$vo['phone']}</td>
+          <td>{$vo['address']}</td>
+          <td>{$vo['workplace']}</td>
+          <td>{$vo['money']}</td>
+          <td>{$vo['reserve_money']}</td>
+          <td>{$vo['unpaid_money']}</td>
+          <td>{$vo['reserve_date']|date="Y-m-d",###}</td>
+          <td>{$vo['remind_date']|date="Y-m-d",###}</td>
+          <td>
+            {if condition="($ltime egt $vo['reserve_date']) AND ($ltime elt $vo['remind_date'])"}
+              未过期
+            {else /} 
+              已过期
+            {/if}
+          </td>
+          <td>{$row_staff[$vo['salesman']]['nickname']}</td>
+        </tr>
+      {/volist}
+      </tbody>
+    </table>
+  </div>
+</div>
+<script>
+$('.show_all').click(function(){
+    var gtime =$("input[name='gtime']:checked").val();
+    var today = $('#row_today').val();
+    if(today){
+      window.location.href="{:url('/index/Tomb/sysyd/gtime/"+gtime+"/today/"+today+"')}";
+    }else{
+      window.location.href="{:url('/index/Tomb/sysyd/gtime/"+gtime+"')}";  
+    }
+});
+</script>

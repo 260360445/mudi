@@ -163,10 +163,6 @@
             layer.close(vhtml);
         }
         function subres(){
-            layer.close(vhtml);
-            var html = layer.load(0, {
-              shade: [0.5] //0.1透明度的白色背景
-            });
             var seid=$("#seid").val();
             var reserve_date=$("input[name='reserve_date']").val();
             var remind_date=$("input[name='remind_date']").val();
@@ -186,41 +182,50 @@
             var contacts_address=$("input[name='contacts_address']").val();
             var salesman=$("#salesman option:selected").val();
             var beizhu=$("#buzhi").val();
-            $.ajax({
-                type        : 'post',
-                url         : '{:url('reserve_add')}',
-                dataType    : 'json',
-                data        : {
-                    seid : seid,
-                    reserve_date : reserve_date,
-                    remind_date : remind_date,
-                    money : money,
-                    reserve_money : reserve_money,
-                    unpaid_money : unpaid_money,
-                    dead_name : dead_name,
-                    dead_relationship : dead_relationship,
-                    contacts_name : contacts_name,
-                    contacts_postcode : contacts_postcode,
-                    contacts_idcard : contacts_idcard,
-                    contacts_sex : contacts_sex,
-                    contacts_tel : contacts_tel,
-                    contacts_phone : contacts_phone,
-                    contacts_workplace : contacts_workplace,
-                    contacts_email : contacts_email,
-                    contacts_address : contacts_address,
-                    salesman : salesman,
-                    beizhu : beizhu,
-                },
-                success     : function(g){
-                    if(g == 'ok'){
-                        layer.close(html);
-                        layer.msg('设置成功');
-                    }else{
-                        layer.close(html);
-                        layer.msg('设置失败');
+            if(reserve_date != '' && remind_date !='' && money !='' && reserve_money !='' && unpaid_money !='' && dead_name !='' && dead_relationship !='' && contacts_name !='' && contacts_postcode !='' && contacts_idcard !='' && contacts_sex !='' && contacts_phone !=''&& contacts_tel !=''&& salesman !=''){
+                layer.close(vhtml);
+                var html = layer.load(0, {
+                  shade: [0.5] //0.1透明度的白色背景
+                });
+               
+                $.ajax({
+                    type        : 'post',
+                    url         : '{:url('reserve_add')}',
+                    dataType    : 'json',
+                    data        : {
+                        seid : seid,
+                        reserve_date : reserve_date,
+                        remind_date : remind_date,
+                        money : money,
+                        reserve_money : reserve_money,
+                        unpaid_money : unpaid_money,
+                        dead_name : dead_name,
+                        dead_relationship : dead_relationship,
+                        contacts_name : contacts_name,
+                        contacts_postcode : contacts_postcode,
+                        contacts_idcard : contacts_idcard,
+                        contacts_sex : contacts_sex,
+                        contacts_tel : contacts_tel,
+                        contacts_phone : contacts_phone,
+                        contacts_workplace : contacts_workplace,
+                        contacts_email : contacts_email,
+                        contacts_address : contacts_address,
+                        salesman : salesman,
+                        beizhu : beizhu,
+                    },
+                    success     : function(g){
+                        if(g == 'ok'){
+                            layer.close(html);
+                            layer.msg('设置成功');
+                        }else{
+                            layer.close(html);
+                            layer.msg('设置失败');
+                        }
                     }
-                }
-            });
+                });
+            }else{
+                layer.msg('信息填写不全或不正确');
+            }
         }
         function zjgm(){
             var html = layer.load(0, {
@@ -256,6 +261,7 @@
             var starttime=$("#starttime").val();
             var endtime=$("#endtime").val();
             var manage_sum_money=$("input[name='manage_sum_money']").val();
+            var dead_name=$("input[name='dead_name']").val();
             var pay_sum_money=$("input[name='pay_sum_money']").val();
             var dead_relationship=$("#dead_relationship option:selected").val();
             var contacts_name=$("input[name='contacts_name']").val();
@@ -267,7 +273,7 @@
             var contacts_email=$("input[name='contacts_email']").val();
             var contacts_address=$("input[name='contacts_address']").val();
             var salesman=$("#salesman option:selected").val();
-            var beizhu=$("#buzhi").val();
+            var beizhu=$("#beizhu").val();
             var reg=/^(0|[1-9][0-9]*)$/;
             if(mw_price == ''){
               layer.msg('请填写墓位费');
@@ -295,6 +301,10 @@
                 layer.msg('请填写数字');
                 $('#manage_year').focus();
                 return false;
+            }
+            if(dead_name == ''){
+              layer.msg('请填写故者姓名');
+              return false;
             }
             if(settime == ''){
               layer.msg('请选择定购日期');
@@ -324,7 +334,7 @@
               layer.msg('请填写手机号');
               return false;
             }
-            if(mw_price != '' && manage_money != '' && manage_year != '' && settime != '' && starttime != '' && endtime != '' && contacts_name != '' && contacts_idcard != '' && contacts_tel != ''  && contacts_phone != ''){
+            if(mw_price != '' && manage_money != '' && manage_year != '' && settime != '' && starttime != '' && endtime != '' && contacts_name != '' && contacts_idcard != '' && contacts_tel != ''  && contacts_phone != '' && dead_name != ''){
                 layer.close(dghtml);
                 ldghtml = layer.load(0, {
                     shade: [0.5] //0.1透明度的白色背景
@@ -341,6 +351,7 @@
                         manage_sum_money : manage_sum_money,
                         settime : settime,
                         starttime : starttime,
+                        dead_name:dead_name,
                         endtime : endtime,
                         pay_sum_money : pay_sum_money,
                         dead_relationship : dead_relationship,
@@ -406,7 +417,7 @@
               }
               if (!reg.test(manage_money)) {
                 layer.msg('请填写数字');
-                $('#manage_year').focus();
+                $('#manage_money').focus();
                 return false;
               }
               if (!reg.test(two)) {

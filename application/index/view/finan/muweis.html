@@ -69,17 +69,27 @@
       </thead>
       <tbody>
       {volist name="list" id="vo"}
-        <tr>
+      {if condition="$vo['pay_status'] eq 0"}
+        <tr onclick="set('{$vo.id}')">
+      {elseif condition="$vo['pay_status'] eq 1"/} 
+        <tr onclick="set_dy('{$vo.id}')">
+      {/if}
           <td>{$vo['long_title']}</td>
-          <td>已预订</td>
+          <td>已订购</td>
           <td>
-            {if condition="$vo['pay_status'] eq 1"}
+            {if condition="$vo['status'] eq 39"}
               已购墓
-            {else/} 
-              已预订
+            {elseif condition="$vo['status'] eq 44"/} 
+              预订
             {/if}
           </td>
-          <td>已付款</td>
+          <td>
+            {if condition="$vo['pay_status'] eq 0"}
+              未付款
+            {elseif condition="$vo['pay_status'] eq 1"/} 
+              已付款
+            {/if}
+          </td>
           <td>{$vo['settime']|date="Y-m-d",###}</td>
           <td>{$vo['starttime']|date="Y-m-d",###}</td>
           <td>{$vo['endtime']|date="Y-m-d",###}</td>
@@ -120,6 +130,81 @@
     </table>
   </div>
 </div>
+<script src="__JS__/layer/layer.js"></script>
+<script type="text/javascript">
+function set_dy(id){
+   var index=layer.confirm('是否确认打印票据？', {
+      btn: ['确定','取消'] //按钮
+    }, function(){
+        layer.close(index);
+        var ihtml = layer.load(0, {
+          shade: [0.5] //0.1透明度的白色背景
+        });
+        $.ajax({
+            type        : 'post',
+            url         : '{:url('finan_set_muweis')}',
+            dataType    : 'json',
+            data        : {
+                id : id
+            },
+            success     : function(e){
+                if (e == '2') {
+                  layer.close(ihtml);
+                  layer.msg('设置成功',{offset: '300px',time: 2000,icon: 1},function () {
+                       window.location.reload();
+                    });
+                } else {
+                  layer.close(ihtml);
+                  layer.msg('设置失败',{offset: '300px',time: 2000,icon: 2},function () {
+                       window.location.reload();
+                    });
+                }
+            },
+            error       : function () {
+
+            },
+        });
+    }, function(){
+      layer.close(index);
+    });
+}
+function set(id){
+   var index=layer.confirm('是否确认该收费记录？', {
+      btn: ['确定','取消'] //按钮
+    }, function(){
+        layer.close(index);
+        var ihtml = layer.load(0, {
+          shade: [0.5] //0.1透明度的白色背景
+        });
+        $.ajax({
+            type        : 'post',
+            url         : '{:url('finan_set_muweis')}',
+            dataType    : 'json',
+            data        : {
+                id : id
+            },
+            success     : function(e){
+                if (e == '2') {
+                  layer.close(ihtml);
+                  layer.msg('设置成功',{offset: '300px',time: 2000,icon: 1},function () {
+                       window.location.reload();
+                    });
+                } else {
+                  layer.close(ihtml);
+                  layer.msg('设置失败',{offset: '300px',time: 2000,icon: 2},function () {
+                       window.location.reload();
+                    });
+                }
+            },
+            error       : function () {
+
+            },
+        });
+    }, function(){
+      layer.close(index);
+    });
+}
+</script>
 <script type="text/javascript">
 $('.show_all').click(function(){
 var cem_id = $('.add_row').find('.cem_id').val();

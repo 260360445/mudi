@@ -67,8 +67,9 @@
                 </tr>
               </thead>
               <tbody>
+              {volist name="list" id="vo"}
                 <tr>
-                  <td>Cem2017010812355</td>
+                  <td>{$vo['long_title']}</td>
                   <td>天祥园A区1排0009号</td>
                   <td>已下葬</td>
                   <td>刘丛礼</td>
@@ -101,7 +102,7 @@
                   <td>已下葬</td>
                   <td>刘丛礼</td>
                 </tr>
-               
+              {/volist} 
               </tbody>
             </table>
           </div>

@@ -199,12 +199,13 @@ class System  extends Root {
     public function sysjcw_wlist_l ($cem_id) {
         return _Syslx::wlists(['sysysid' => $cem_id]);
     }
+    
 
 
 
 
 
-    public function  upload ()
+    /*public function  upload ()
     {
 
         $src = '';
@@ -222,7 +223,7 @@ class System  extends Root {
         $this->assign('src', $src);
         $this->view->engine->layout(false);
         return $this->fetch();
-    }
+    }*/
     
 
 }

@@ -29,7 +29,7 @@ class Staff extends Root {
         session('auth', $auth);
         return ['status' => true, 'msg' => '登录成功!'];
     }
-
+    
 
     static public function wlist () {
         return self::select();

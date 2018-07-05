@@ -68,10 +68,10 @@
           <td>{$list['long_title']}</td>
           <td>已预订</td>
           <td>
-            {if condition="$list['pay_status'] eq 1"}
-              已购墓
-            {else/} 
+            {if condition="$list['status'] eq 39"}
               已预订
+            {elseif condition="$list['status'] eq 44"/} 
+              已购墓
             {/if}
           </td>
           <td>{$list['price']}</td>
