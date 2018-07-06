@@ -4651,7 +4651,7 @@ html,body{width: 100%;height: 100%;}
 	margin: 0;
 	text-align: right;
 }
-.gztanea select{
+.gztanea input{
 	width: 120px;
 	outline: 0;
 	font-size: 14px;
@@ -4677,7 +4677,7 @@ html,body{width: 100%;height: 100%;}
 	margin: 0;
 	text-align: right;
 }
-.gztaneb select{
+.gztaneb input{
 	width: 120px;
 	outline: 0;
 	font-size: 14px;
@@ -4703,7 +4703,7 @@ html,body{width: 100%;height: 100%;}
 	margin: 0;
 	text-align: right;
 }
-.gztanec select{
+.gztanec input{
 	width: 120px;
 	outline: 0;
 	font-size: 14px;

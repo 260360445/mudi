@@ -103,4 +103,19 @@ class Statistics  extends Root {
         $data = _Info::select_user_list_all($_POST);
         return $data;
     }
+    //墓位销售员业绩统计-全部  有时间
+    public function select_user_list_all_time(){
+        $data = _Info::select_user_list_all_time($_POST);
+        return $data;
+    }
+    //墓位销售员业绩统计-个人  没有时间
+    public function select_user_list_tab_one(){
+        $data = _Info::select_user_list_tab_one($_POST);
+        return $data;
+    }
+    //墓位销售员业绩统计-个人  有时间
+    public function sselect_user_list_tab_one_time(){
+        $data = _Info::sselect_user_list_tab_one_time($_POST);
+        return $data;
+    }
 }

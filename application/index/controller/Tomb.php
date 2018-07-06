@@ -159,6 +159,10 @@ class Tomb  extends Root {
                 $data['manage_money']=$_POST['manage_money'];
                 $data['manage_year']=$_POST['manage_year'];
                 $data['manage_time']= time()+3600*8+3600*24*36*$_POST['manage_year'];//比如5天前的时间
+                $data['mwnum']=$_POST['seid'];
+                $data['lnum']=date('YmdHis',time());
+                $data['hnum']='TQ'.date('YmdHis',time());
+                $data['znum']='Cem'.date('YmdHis',time());
                 $data['pay_status']=0;
                 $data['salesman']=$_POST['salesman'];
                 $data['beizhu']=$_POST['beizhu'];
@@ -194,6 +198,10 @@ class Tomb  extends Root {
                 $data['manage_money']=$_POST['manage_money'];
                 $data['manage_year']=$_POST['manage_year'];
                 $data['manage_time']= time()+3600*8+3600*24*36*$_POST['manage_year'];//比如5天前的时间
+                $data['mwnum']=$_POST['seid'];
+                $data['lnum']=date('YmdHis',time());
+                $data['hnum']='TQ'.date('YmdHis',time());
+                $data['znum']='Cem'.date('YmdHis',time());
                 $data['pay_sum_money']=$_POST['yuee']+$_POST['manage_money']*$_POST['manage_year'];
                 $data['manage_sum_money']=$_POST['manage_money']*$_POST['manage_year'];
                 $data['salesman']=$_POST['salesman'];
@@ -234,6 +242,7 @@ class Tomb  extends Root {
                 $data['mwnum']=$_POST['seid'];
                 $data['lnum']=date('YmdHis',time());
                 $data['hnum']='TQ'.date('YmdHis',time());
+                $data['znum']='Cem'.date('YmdHis',time());   
                 $data['salesman']=$_POST['salesman'];
                 $data['beizhu']=$_POST['beizhu'];
                 $data['pay_sum_money']=$_POST['mw_price']+$_POST['manage_money']*$_POST['manage_year'];
@@ -270,6 +279,7 @@ class Tomb  extends Root {
                 $data['mwnum']=$_POST['seid'];
                 $data['lnum']=date('YmdHis',time());
                 $data['hnum']='TQ'.date('YmdHis',time());
+                $data['znum']='Cem'.date('YmdHis',time());
                 $data['manage_money']=$_POST['manage_money'];
                 $data['manage_year']=$_POST['manage_year'];
                 $data['pay_sum_money']=$_POST['mw_price']+$_POST['manage_money']*$_POST['manage_year'];

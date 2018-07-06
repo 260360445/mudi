@@ -21,9 +21,9 @@ class CemInfo extends Root {
     static public function wlistt ($map = []) {
         return self::field('a.id,a.long_title,a.pay_status,a.sta,a.status,a.price,a.money,a.settime,a.starttime,a.endtime,a.mwnum,a.lnum,a.hnum,a.pay_sum_money,a.manage_money,a.manage_year,a.manage_sum_money,a.reserve_money,a.unpaid_money,a.pay_status,a.reserve_date,a.reserve_date,a.remind_date,a.update_by,a.beizhu,a.salesman,b.name,b.sex,b.idcard,b.tel,b.phone,b.postcode,b.address,b.workplace,b.email,b.relationship,d.dead_name')->alias('a')->join('contacts b','a.contacts_id = b.id')->join('dead d','a.id = d.cem_info_id')->where($map)->select();
     }
-    //顾着落幕等级
+    //故者落幕登记
     static public function reserve_gzdj($info){
-        $arr=self::alias('a')->join('contacts b','a.contacts_id = b.id')->where(['a.id'=>$info['id']])->find();
+        $arr=self::alias('a')->join('contacts b','a.contacts_id = b.id')->join('dead d','a.id = d.cem_info_id')->where(['a.id'=>$info['id']])->find();
         $html='';
         $html.='<div class="gztan" style="display:block;">';
              $html.='<div class="gztana">';
@@ -33,119 +33,114 @@ class CemInfo extends Root {
                          $html.='<div class="gztanb">';
                              $html.='<div class="gztanba">';
                                  $html.='<p>墓位全称：</p>';
-                                 $html.='<input type="text" value="天福园A区1排0031号"/>';
+                                 $html.='<input type="text" value="'.$arr['long_title'].'" disabled/>';
                              $html.='</div>';
                              $html.='<div class="gztanbb">';
                                  $html.='<p>证书编号：</p>';
-                                 $html.='<input type="text" value="Cem201806210031"/>';
+                                 $html.='<input type="text" value="'.$arr['znum'].'" disabled/>';
                                  $html.='<i>*</i>';
                              $html.='</div>';
                              $html.='<div class="gztanbc">';
                                  $html.='<p>定购日期：</p>';
-                                 $html.='<select>';
-                                    $html.=' <option>2009年3月28日</option>';
-                                 $html.='</select>';
+                                 $html.='<input type="text" value="'.date('Y-m-d',$arr['settime']).'" disabled/>';
                              $html.='</div>';
                          $html.='</div>';
                          $html.='<div class="gztanc">';
                             $html.=' <div class="gztanca">';
                                  $html.='<p>故者姓名：</p>';
-                                 $html.='<input type="text" />';
+                                 $html.='<input type="text" value="'.$arr['dead_name'].'"/>';
                                  $html.='<i>*</i>';
                             $html.=' </div>';
                             $html.=' <div class="gztancb">';
                                  $html.='<p>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</p>';
-                                 $html.='<select>';
-                                     $html.='<option>男</option>';
-                                     $html.='<option>女</option>';
+                                 $html.='<select name="dead_sex" id="dead_sex">';
+                                     $html.='<option value="2">男</option>';
+                                     $html.='<option value="3">女</option>';
                                  $html.='</select>';
                                  $html.='<i>*</i>';
                              $html.='</div>';
                              $html.='<div class="gztancc">';
                                 $html.=' <p>使用开始：</p>';
-                                $html.='<select>';
-                                    $html.=' <option>2009年3月28日</option>';
-                                 $html.='</select>';
+                                $html.='<input class="Wdate" name="starttime" type="text" onClick="WdatePicker()">';
                              $html.='</div>';
                          $html.='</div>';
                          $html.='<div class="gztand">';
                              $html.='<div class="gztanda">';
                                  $html.='<p>工作单位：</p>';
-                                 $html.='<input type="text" value="天福园A区1排0031号"/>';
+                                 $html.='<input type="text" name="dead_work" id="dead_work"/>';
                              $html.='</div>';
                              $html.='<div class="gztandb">';
                                 $html.=' <p>原&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;籍：</p>';
-                                 $html.='<input type="text" value="Cem201806210031"/>';
+                                 $html.='<input type="text" name="dead_address" id="dead_address"/>';
                              $html.='</div>';
                              $html.='<div class="gztandc">';
                                  $html.='<p>使用结束：</p>';
-                                 $html.='<select>';
-                                     $html.='<option>2009年3月28日</option>';
-                                 $html.='</select>';
+                                 $html.='<input class="Wdate" name="endtime" type="text" onClick="WdatePicker()">';
                              $html.='</div>';
                          $html.='</div>';
                          $html.='<div class="gztane">';
                              $html.='<div class="gztanea">';
                                  $html.='<p>出生日期：</p>';
-                                 $html.='<select>';
-                                    $html.=' <option>2018年6月21日</option>';
-                                 $html.='</select>';
+                                 $html.='<input class="Wdate" name="gstime" type="text" onClick="WdatePicker()">';
                                 $html.=' <b>（公历）</b>';
                              $html.='</div>';
                              $html.='<div class="gztaneb">';
                                 $html.=' <p>逝世日期：</p>';
-                                $html.=' <select>';
-                                 $html.='    <option>2018年6月21日</option>';
-                                $html.=' </select>';
+                                $html.=' <input class="Wdate" name="gdtime" type="text" onClick="WdatePicker()">';
                                 $html.=' <b>（公历）</b>';
                              $html.='</div>';
                              $html.='<div class="gztanec">';
                                  $html.='<p>落葬日期：</p>';
-                                 $html.='<select>';
-                                     $html.='<option>2018年6月21日</option>';
-                                 $html.='</select>';
+                                 $html.='<input class="Wdate" name="gltime" type="text" onClick="WdatePicker()">';
                                 $html.=' <b>（公历）</b>';
                              $html.='</div>';
                          $html.='</div>';
                          $html.='<div class="gztanf">';
                              $html.='<div class="gztanfa">';
                                  $html.='<p>出生日期：</p>';
-                                 $html.='<input type="text" />';
+                                 $html.='<input type="text" name="nstime"/>';
                                  $html.='<b>（农历）</b>';
                              $html.='</div>';
                              $html.='<div class="gztanfb">';
                                 $html.=' <p>逝世日期：</p>';
-                                $html.=' <input type="text" />';
+                                $html.=' <input type="text" name="ndtime"/>';
                                 $html.=' <b>（农历）</b>';
                              $html.='</div>';
                              $html.='<div class="gztanfc">';
                                  $html.='<p>落葬日期：</p>';
-                                 $html.='<input type="text" />';
+                                 $html.='<input type="text" name="nltime"/>';
                                  $html.='<b>（农历）</b>';
                              $html.='</div>';
                          $html.='</div>';
                          $html.='<div class="gztang">';
                              $html.='<div class="gztanga">';
                                  $html.='<select>';
-                                   $html.='  <option></option>';
+                                   $html.='  <option>只显示农历</option>';
+                                   $html.='  <option>只显示公历</option>';
+                                   $html.='  <option>都显示</option>';
+                                   $html.='  <option>都不显示</option>';
                                  $html.='</select>';
                              $html.='</div>';
                              $html.='<div class="gztangb">';
-                                $html.=' <select>';
-                                    $html.=' <option>2018年6月21日</option>';
-                                 $html.='</select>';
+                                $html.=' <input class="Wdate" name="jrtime" type="text" onClick="WdatePicker()">';
                                  $html.='<p>（农历数字，用于祭祀日提醒）</p>';
                              $html.='</div>';
                              $html.='<div class="gztangc">';
                                  $html.='<select>';
-                                    $html.=' <option></option>';
+                                    $html.='  <option>只显示农历</option>';
+                                   $html.='  <option>只显示公历</option>';
+                                   $html.='  <option>都显示</option>';
+                                   $html.='  <option>都不显示</option>';
                                  $html.='</select>';
                              $html.='</div>';
                          $html.='</div>';
                          $html.='<div class="gztanh">';
                             $html.=' <div class="gztanha">';
                                  $html.='<select>';
-                                    $html.=' <option></option>';
+                                    $html.='  <option>只显示农历</option>';
+                                   $html.='  <option>只显示公历</option>';
+                                   $html.='  <option>都显示</option>';
+                                   $html.='  <option>都不显示</option>';
                                 $html.=' </select>';
                             $html.=' </div>';
                         $html.=' </div>';
@@ -2200,15 +2195,97 @@ class CemInfo extends Root {
         }
         return RE_ERROR;
     }
-    //墓位销售员业绩统计-全部 没有时间
+
+    static public function sselect_user_list_tab_one_time($arra){
+        if($arra['type'] == 'one'){
+            $html='';
+            if($arra['starttime']!='' && $arra['endtime']!=''){
+                $arr=self::field('id,long_title,settime,starttime,endtime,money,manage_sum_money')->where('salesman='.$arra['cem'].' and status=44 and settime>='.strtotime($arra['starttime']).' and settime<='.strtotime($arra['endtime']))->select();
+                $nickname=self::table('staff')->field('nickname')->where(['id'=>$arra['cem']])->find();
+                foreach ($arr as $key => $v) {
+                    $html.='<tr class="trtr">';
+                        $html.='<td>1</td>';
+                        $html.='<td>'.$v['long_title'].'</td>';
+                        $html.='<td>'.date('Y-m-d',$v['settime']).'</td>';
+                        $html.='<td>'.date('Y-m-d',$v['starttime']).'</td>';
+                        $html.='<td>'.date('Y-m-d',$v['endtime']).'</td>';
+                        $html.='<td>'.$v['money'].'</td>';
+                        $html.='<td>'.$v['manage_sum_money'].'</td>';
+                        $sum=$v['money']+$v['manage_sum_money'];
+                        $html.='<td>'.$sum.'</td>';
+                        $html.='<td>'.$nickname['nickname'].'</td>';
+                    $html.='</tr>';
+                }
+            }else if($arra['starttime']!='' && $arra['endtime']==''){
+                $arr=self::field('id,long_title,settime,starttime,endtime,money,manage_sum_money')->where('salesman='.$arra['cem'].' and status=44 and settime>='.strtotime($arra['starttime']))->select();
+                $nickname=self::table('staff')->field('nickname')->where(['id'=>$arra['cem']])->find();
+                foreach ($arr as $key => $v) {
+                    $html.='<tr class="trtr">';
+                        $html.='<td>1</td>';
+                        $html.='<td>'.$v['long_title'].'</td>';
+                        $html.='<td>'.date('Y-m-d',$v['settime']).'</td>';
+                        $html.='<td>'.date('Y-m-d',$v['starttime']).'</td>';
+                        $html.='<td>'.date('Y-m-d',$v['endtime']).'</td>';
+                        $html.='<td>'.$v['money'].'</td>';
+                        $html.='<td>'.$v['manage_sum_money'].'</td>';
+                        $sum=$v['money']+$v['manage_sum_money'];
+                        $html.='<td>'.$sum.'</td>';
+                        $html.='<td>'.$nickname['nickname'].'</td>';
+                    $html.='</tr>';
+                }
+            }else if($arra['starttime']=='' && $arra['endtime']!=''){
+               $arr=self::field('id,long_title,settime,starttime,endtime,money,manage_sum_money')->where('salesman='.$arra['cem'].' and status=44 and settime<='.strtotime($arra['endtime']))->select();
+                $nickname=self::table('staff')->field('nickname')->where(['id'=>$arra['cem']])->find();
+                foreach ($arr as $key => $v) {
+                    $html.='<tr class="trtr">';
+                        $html.='<td>1</td>';
+                        $html.='<td>'.$v['long_title'].'</td>';
+                        $html.='<td>'.date('Y-m-d',$v['settime']).'</td>';
+                        $html.='<td>'.date('Y-m-d',$v['starttime']).'</td>';
+                        $html.='<td>'.date('Y-m-d',$v['endtime']).'</td>';
+                        $html.='<td>'.$v['money'].'</td>';
+                        $html.='<td>'.$v['manage_sum_money'].'</td>';
+                        $sum=$v['money']+$v['manage_sum_money'];
+                        $html.='<td>'.$sum.'</td>';
+                        $html.='<td>'.$nickname['nickname'].'</td>';
+                    $html.='</tr>';
+                }     
+            }
+            return $html;
+        }
+    }
+    //墓位销售员业绩统计-个人  没有时间
+    static public function select_user_list_tab_one($arra){
+        if($arra['type'] == 'one'){
+            $html='';
+            $arr=self::field('id,long_title,settime,starttime,endtime,money,manage_sum_money')->where(['salesman'=>$arra['cem'],'status'=>44])->select();
+            $nickname=self::table('staff')->field('nickname')->where(['id'=>$arra['cem']])->find();
+            foreach ($arr as $key => $v) {
+                $html.='<tr class="trtr">';
+                    $html.='<td>1</td>';
+                    $html.='<td>'.$v['long_title'].'</td>';
+                    $html.='<td>'.date('Y-m-d',$v['settime']).'</td>';
+                    $html.='<td>'.date('Y-m-d',$v['starttime']).'</td>';
+                    $html.='<td>'.date('Y-m-d',$v['endtime']).'</td>';
+                    $html.='<td>'.$v['money'].'</td>';
+                    $html.='<td>'.$v['manage_sum_money'].'</td>';
+                    $sum=$v['money']+$v['manage_sum_money'];
+                    $html.='<td>'.$sum.'</td>';
+                    $html.='<td>'.$nickname['nickname'].'</td>';
+                $html.='</tr>';
+            }
+            return $html;
+        }
+    }
+    //墓位销售员业绩统计-全部 有时间
     static public function select_user_list_all_time($arra){
          if($arra['id'] == 'all'){
+            $html='';
             if($arra['starttime']!='' && $arra['endtime']!=''){
-                $html='';
                 $arr=self::table('staff')->select();
                 foreach ($arr as $key => $info) {
                     $data['count']=self::where('salesman='.$info['id'].' and status=44 and settime>='.strtotime($arra['starttime']).' and settime<='.strtotime($arra['endtime']))->count();
-                    $money=self::field('sum(money)')->where'salesman='.$info['id'].' and status=44 and settime>='.strtotime($arra['starttime']).' and settime<='.strtotime($arra['endtime']))->select();
+                    $money=self::field('sum(money)')->where('salesman='.$info['id'].' and status=44 and settime>='.strtotime($arra['starttime']).' and settime<='.strtotime($arra['endtime']))->select();
                     $manage_sum_money=self::field('sum(manage_sum_money)')->where('salesman='.$info['id'].' and status=44 and settime>='.strtotime($arra['starttime']).' and settime<='.strtotime($arra['endtime']))->select();
                     $nickname=self::table('staff')->field('nickname')->where(['id'=>$info['id']])->find();
                     if($money[0]['sum(money)'] != null){//墓位费 合计
@@ -2232,9 +2309,59 @@ class CemInfo extends Root {
                     $html.='</tr>';
                 }
             }else if($arra['starttime']!='' && $arra['endtime']==''){
-                
+                $arr=self::table('staff')->select();
+                foreach ($arr as $key => $info) {
+                    $data['count']=self::where('salesman='.$info['id'].' and status=44 and settime>='.strtotime($arra['starttime']))->count();
+                    $money=self::field('sum(money)')->where('salesman='.$info['id'].' and status=44 and settime>='.strtotime($arra['starttime']))->select();
+                    $manage_sum_money=self::field('sum(manage_sum_money)')->where('salesman='.$info['id'].' and status=44 and settime>='.strtotime($arra['starttime']))->select();
+                    $nickname=self::table('staff')->field('nickname')->where(['id'=>$info['id']])->find();
+                    if($money[0]['sum(money)'] != null){//墓位费 合计
+                        $price=$money[0]['sum(money)'];
+                    }else{
+                        $price=0;
+                    }
+                    if($manage_sum_money[0]['sum(manage_sum_money)'] != null){//管理费 合计
+                        $money=$manage_sum_money[0]['sum(manage_sum_money)'];
+                    }else{
+                        $money=0;
+                    }
+                    $data['shouru']=$price+$money;//收入
+                    $html.='<tr class="trtr">';
+                        $html.='<td>'.$nickname['nickname'].'</td>';
+                        $html.='<td>'.$nickname['nickname'].'</td>';
+                        $html.='<td>'.$data['count'].'</td>';
+                        $html.='<td>'.$price.'</td>';
+                        $html.='<td>'.$money.'</td>';
+                        $html.='<td>'.$data['shouru'].'</td>';
+                    $html.='</tr>';
+                }
             }else if($arra['starttime']=='' && $arra['endtime']!=''){
-                
+                $arr=self::table('staff')->select();
+                foreach ($arr as $key => $info) {
+                    $data['count']=self::where('salesman='.$info['id'].' and status=44 and settime<='.strtotime($arra['endtime']))->count();
+                    $money=self::field('sum(money)')->where('salesman='.$info['id'].' and status=44 and settime<='.strtotime($arra['endtime']))->select();
+                    $manage_sum_money=self::field('sum(manage_sum_money)')->where('salesman='.$info['id'].' and status=44 and settime<='.strtotime($arra['endtime']))->select();
+                    $nickname=self::table('staff')->field('nickname')->where(['id'=>$info['id']])->find();
+                    if($money[0]['sum(money)'] != null){//墓位费 合计
+                        $price=$money[0]['sum(money)'];
+                    }else{
+                        $price=0;
+                    }
+                    if($manage_sum_money[0]['sum(manage_sum_money)'] != null){//管理费 合计
+                        $money=$manage_sum_money[0]['sum(manage_sum_money)'];
+                    }else{
+                        $money=0;
+                    }
+                    $data['shouru']=$price+$money;//收入
+                    $html.='<tr class="trtr">';
+                        $html.='<td>'.$nickname['nickname'].'</td>';
+                        $html.='<td>'.$nickname['nickname'].'</td>';
+                        $html.='<td>'.$data['count'].'</td>';
+                        $html.='<td>'.$price.'</td>';
+                        $html.='<td>'.$money.'</td>';
+                        $html.='<td>'.$data['shouru'].'</td>';
+                    $html.='</tr>';
+                }
             }
            
             return $html;
