@@ -1,0 +1,117 @@
+<div class="cont">
+  <form>
+    <fieldset>
+       <legend>统计条件设置与结果打印</legend>             
+       <div class="conta">
+          <p>选择墓园</p>
+          <p>统计开始时间</p>
+          <p>统计结束时间</p>
+         
+       </div>
+       <div class="contb">
+          <select name="cem_id" class="cem_id" onchange="buy()">
+            {foreach $cem_list as $k => $vo}
+                 <option value="{$vo.id}">{$vo.title}</option>
+            {/foreach}
+         </select>
+         <input class="Wdate xiaostime" id="starttime" type="text" onClick="WdatePicker()" style="margin-left:10px;">
+         <input class="Wdate xiaostime" id="endtime" type="text" onClick="WdatePicker()">
+          
+        
+       </div>
+       <div class="xiaost">
+           <button type="button" class="xiaosd show_all">统计全部墓园</button>
+         <div class="xiaosd">打印统计额</div>
+         <div class="xiaosd">打印明细</div>
+       </div>
+    </fieldset>
+    
+  </form>
+  <div class="conbiao">
+    <table class="table table-bordered">
+      <!--<caption>边框表格布局</caption>-->
+      <thead>
+        <tr>
+          <th>墓园编号</th>
+          <th>墓位名称</th>
+          <th>销售数量</th>
+          <th>墓位费合计</th>
+          <th>管理费合计</th>
+          <th>销售收入合计</th>
+        </tr>
+      </thead>
+      <tbody class="add_row">
+       
+      </tbody>
+    </table>
+  </div>
+</div>
+<script src="__JS__/layer/layer.js"></script>
+<script language="javascript" type="text/javascript" src="__JS__/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+  $(function(){
+    var cem=$(".cem_id option:selected").val();
+    che(cem);
+  })
+  function che(cem){
+    var html='';
+    $.ajax({
+        type        : 'post',
+        url         : '{:url('select_cem_list')}',
+        dataType    : 'json',
+        data        : {
+            id : cem,
+        },
+        success     : function(g){
+          html+='<tr class="trtr">';
+             html+='<td>'+g['eid']+'</td>';
+             html+='<td>'+g['title']+'</td>';
+             html+='<td>'+g['count']+'</td>';
+             html+='<td>'+g['muwei']+'</td>';
+             html+='<td>'+g['guanli']+'</td>';
+             html+='<td>'+g['shouru']+'</td>';
+          html+='</tr>';
+          $(".add_row").append(html);
+        }
+    });
+  }
+  function buy(){
+    $(".trtr").remove();
+    var cem=$(".cem_id option:selected").val();
+    che(cem);
+  }
+  $(".show_all").click(function(){
+    $(".trtr").remove();
+    var start=$("#starttime").val();
+    var end=$("#endtime").val();
+    if(start || end){
+      $.ajax({
+          type        : 'post',
+          url         : '{:url('select_cem_list_all_time')}',
+          dataType    : 'json',
+          data        : {
+              id : 'all',
+              starttime : start,
+              endtime : end,
+          },
+          success     : function(g){
+            
+            $(".add_row").append(g);
+          }
+      });
+    }else{
+      $.ajax({
+          type        : 'post',
+          url         : '{:url('select_cem_list_all')}',
+          dataType    : 'json',
+          data        : {
+              id : 'all',
+          },
+          success     : function(g){
+            
+            $(".add_row").append(g);
+          }
+      });
+    }
+  })
+</script>

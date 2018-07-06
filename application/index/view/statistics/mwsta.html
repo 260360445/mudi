@@ -1,0 +1,100 @@
+<div class="cont">
+  <form>
+    <fieldset>
+       <legend>统计条件设置与结果打印</legend>             
+       <div class="conta">
+          <p>选择墓园</p>
+          
+         
+       </div>
+       <div class="contb">
+        <select name="cem_id" class="cem_id" onchange="buy()">
+            {foreach $cem_list as $k => $vo}
+                 <option value="{$vo.id}">{$vo.title}</option>
+            {/foreach}
+         </select>
+        
+        <button type="button" class="contc show_all">显示全部</button>
+        <div class="contc">打印统计结果</div>
+       </div>
+    </fieldset>
+    
+  </form>
+  <div class="conbiao">
+    <table class="table table-bordered">
+      <!--<caption>边框表格布局</caption>-->
+      <thead>
+        <tr>
+          <th>编号</th>
+          <th>墓位状态</th>
+          <th>销售数量</th>
+         
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>空墓</td>
+          <td id="kong"></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>已预订</td>
+          <td id="yuding"></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>已订购</td>
+          <td id="dinggou"></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>已下葬</td>
+          <td id="xiazang"></td>
+        </tr>
+      </tbody>
+    </table>  
+  </div>
+</div>
+<script type="text/javascript">
+  $(function(){
+    var cem=$(".cem_id option:selected").val();
+    che(cem);
+  })
+  function che(cem){
+    $.ajax({
+        type        : 'post',
+        url         : '{:url('select_cem')}',
+        dataType    : 'json',
+        data        : {
+            id : cem,
+        },
+        success     : function(g){
+            $("#kong").html(g['kong']);
+            $("#yuding").html(g['yuding']);
+            $("#dinggou").html(g['dinggou']);
+            $("#xiazang").html(g['xiazang']);
+        }
+    });
+  }
+  $(".show_all").click(function(){
+    $.ajax({
+        type        : 'post',
+        url         : '{:url('select_show_all')}',
+        dataType    : 'json',
+        data        : {
+            id : 'all',
+        },
+        success     : function(g){
+            $("#kong").html(g['kong']);
+            $("#yuding").html(g['yuding']);
+            $("#dinggou").html(g['dinggou']);
+            $("#xiazang").html(g['xiazang']);
+        }
+    });
+  })
+  function buy(){
+    var cem=$(".cem_id option:selected").val();
+    che(cem);
+  }
+</script>

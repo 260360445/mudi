@@ -291,7 +291,7 @@
                       type: 1,
                       title: '故者落葬登记', //不显示标题
                       skin: 'layui-layer-rim', //加上边框
-                      area: ['870px', '672px'], //宽高
+                      area: ['890px', '690px'], //宽高
                       content: g
                     });
                 }
@@ -315,13 +315,24 @@
                       type: 1,
                       title: '碑文设置', //不显示标题
                       skin: 'layui-layer-rim', //加上边框
-                      area: ['870px', '672px'], //宽高
+                      area: ['832px', '610px'], //宽高
                       content: g
                     });
                 }
             });
           }
-
+        function tab1(){
+            $("#tab1").show();
+            $("#tab2").hide();
+            $("#liset2").removeClass('bwon');
+            $("#liset1").addClass('bwon');
+        }
+        function tab2(){
+            $("#tab2").show();
+            $("#tab1").hide();
+            $("#liset1").removeClass('bwon');
+            $("#liset2").addClass('bwon');
+        }
         function _tc2_show() {
             $('.tc2').attr('src', "{:url('buyed_tc2', '', '')}/id/" + id);
             $('.tc2').show();

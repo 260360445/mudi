@@ -155,4 +155,5 @@ class Stration extends Root {
         $this->assign('list', _Info::wlistt($map));
         return $this->fetch();
     }
+    
 }

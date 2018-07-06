@@ -444,16 +444,15 @@ class CemInfo extends Root {
     static public function reserve_bwtc($info){
 
         $html='';
-        $html.='<div class="bwtan" style="display:block">';
-             $html.='<div class="bwtantop">碑文设置</div>';
+        $html.='<div class="bwtan" style="display:block;width: 817px;min-height: 550px;margin-left: -402px;margin-top: -268px;">';
              $html.='<div class="bwtanul">';
                  $html.='<ul>';
-                     $html.='<li class="bwon"><a href="#">碑文参数设置</a></li>';
-                     $html.='<li><a href="#">碑文内容设置</a></li>';
+                     $html.='<li class="bwon" id="liset1"><a href="#" onclick="tab1()">碑文参数设置</a></li>';
+                     $html.='<li id="liset2"><a href="#" onclick="tab2()">碑文内容设置</a></li>';
                  $html.='</ul>';
              $html.='</div>';
              $html.='<div class="bwtancon">';
-                 $html.='<div class="inner">';
+                 $html.='<div class="inner" id="tab1">';
                     $html.=' <div class="bwtana">';
                         $html.=' <form>';
                             $html.=' <fieldset>';
@@ -561,13 +560,13 @@ class CemInfo extends Root {
                      $html.='</div>';
                $html.=' </div>';
 
-                 $html.='<div class="inner">';
+                 $html.='<div class="inner" id="tab2">';
                      $html.='<div class="bwtana">';
                          $html.='<form>';
                             $html.=' <fieldset>';
                                 $html.=' <legend>墓位信息</legend>';
                                  $html.='<div class="bwtanb">';
-                                    $html.=' <p>您选择的是：天福园A区6排0030号 | 墓位样式：双人墓</p>';
+                                    $html.=' <p>您选择的是：天福园A区6排0030号 | 墓位样式：双人墓1</p>';
                                      $html.='<div class="bwtanc">';
                                         $html.=' <div>墓位长：0.87米</div>';
                                         $html.=' <div>墓位宽：0.78米</div>';
@@ -708,17 +707,17 @@ class CemInfo extends Root {
                                      $html.='</div>';
                                  $html.='</div>';
                                  $html.='<div class="bwnrc">';
-                                     $html.='<div class="bwnrca">';
-                                        $html.=' <div>打印传统碑文登记表（正）</div>';
+                                     $html.='<div class="bwnrca" style="display: inline-flex;margin-left: 155px;">';
+                                        $html.=' <div style="margin-right: 10px;">打印传统碑文登记表（正）</div>';
                                         $html.=' <div>打印传统碑文登记表（反）</div>';
                                      $html.='</div>';
-                                    $html.=' <div class="bwnrca">';
-                                         $html.='<div>打印现代碑文登记表（正）</div>';
+                                    $html.=' <div class="bwnrca" style="display: inline-flex;margin-left: 155px;">';
+                                         $html.='<div style="margin-right: 10px;">打印现代碑文登记表（正）</div>';
                                          $html.='<div>打印现代碑文登记表（反）</div>';
                                      $html.='</div>';
-                                     $html.='<div class="bwnrca">';
-                                         $html.='<div>保存碑文内容</div>';
-                                        $html.=' <div>填写碑文杂费单</div>';
+                                     $html.='<div class="bwnrca" style="display: inline-flex;margin-left: 155px;">';
+                                         $html.='<div style="margin-right: 10px;">保存碑文内容</div>';
+                                        $html.=' <div onclick="setbeiwen()">填写碑文杂费单</div>';
                                     $html.=' </div>';
                                  $html.='</div>';
                              $html.='</fieldset>';
@@ -2200,6 +2199,366 @@ class CemInfo extends Root {
             return RE_SUCCESS;
         }
         return RE_ERROR;
+    }
+    //墓位销售员业绩统计-全部 没有时间
+    static public function select_user_list_all_time($arra){
+         if($arra['id'] == 'all'){
+            if($arra['starttime']!='' && $arra['endtime']!=''){
+                $html='';
+                $arr=self::table('staff')->select();
+                foreach ($arr as $key => $info) {
+                    $data['count']=self::where('salesman='.$info['id'].' and status=44 and settime>='.strtotime($arra['starttime']).' and settime<='.strtotime($arra['endtime']))->count();
+                    $money=self::field('sum(money)')->where'salesman='.$info['id'].' and status=44 and settime>='.strtotime($arra['starttime']).' and settime<='.strtotime($arra['endtime']))->select();
+                    $manage_sum_money=self::field('sum(manage_sum_money)')->where('salesman='.$info['id'].' and status=44 and settime>='.strtotime($arra['starttime']).' and settime<='.strtotime($arra['endtime']))->select();
+                    $nickname=self::table('staff')->field('nickname')->where(['id'=>$info['id']])->find();
+                    if($money[0]['sum(money)'] != null){//墓位费 合计
+                        $price=$money[0]['sum(money)'];
+                    }else{
+                        $price=0;
+                    }
+                    if($manage_sum_money[0]['sum(manage_sum_money)'] != null){//管理费 合计
+                        $money=$manage_sum_money[0]['sum(manage_sum_money)'];
+                    }else{
+                        $money=0;
+                    }
+                    $data['shouru']=$price+$money;//收入
+                    $html.='<tr class="trtr">';
+                        $html.='<td>'.$nickname['nickname'].'</td>';
+                        $html.='<td>'.$nickname['nickname'].'</td>';
+                        $html.='<td>'.$data['count'].'</td>';
+                        $html.='<td>'.$price.'</td>';
+                        $html.='<td>'.$money.'</td>';
+                        $html.='<td>'.$data['shouru'].'</td>';
+                    $html.='</tr>';
+                }
+            }else if($arra['starttime']!='' && $arra['endtime']==''){
+                
+            }else if($arra['starttime']=='' && $arra['endtime']!=''){
+                
+            }
+           
+            return $html;
+        }
+    }
+    //墓位销售员业绩统计-全部 没有时间
+    static public function select_user_list_all($arra){
+         if($arra['id'] == 'all'){
+            $html='';
+            $arr=self::table('staff')->select();
+            foreach ($arr as $key => $info) {
+                $data['count']=self::where(['salesman'=>$info['id'],'status'=>44])->count();
+                $money=self::field('sum(money)')->where(['salesman'=>$info['id'],'status'=>44])->select();
+                $manage_sum_money=self::field('sum(manage_sum_money)')->where(['salesman'=>$info['id'],'status'=>44])->select();
+                $nickname=self::table('staff')->field('nickname')->where(['id'=>$info['id']])->find();
+                if($money[0]['sum(money)'] != null){//墓位费 合计
+                    $price=$money[0]['sum(money)'];
+                }else{
+                    $price=0;
+                }
+                if($manage_sum_money[0]['sum(manage_sum_money)'] != null){//管理费 合计
+                    $money=$manage_sum_money[0]['sum(manage_sum_money)'];
+                }else{
+                    $money=0;
+                }
+                $data['shouru']=$price+$money;//收入
+                $html.='<tr class="trtr">';
+                    $html.='<td>'.$nickname['nickname'].'</td>';
+                    $html.='<td>'.$nickname['nickname'].'</td>';
+                    $html.='<td>'.$data['count'].'</td>';
+                    $html.='<td>'.$price.'</td>';
+                    $html.='<td>'.$money.'</td>';
+                    $html.='<td>'.$data['shouru'].'</td>';
+                $html.='</tr>';
+            }
+            return $html;
+        }
+    }
+    //墓位销售员业绩统计-个人
+    static public function select_user_list($arra){
+        $data['count']=self::where(['salesman'=>$arra['id'],'status'=>44])->count();
+        $money=self::field('sum(money)')->where(['salesman'=>$arra['id'],'status'=>44])->select();
+        $manage_sum_money=self::field('sum(manage_sum_money)')->where(['salesman'=>$arra['id'],'status'=>44])->select();
+        $nickname=self::table('staff')->field('nickname')->where(['id'=>$arra['id']])->find();
+        if($money[0]['sum(money)'] != null){//墓位费 合计
+            $price=$money[0]['sum(money)'];
+        }else{
+            $price=0;
+        }
+        if($manage_sum_money[0]['sum(manage_sum_money)'] != null){//管理费 合计
+            $money=$manage_sum_money[0]['sum(manage_sum_money)'];
+        }else{
+            $money=0;
+        }
+        $data['shouru']=$price+$money;//收入
+        $data['nickname']=$nickname['nickname'];//姓命
+        $data['price']=$price;//管理费 合计
+        $data['money']=$money;//墓位费 合计
+        return $data;
+    }
+    //墓位预订情况统计--全部 有时间
+    static public function select_cem_yu_list_all_time($arra){
+         if($arra['id'] == 'all'){
+            $html='';
+            if($arra['starttime']!='' && $arra['endtime']!=''){
+                $arr=self::table('cem')->field('id,title')->select();
+                foreach ($arr as $key => $info) {
+                    $data['count']=self::where('cem_id='.$info['id'].' and status=39 and reserve_date>='.strtotime($arra['starttime']).' and reserve_date<='.strtotime($arra['endtime']))->count();
+                    $reserve_money=self::field('sum(reserve_money)')->where('cem_id='.$info['id'].' and status=39 and reserve_date>='.strtotime($arra['starttime']).' and reserve_date<='.strtotime($arra['endtime']))->select();
+                    $title=self::table('cem')->field('title')->where(['id'=>$info['id']])->find();
+                    if($reserve_money[0]['sum(reserve_money)'] != null){
+                        $price=$reserve_money[0]['sum(reserve_money)'];
+                    }else{
+                        $price=0;
+                    }
+                    $html.='<tr class="trtr">';
+                        $html.='<td>'.$info['id'].'</td>';
+                        $html.='<td>'.$title['title'].'</td>';
+                        $html.='<td>'.$data['count'].'</td>';
+                        $html.='<td>'.$price.'</td>';
+                    $html.='</tr>';
+                }
+            }else if($arra['starttime']!='' && $arra['endtime'] == ''){
+                $arr=self::table('cem')->field('id,title')->select();
+                foreach ($arr as $key => $info) {
+                    $data['count']=self::where('cem_id='.$info['id'].' and status=39 and reserve_date>='.strtotime($arra['starttime']))->count();
+                    $reserve_money=self::field('sum(reserve_money)')->where('cem_id='.$info['id'].' and status=39 and reserve_date>='.strtotime($arra['starttime']))->select();
+                    $title=self::table('cem')->field('title')->where(['id'=>$info['id']])->find();
+                    if($reserve_money[0]['sum(reserve_money)'] != null){
+                        $price=$reserve_money[0]['sum(reserve_money)'];
+                    }else{
+                        $price=0;
+                    }
+                    $html.='<tr class="trtr">';
+                        $html.='<td>'.$info['id'].'</td>';
+                        $html.='<td>'.$title['title'].'</td>';
+                        $html.='<td>'.$data['count'].'</td>';
+                        $html.='<td>'.$price.'</td>';
+                    $html.='</tr>';
+                }
+            }else if($arra['starttime']=='' && $arra['endtime'] != ''){
+                $arr=self::table('cem')->field('id,title')->select();
+                foreach ($arr as $key => $info) {
+                    $data['count']=self::where('cem_id='.$info['id'].' and status=39 and reserve_date<='.strtotime($arra['endtime']))->count();
+                    $reserve_money=self::field('sum(reserve_money)')->where('cem_id='.$info['id'].' and status=39 and reserve_date<='.strtotime($arra['endtime']))->select();
+                    $title=self::table('cem')->field('title')->where(['id'=>$info['id']])->find();
+                    if($reserve_money[0]['sum(reserve_money)'] != null){
+                        $price=$reserve_money[0]['sum(reserve_money)'];
+                    }else{
+                        $price=0;
+                    }
+                    $html.='<tr class="trtr">';
+                        $html.='<td>'.$info['id'].'</td>';
+                        $html.='<td>'.$title['title'].'</td>';
+                        $html.='<td>'.$data['count'].'</td>';
+                        $html.='<td>'.$price.'</td>';
+                    $html.='</tr>';
+                }
+            }
+            return $html;
+        }
+    }
+    //墓位预订情况统计--全部 没有时间
+    static public function select_cem_yu_list_all($arra){
+        if($arra['id'] == 'all'){
+            $html='';
+            $arr=self::table('cem')->field('id,title')->select();
+            foreach ($arr as $key => $info) {
+                $data['count']=self::where(['cem_id'=>$info['id'],'status'=>39])->count();
+                $reserve_money=self::field('sum(reserve_money)')->where(['cem_id'=>$info['id'],'status'=>39])->select();
+                $title=self::table('cem')->field('title')->where(['id'=>$info['id']])->find();
+                if($reserve_money[0]['sum(reserve_money)'] != null){
+                    $price=$reserve_money[0]['sum(reserve_money)'];
+                }else{
+                    $price=0;
+                }
+                $html.='<tr class="trtr">';
+                    $html.='<td>'.$info['id'].'</td>';
+                    $html.='<td>'.$title['title'].'</td>';
+                    $html.='<td>'.$data['count'].'</td>';
+                    $html.='<td>'.$price.'</td>';
+                $html.='</tr>';
+            }
+            return $html;
+        }
+    }
+    //墓位预订情况统计
+    static public function select_cem_yu_list($info){
+        $data['count']=self::where(['cem_id'=>$info['id'],'status'=>39])->count();
+        $reserve_money=self::field('sum(reserve_money)')->where(['cem_id'=>$info['id'],'status'=>39])->select();
+        $title=self::table('cem')->field('title')->where(['id'=>$info['id']])->find();
+        if($reserve_money[0]['sum(reserve_money)'] != null){
+            $price=$reserve_money[0]['sum(reserve_money)'];
+        }else{
+            $price=0;
+        }
+        $data['eid']=$info['id'];
+        $data['title']=$title['title'];
+        $data['money']=$price;
+        return $data;
+    }
+    //墓位销售情况统计--总计 时间
+    static public function select_cem_list_all_time($arra){
+        if($arra['id'] == 'all'){
+            $html='';
+            if($arra['starttime']!='' && $arra['endtime']!=''){
+                $arr=self::table('cem')->field('id,title')->select();
+                foreach ($arr as $key => $info) {
+                    $data['count']=self::where('cem_id='.$info['id'].' and status=44 and settime>='.strtotime($arra['starttime']).' and settime<='.strtotime($arra['endtime']))->count();
+                    $muwei=self::field('sum(money)')->where('cem_id='.$info['id'].' and status=44 and settime>='.strtotime($arra['starttime']).' and settime<='.strtotime($arra['endtime']))->select();
+                    $guanli=self::field('sum(manage_sum_money)')->where('cem_id='.$info['id'].' and status=44 and settime>='.strtotime($arra['starttime']).' and settime<='.strtotime($arra['endtime']))->select();
+                    $title=self::table('cem')->field('title')->where(['id'=>$info['id']])->find();
+                    if($muwei[0]['sum(money)'] != null){
+                        $price=$muwei[0]['sum(money)'];
+                    }else{
+                        $price=0;
+                    }
+                    if($guanli[0]['sum(manage_sum_money)'] != null){
+                        $money=$guanli[0]['sum(manage_sum_money)'];
+                    }else{
+                        $money=0;
+                    }
+                    $data['shouru']=$price+$money;
+                    $html.='<tr class="trtr">';
+                        $html.='<td>'.$info['id'].'</td>';
+                        $html.='<td>'.$title['title'].'</td>';
+                        $html.='<td>'.$data['count'].'</td>';
+                        $html.='<td>'.$price.'</td>';
+                        $html.='<td>'.$money.'</td>';
+                        $html.='<td>'.$data['shouru'].'</td>';
+                    $html.='</tr>';
+                }
+            }else if($arra['starttime']!='' && $arra['endtime'] == ''){
+                $arr=self::table('cem')->field('id,title')->select();
+                foreach ($arr as $key => $info) {
+                    $data['count']=self::where('cem_id='.$info['id'].' and status=44 and settime>='.strtotime($arra['starttime']))->count();
+                    $muwei=self::field('sum(money)')->where('cem_id='.$info['id'].' and status=44 and settime>='.strtotime($arra['starttime']))->select();
+                    $guanli=self::field('sum(manage_sum_money)')->where('cem_id='.$info['id'].' and status=44 and settime>='.strtotime($arra['starttime']))->select();
+                    $title=self::table('cem')->field('title')->where(['id'=>$info['id']])->find();
+                    if($muwei[0]['sum(money)'] != null){
+                        $price=$muwei[0]['sum(money)'];
+                    }else{
+                        $price=0;
+                    }
+                    if($guanli[0]['sum(manage_sum_money)'] != null){
+                        $money=$guanli[0]['sum(manage_sum_money)'];
+                    }else{
+                        $money=0;
+                    }
+                    $data['shouru']=$price+$money;
+                    $html.='<tr class="trtr">';
+                        $html.='<td>'.$info['id'].'</td>';
+                        $html.='<td>'.$title['title'].'</td>';
+                        $html.='<td>'.$data['count'].'</td>';
+                        $html.='<td>'.$price.'</td>';
+                        $html.='<td>'.$money.'</td>';
+                        $html.='<td>'.$data['shouru'].'</td>';
+                    $html.='</tr>';
+                }
+            }else if($arra['starttime']=='' && $arra['endtime'] != ''){
+                $arr=self::table('cem')->field('id,title')->select();
+                foreach ($arr as $key => $info) {
+                    $data['count']=self::where('cem_id='.$info['id'].' and status=44 and settime<='.strtotime($arra['endtime']))->count();
+                    $muwei=self::field('sum(money)')->where('cem_id='.$info['id'].' and status=44 and settime<='.strtotime($arra['endtime']))->select();
+                    $guanli=self::field('sum(manage_sum_money)')->where('cem_id='.$info['id'].' and status=44 and settime<='.strtotime($arra['endtime']))->select();
+                    $title=self::table('cem')->field('title')->where(['id'=>$info['id']])->find();
+                    if($muwei[0]['sum(money)'] != null){
+                        $price=$muwei[0]['sum(money)'];
+                    }else{
+                        $price=0;
+                    }
+                    if($guanli[0]['sum(manage_sum_money)'] != null){
+                        $money=$guanli[0]['sum(manage_sum_money)'];
+                    }else{
+                        $money=0;
+                    }
+                    $data['shouru']=$price+$money;
+                    $html.='<tr class="trtr">';
+                        $html.='<td>'.$info['id'].'</td>';
+                        $html.='<td>'.$title['title'].'</td>';
+                        $html.='<td>'.$data['count'].'</td>';
+                        $html.='<td>'.$price.'</td>';
+                        $html.='<td>'.$money.'</td>';
+                        $html.='<td>'.$data['shouru'].'</td>';
+                    $html.='</tr>';
+                }
+            }
+            return $html;
+        }
+    }
+    //墓位销售情况统计--总计
+    static public function select_cem_list_all($arra){
+        if($arra['id'] == 'all'){
+            $html='';
+            $arr=self::table('cem')->field('id,title')->select();
+            foreach ($arr as $key => $info) {
+                $data['count']=self::where(['cem_id'=>$info['id'],'status'=>44])->count();
+                $muwei=self::field('sum(money)')->where(['cem_id'=>$info['id'],'status'=>44])->select();
+                $guanli=self::field('sum(manage_sum_money)')->where(['cem_id'=>$info['id'],'status'=>44])->select();
+                $title=self::table('cem')->field('title')->where(['id'=>$info['id']])->find();
+                if($muwei[0]['sum(money)'] != null){
+                    $price=$muwei[0]['sum(money)'];
+                }else{
+                    $price=0;
+                }
+                if($guanli[0]['sum(manage_sum_money)'] != null){
+                    $money=$guanli[0]['sum(manage_sum_money)'];
+                }else{
+                    $money=0;
+                }
+                $data['shouru']=$price+$money;
+                $html.='<tr class="trtr">';
+                    $html.='<td>'.$info['id'].'</td>';
+                    $html.='<td>'.$title['title'].'</td>';
+                    $html.='<td>'.$data['count'].'</td>';
+                    $html.='<td>'.$price.'</td>';
+                    $html.='<td>'.$money.'</td>';
+                    $html.='<td>'.$data['shouru'].'</td>';
+                $html.='</tr>';
+            }
+            return $html;
+        }
+        
+    }
+    //墓位销售情况统计
+    static public function select_cem_list($info){
+        $data['count']=self::where(['cem_id'=>$info['id'],'status'=>44])->count();
+        $muwei=self::field('sum(money)')->where(['cem_id'=>$info['id'],'status'=>44])->select();
+        $guanli=self::field('sum(manage_sum_money)')->where(['cem_id'=>$info['id'],'status'=>44])->select();
+        $title=self::table('cem')->field('title')->where(['id'=>$info['id']])->find();
+        if($muwei[0]['sum(money)'] != null){
+            $price=$muwei[0]['sum(money)'];
+        }else{
+            $price=0;
+        }
+        if($guanli[0]['sum(manage_sum_money)'] != null){
+            $money=$guanli[0]['sum(manage_sum_money)'];
+        }else{
+            $money=0;
+        }
+        $data['shouru']=$price+$money;
+        $data['eid']=$info['id'];
+        $data['title']=$title['title'];
+        $data['muwei']=$price;
+        $data['guanli']=$money;
+        return $data;
+    }
+    //墓位状态统计数量
+    static public function select_cem($info){
+        $data['kong']=self::where(['cem_id'=>$info['id'],'status'=>38])->count();
+        $data['yuding']=self::where(['cem_id'=>$info['id'],'status'=>39])->count();
+        $data['dinggou']=self::where(['cem_id'=>$info['id'],'status'=>44])->count();
+        $data['xiazang']=self::where(['cem_id'=>$info['id'],'status'=>41])->count();
+        return $data;
+    }
+    //墓位状态统计总数量
+    static public function select_show_all($info){
+        if($info['id'] == 'all'){
+            $data['kong']=self::where(['status'=>38])->count();
+            $data['yuding']=self::where(['status'=>39])->count();
+            $data['dinggou']=self::where(['status'=>44])->count();
+            $data['xiazang']=self::where(['status'=>41])->count();
+            return $data;
+        }
     }
     //修改业务员信息
     static public function set_subuser($info){
