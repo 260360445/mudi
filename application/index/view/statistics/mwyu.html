@@ -75,6 +75,9 @@
     che(cem);
   }
   $(".show_all").click(function(){
+    var index = layer.load(1, {
+      shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
     $(".trtr").remove();
     var start=$("#starttime").val();
     var end=$("#endtime").val();
@@ -89,7 +92,7 @@
               endtime : end,
           },
           success     : function(g){
-            
+            layer.close(index);
             $(".add_row").append(g);
           }
       });
@@ -102,7 +105,7 @@
               id : 'all',
           },
           success     : function(g){
-            
+            layer.close(index);
             $(".add_row").append(g);
           }
       });

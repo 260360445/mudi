@@ -452,6 +452,11 @@ class Visit extends Root {
     static public function add ($info) {
 
         $info['contacts_id'] = Contacts::vlog_add();
+        if($info['transaction_status'] == 1){
+            $info['no_transaction_ps'] = null;
+        }else{
+            $info['no_transaction_ps'] = $info['no_transaction_ps'];
+        }
         if($info['transaction_suc_date']){
             $info['transaction_suc_date'] = strtotime($info['transaction_suc_date']);
         }

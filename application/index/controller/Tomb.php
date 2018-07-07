@@ -114,7 +114,7 @@ class Tomb  extends Root {
             try{
                 Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
                 $LastInsID =Db::table('contacts')->getLastInsID();
-                Db::table('visit_log')->insert(['contacts_id'=>$LastInsID,'transaction_status'=>1,'transaction_suc_date'=>time(),'receiver'=>$_POST['salesman']]);
+                Db::table('visit_log')->insert(['contacts_id'=>$LastInsID,'transaction_status'=>1,'transaction_suc_date'=>time(),'come_date'=>time(),'receiver'=>$_POST['salesman']]);
                 $data['status']  = 39;
                 $data['reserve_date']=strtotime($_POST['reserve_date']);
                 $data['remind_date']=strtotime($_POST['remind_date']);
@@ -189,7 +189,7 @@ class Tomb  extends Root {
             try{
                 Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
                 $LastInsID =Db::table('contacts')->getLastInsID();
-                Db::table('visit_log')->insert(['contacts_id'=>$LastInsID,'transaction_status'=>1,'transaction_suc_date'=>time(),'receiver'=>$_POST['salesman']]);
+                Db::table('visit_log')->insert(['contacts_id'=>$LastInsID,'transaction_status'=>1,'transaction_suc_date'=>time(),'come_date'=>time(),'receiver'=>$_POST['salesman']]);
                 $data['status']  = 44;
                 $data['settime']=strtotime($_POST['settime']);
                 $data['starttime']=strtotime($_POST['starttime']);
@@ -268,7 +268,7 @@ class Tomb  extends Root {
             try{
                 Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
                 $LastInsID =Db::table('contacts')->getLastInsID();
-                Db::table('visit_log')->insert(['contacts_id'=>$LastInsID,'transaction_status'=>1,'transaction_suc_date'=>time(),'receiver'=>$_POST['salesman']]);
+                Db::table('visit_log')->insert(['contacts_id'=>$LastInsID,'transaction_status'=>1,'transaction_suc_date'=>time(),'come_date'=>time(),'receiver'=>$_POST['salesman']]);
                 $data['status']  = 44;
                 $data['settime']=strtotime($_POST['settime']);
                 $data['starttime']=strtotime($_POST['starttime']);

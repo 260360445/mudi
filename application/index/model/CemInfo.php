@@ -2195,7 +2195,528 @@ class CemInfo extends Root {
         }
         return RE_ERROR;
     }
-
+    ////各渠道来访及成交情况表--有时间
+    static public function show_qudao_all_time($arra){
+        if($arra['starttime'] != '' && $arra['endtime'] != ''){
+            $pai=self::table('come_channel')->where(['pid'=>$arra['cem_id1'],'ppid'=>$arra['cem_id2']])->select();
+            $html='';
+            $price='';
+            foreach ($pai as $key => $value) {
+                $lcount=self::table('visit_log')->where('channel_t1='.$arra['cem_id1'].' and channel_t2='.$arra['cem_id2'].' and channel_t3='.$value['id'].' and come_date>='.strtotime($arra['starttime']).' and come_date<='.strtotime($arra['endtime']))->count();//来访份数
+                $mcount=self::table('visit_log')->where('channel_t1='.$arra['cem_id1'].' and channel_t2='.$arra['cem_id2'].' and channel_t3='.$value['id'].' and transaction_status=1 and come_date>='.strtotime($arra['starttime']).' and come_date<='.strtotime($arra['endtime']))->count();//成交份数
+                $user=self::table('visit_log')->field('contacts_id')->where('channel_t1='.$arra['cem_id1'].' and channel_t2='.$arra['cem_id2'].' and channel_t3='.$value['id'].' and come_date>='.strtotime($arra['starttime']).' and come_date<='.strtotime($arra['endtime']))->select();
+                $sum=0;
+                $idstr1='';
+                foreach ($user as $key => $vo) {
+                    if($key == 0){
+                        $idstr1.=$vo['contacts_id'];
+                    }else{
+                        $idstr1.=','.$vo['contacts_id'];
+                    }
+                    $buy[$key]=self::where(['contacts_id'=>$vo['contacts_id'],'status'=>44])->count();
+                }
+                foreach ($buy as $v){
+                    $sum+=$v;//成交个数
+                }
+                $where['contacts_id']=['in',$idstr1];
+                $money=self::field('sum(money)')->where($where)->select();
+                if($money[0]['sum(money)'] != null){//成交金额
+                    $price=$money[0]['sum(money)'];
+                }else{
+                    $price=0;
+                }
+                $k=$key+1;
+                $html.='<tr class="trtr">';
+                    $html.='<td>'.$k.'</td>';
+                    $html.='<td>'.$value['title'].'</td>';
+                    $html.='<td>'.$lcount.'</td>';
+                    $html.='<td>'.$mcount.'</td>';
+                    $html.='<td></td>';
+                    $html.='<td>'.$sum.'</td>';
+                    $html.='<td></td>';
+                    $html.='<td>'.$price.'</td>';
+                $html.='</tr>';
+            }
+        }else if($arra['starttime'] != '' && $arra['endtime'] == ''){
+            $pai=self::table('come_channel')->where(['pid'=>$arra['cem_id1'],'ppid'=>$arra['cem_id2']])->select();
+            $html='';
+            $price='';
+            foreach ($pai as $key => $value) {
+                $lcount=self::table('visit_log')->where('channel_t1='.$arra['cem_id1'].' and channel_t2='.$arra['cem_id2'].' and channel_t3='.$value['id'].' and come_date>='.strtotime($arra['starttime']))->count();//来访份数
+                $mcount=self::table('visit_log')->where('channel_t1='.$arra['cem_id1'].' and channel_t2='.$arra['cem_id2'].' and channel_t3='.$value['id'].' and transaction_status=1 and come_date>='.strtotime($arra['starttime']))->count();//成交份数
+                $user=self::table('visit_log')->field('contacts_id')->where('channel_t1='.$arra['cem_id1'].' and channel_t2='.$arra['cem_id2'].' and channel_t3='.$value['id'].' and come_date>='.strtotime($arra['starttime']))->select();
+                $sum=0;
+                $idstr1='';
+                $where='';
+                foreach ($user as $key => $vo) {
+                    if($key == 0){
+                        $idstr1.=$vo['contacts_id'];
+                    }else{
+                        $idstr1.=','.$vo['contacts_id'];
+                    }
+                    $buy[$key]=self::where(['contacts_id'=>$vo['contacts_id'],'status'=>44])->count();
+                }
+                foreach ($buy as $v){
+                    $sum+=$v;//成交个数
+                }
+                $where['contacts_id']=['in',$idstr1];
+                $money=self::field('sum(money)')->where($where)->select();
+                if($money[0]['sum(money)'] != null){//成交金额
+                    $price=$money[0]['sum(money)'];
+                }else{
+                    $price=0;
+                }
+                $k=$key+1;
+                $html.='<tr class="trtr">';
+                    $html.='<td>'.$k.'</td>';
+                    $html.='<td>'.$value['title'].'</td>';
+                    $html.='<td>'.$lcount.'</td>';
+                    $html.='<td>'.$mcount.'</td>';
+                    $html.='<td></td>';
+                    $html.='<td>'.$sum.'</td>';
+                    $html.='<td></td>';
+                    $html.='<td>'.$price.'</td>';
+                $html.='</tr>';
+            }
+        }else if($arra['starttime'] == '' && $arra['endtime'] != ''){
+            $pai=self::table('come_channel')->where(['pid'=>$arra['cem_id1'],'ppid'=>$arra['cem_id2']])->select();
+            $html='';
+            $price='';
+            foreach ($pai as $key => $value) {
+                $lcount=self::table('visit_log')->where('channel_t1='.$arra['cem_id1'].' and channel_t2='.$arra['cem_id2'].' and channel_t3='.$value['id'].' and come_date<='.strtotime($arra['endtime']))->count();//来访份数
+                $mcount=self::table('visit_log')->where('channel_t1='.$arra['cem_id1'].' and channel_t2='.$arra['cem_id2'].' and channel_t3='.$value['id'].' and transaction_status=1 and come_date<='.strtotime($arra['endtime']))->count();//成交份数
+                $user=self::table('visit_log')->field('contacts_id')->where('channel_t1='.$arra['cem_id1'].' and channel_t2='.$arra['cem_id2'].' and channel_t3='.$value['id'].' and come_date<='.strtotime($arra['endtime']))->select();
+                $sum=0;
+                $idstr1='';
+                foreach ($user as $key => $vo) {
+                    if($key == 0){
+                        $idstr1.=$vo['contacts_id'];
+                    }else{
+                        $idstr1.=','.$vo['contacts_id'];
+                    }
+                    $buy[$key]=self::where(['contacts_id'=>$vo['contacts_id'],'status'=>44])->count();
+                }
+                foreach ($buy as $v){
+                    $sum+=$v;//成交个数
+                }
+                $where['contacts_id']=['in',$idstr1];
+                $money=self::field('sum(money)')->where($where)->select();
+                if($money[0]['sum(money)'] != null){//成交金额
+                    $price=$money[0]['sum(money)'];
+                }else{
+                    $price=0;
+                }
+                $k=$key+1;
+                $html.='<tr class="trtr">';
+                    $html.='<td>'.$k.'</td>';
+                    $html.='<td>'.$value['title'].'</td>';
+                    $html.='<td>'.$lcount.'</td>';
+                    $html.='<td>'.$mcount.'</td>';
+                    $html.='<td></td>';
+                    $html.='<td>'.$sum.'</td>';
+                    $html.='<td></td>';
+                    $html.='<td>'.$price.'</td>';
+                $html.='</tr>';
+            }
+        }
+        
+        return $html;
+    }
+    ////各渠道来访及成交情况表--没有时间
+    static public function show_qudao_all($arra){
+        $pai=self::table('come_channel')->where(['pid'=>$arra['cem_id1'],'ppid'=>$arra['cem_id2']])->select();
+        $html='';
+        $price='';
+        foreach ($pai as $key => $value) {
+            $lcount=self::table('visit_log')->where('channel_t1='.$arra['cem_id1'].' and channel_t2='.$arra['cem_id2'].' and channel_t3='.$value['id'])->count();//来访份数
+            $mcount=self::table('visit_log')->where('channel_t1='.$arra['cem_id1'].' and channel_t2='.$arra['cem_id2'].' and channel_t3='.$value['id'].' and transaction_status=1')->count();//成交份数
+            $user=self::table('visit_log')->field('contacts_id')->where('channel_t1='.$arra['cem_id1'].' and channel_t2='.$arra['cem_id2'].' and channel_t3='.$value['id'])->select();
+            $sum=0;
+            $idstr1='';
+            foreach ($user as $key => $vo) {
+                if($key == 0){
+                    $idstr1.=$vo['contacts_id'];
+                }else{
+                    $idstr1.=','.$vo['contacts_id'];
+                }
+                $buy[$key]=self::where(['contacts_id'=>$vo['contacts_id'],'status'=>44])->count();
+            }
+            foreach ($buy as $v){
+                $sum+=$v;//成交个数
+            }
+            $where['contacts_id']=['in',$idstr1];
+            $money=self::field('sum(money)')->where($where)->select();
+            if($money[0]['sum(money)'] != null){//成交金额
+                $price=$money[0]['sum(money)'];
+            }else{
+                $price=0;
+            }
+            $k=$key+1;
+            $html.='<tr class="trtr">';
+                $html.='<td>'.$k.'</td>';
+                $html.='<td>'.$value['title'].'</td>';
+                $html.='<td>'.$lcount.'</td>';
+                $html.='<td>'.$mcount.'</td>';
+                $html.='<td></td>';
+                $html.='<td>'.$sum.'</td>';
+                $html.='<td></td>';
+                $html.='<td>'.$price.'</td>';
+            $html.='</tr>';
+        }
+        return $html;
+    }
+    //墓位销售、剩余情况表 统计园区总体  时间查询
+    static public function show_mwsell_all_time($arra){
+        $data['zcount']=self::where('cem_id='.$arra['id'].' and cem_area_id='.$arra['area'].' and create_time<='.strtotime($arra['endtime']))->count();
+        $data['mcount']=self::where('cem_id='.$arra['id'].' and cem_area_id='.$arra['area'].' and status =44 and settime<='.strtotime($arra['endtime']))->count();
+        $data['lcount']=self::where('cem_id='.$arra['id'].' and cem_area_id='.$arra['area'].' and status =41 and settime<='.strtotime($arra['endtime']))->count();
+        $data['scount']=self::where('cem_id='.$arra['id'].' and cem_area_id='.$arra['area'].' and status =38 and create_time<='.strtotime($arra['endtime']))->count();
+        $money=self::field('sum(price)')->where('cem_id='.$arra['id'].' and cem_area_id='.$arra['area'].' and status =38 and create_time<='.strtotime($arra['endtime']))->select();
+        if($money[0]['sum(price)'] != null){//墓位费 合计
+            $price=$money[0]['sum(price)'];
+        }else{
+            $price=0;
+        }
+        $html.='<tr class="trtr">';
+            $html.='<td>1</td>';
+            $html.='<td>园区墓位总数</td>';
+            $html.='<td>'.$data['zcount'].'</td>';
+            $html.='<td>座</td>';
+        $html.='</tr>';
+        $html.='<tr class="trtr">';
+            $html.='<td>2</td>';
+            $html.='<td>已销售墓位总数</td>';
+            $html.='<td>'.$data['mcount'].'</td>';
+            $html.='<td>座</td>';
+        $html.='</tr>';
+        $html.='<tr class="trtr">';
+            $html.='<td>3</td>';
+            $html.='<td>已落葬墓位总数</td>';
+            $html.='<td>'.$data['lcount'].'</td>';
+            $html.='<td>座</td>';
+        $html.='</tr>';
+        $html.='<tr class="trtr">';
+            $html.='<td>4</td>';
+            $html.='<td>剩余墓位总数</td>';
+            $html.='<td>'.$data['scount'].'</td>';
+            $html.='<td>座</td>';
+        $html.='</tr>';
+        $html.='<tr class="trtr">';
+            $html.='<td>5</td>';
+            $html.='<td>剩余墓位可销售</td>';
+            $html.='<td>'.$price.'</td>';
+            $html.='<td>元</td>';
+        $html.='</tr>';
+        return $html;
+    }
+    //墓位销售、剩余情况表 统计园区总体
+    static public function show_mwsell_all($arra){
+        $data['zcount']=self::where(['cem_id'=>$arra['id'],'cem_area_id'=>$arra['area']])->count();
+        $data['mcount']=self::where(['cem_id'=>$arra['id'],'cem_area_id'=>$arra['area'],'status'=>44])->count();
+        $data['lcount']=self::where(['cem_id'=>$arra['id'],'cem_area_id'=>$arra['area'],'status'=>41])->count();
+        $data['scount']=self::where(['cem_id'=>$arra['id'],'cem_area_id'=>$arra['area'],'status'=>38])->count();
+        $money=self::field('sum(price)')->where(['cem_id'=>$arra['id'],'cem_area_id'=>$arra['area'],'status'=>38])->select();
+        if($money[0]['sum(price)'] != null){//墓位费 合计
+            $price=$money[0]['sum(price)'];
+        }else{
+            $price=0;
+        }
+        $html.='<tr class="trtr">';
+            $html.='<td>1</td>';
+            $html.='<td>园区墓位总数</td>';
+            $html.='<td>'.$data['zcount'].'</td>';
+            $html.='<td>座</td>';
+        $html.='</tr>';
+        $html.='<tr class="trtr">';
+            $html.='<td>2</td>';
+            $html.='<td>已销售墓位总数</td>';
+            $html.='<td>'.$data['mcount'].'</td>';
+            $html.='<td>座</td>';
+        $html.='</tr>';
+        $html.='<tr class="trtr">';
+            $html.='<td>3</td>';
+            $html.='<td>已落葬墓位总数</td>';
+            $html.='<td>'.$data['lcount'].'</td>';
+            $html.='<td>座</td>';
+        $html.='</tr>';
+        $html.='<tr class="trtr">';
+            $html.='<td>4</td>';
+            $html.='<td>剩余墓位总数</td>';
+            $html.='<td>'.$data['scount'].'</td>';
+            $html.='<td>座</td>';
+        $html.='</tr>';
+        $html.='<tr class="trtr">';
+            $html.='<td>5</td>';
+            $html.='<td>剩余墓位可销售</td>';
+            $html.='<td>'.$price.'</td>';
+            $html.='<td>元</td>';
+        $html.='</tr>';
+        return $html;
+    }
+    //来访及成交情况表
+    static public function show_all_come($arra){
+        if($arra['starttime'] != '' && $arra['endtime']!= ''){
+            $banche=self::table('visit_log')->where('come_fun=12 and come_date>='.strtotime($arra['starttime']).' and come_date<='.strtotime($arra['endtime']))->count();
+            $cart=self::table('visit_log')->where('come_fun=13 and come_date>='.strtotime($arra['starttime']).' and come_date<='.strtotime($arra['endtime']))->count();
+            $count1=$banche+$cart;
+            $banchecount=self::table('visit_log')->where('come_fun=12 and transaction_status=1 and come_date>='.strtotime($arra['starttime']).' and come_date<='.strtotime($arra['endtime']))->count();//成交分数
+            $cartcount=self::table('visit_log')->where('come_fun=13 and transaction_status=1 and come_date>='.strtotime($arra['starttime']).' and come_date<='.strtotime($arra['endtime']))->count();//成交分数
+            $count2=$banchecount+$cartcount;
+            $user1=self::table('visit_log')->field('contacts_id')->where('come_fun=12 and come_date>='.strtotime($arra['starttime']).' and come_date<='.strtotime($arra['endtime']))->select();
+            $user2=self::table('visit_log')->field('contacts_id')->where('come_fun=13 and come_date>='.strtotime($arra['starttime']).' and come_date<='.strtotime($arra['endtime']))->select();
+            $sum1=0;
+            $sum2=0;
+            $idstr1='';
+            $idstr2='';
+            foreach ($user1 as $key => $value) {
+                if($key == 0){
+                    $idstr1.=$value['contacts_id'];
+                }else{
+                    $idstr1.=','.$value['contacts_id'];
+                }
+                $buy1[$key]=self::where(['contacts_id'=>$value['contacts_id'],'status'=>44])->count();
+            }
+            foreach ($buy1 as $v){
+                $sum1+=$v;
+            }
+            foreach ($user2 as $key => $value) {
+                if($key == 0){
+                    $idstr2.=$value['contacts_id'];
+                }else{
+                    $idstr2.=','.$value['contacts_id'];
+                }
+                $buy2[$key]=self::where(['contacts_id'=>$value['contacts_id'],'status'=>44])->count();
+            }
+            foreach ($buy2 as $v){
+                $sum2+=$v;
+            }
+            $sumcount=$sum1+$sum2;
+            $where1['contacts_id']=['in',$idstr1];
+            $where2['contacts_id']=['in',$idstr2];
+            $banchemoney=self::field('sum(money)')->where($where1)->select();
+            $cartmoney=self::field('sum(money)')->where($where2)->select();
+            if($banchemoney[0]['sum(money)'] != null){//墓位费 合计
+                $price1=$banchemoney[0]['sum(money)'];
+            }else{
+                $price1=0;
+            }
+            if($cartmoney[0]['sum(money)'] != null){//墓位费 合计
+                $price2=$cartmoney[0]['sum(money)'];
+            }else{
+                $price2=0;
+            }
+            $pricecount=$price1+$price2;
+        }else if($arra['starttime'] != '' && $arra['endtime']== ''){
+            $banche=self::table('visit_log')->where('come_fun=12 and come_date>='.strtotime($arra['starttime']))->count();
+            $cart=self::table('visit_log')->where('come_fun=13 and come_date>='.strtotime($arra['starttime']))->count();
+            $count1=$banche+$cart;
+            $banchecount=self::table('visit_log')->where('come_fun=12 and transaction_status=1 and come_date>='.strtotime($arra['starttime']))->count();//成交分数
+            $cartcount=self::table('visit_log')->where('come_fun=13 and transaction_status=1 and come_date>='.strtotime($arra['starttime']))->count();//成交分数
+            $count2=$banchecount+$cartcount;
+            $user1=self::table('visit_log')->field('contacts_id')->where('come_fun=12 and come_date>='.strtotime($arra['starttime']))->select();
+            $user2=self::table('visit_log')->field('contacts_id')->where('come_fun=13 and come_date>='.strtotime($arra['starttime']))->select();
+            $sum1=0;
+            $sum2=0;
+            $idstr1='';
+            $idstr2='';
+            foreach ($user1 as $key => $value) {
+                if($key == 0){
+                    $idstr1.=$value['contacts_id'];
+                }else{
+                    $idstr1.=','.$value['contacts_id'];
+                }
+                $buy1[$key]=self::where(['contacts_id'=>$value['contacts_id'],'status'=>44])->count();
+            }
+            foreach ($buy1 as $v){
+                $sum1+=$v;
+            }
+            foreach ($user2 as $key => $value) {
+                if($key == 0){
+                    $idstr2.=$value['contacts_id'];
+                }else{
+                    $idstr2.=','.$value['contacts_id'];
+                }
+                $buy2[$key]=self::where(['contacts_id'=>$value['contacts_id'],'status'=>44])->count();
+            }
+            foreach ($buy2 as $v){
+                $sum2+=$v;
+            }
+            $sumcount=$sum1+$sum2;
+            $where1['contacts_id']=['in',$idstr1];
+            $where2['contacts_id']=['in',$idstr2];
+            $banchemoney=self::field('sum(money)')->where($where1)->select();
+            $cartmoney=self::field('sum(money)')->where($where2)->select();
+            if($banchemoney[0]['sum(money)'] != null){//墓位费 合计
+                $price1=$banchemoney[0]['sum(money)'];
+            }else{
+                $price1=0;
+            }
+            if($cartmoney[0]['sum(money)'] != null){//墓位费 合计
+                $price2=$cartmoney[0]['sum(money)'];
+            }else{
+                $price2=0;
+            }
+            $pricecount=$price1+$price2;
+        }else if($arra['starttime'] == '' && $arra['endtime']!= ''){
+            $banche=self::table('visit_log')->where('come_fun=12 and come_date<='.strtotime($arra['endtime']))->count();
+            $cart=self::table('visit_log')->where('come_fun=13 and come_date<='.strtotime($arra['endtime']))->count();
+            $count1=$banche+$cart;
+            $banchecount=self::table('visit_log')->where('come_fun=12 and transaction_status=1 and come_date<='.strtotime($arra['endtime']))->count();//成交分数
+            $cartcount=self::table('visit_log')->where('come_fun=13 and transaction_status=1 and come_date<='.strtotime($arra['endtime']))->count();//成交分数
+            $count2=$banchecount+$cartcount;
+            $user1=self::table('visit_log')->field('contacts_id')->where('come_fun=12 and come_date<='.strtotime($arra['endtime']))->select();
+            $user2=self::table('visit_log')->field('contacts_id')->where('come_fun=13 and come_date<='.strtotime($arra['endtime']))->select();
+            $sum1=0;
+            $sum2=0;
+            $idstr1='';
+            $idstr2='';
+            foreach ($user1 as $key => $value) {
+                if($key == 0){
+                    $idstr1.=$value['contacts_id'];
+                }else{
+                    $idstr1.=','.$value['contacts_id'];
+                }
+                $buy1[$key]=self::where(['contacts_id'=>$value['contacts_id'],'status'=>44])->count();
+            }
+            foreach ($buy1 as $v){
+                $sum1+=$v;
+            }
+            foreach ($user2 as $key => $value) {
+                if($key == 0){
+                    $idstr2.=$value['contacts_id'];
+                }else{
+                    $idstr2.=','.$value['contacts_id'];
+                }
+                $buy2[$key]=self::where(['contacts_id'=>$value['contacts_id'],'status'=>44])->count();
+            }
+            foreach ($buy2 as $v){
+                $sum2+=$v;
+            }
+            $sumcount=$sum1+$sum2;
+            $where1['contacts_id']=['in',$idstr1];
+            $where2['contacts_id']=['in',$idstr2];
+            $banchemoney=self::field('sum(money)')->where($where1)->select();
+            $cartmoney=self::field('sum(money)')->where($where2)->select();
+            if($banchemoney[0]['sum(money)'] != null){//墓位费 合计
+                $price1=$banchemoney[0]['sum(money)'];
+            }else{
+                $price1=0;
+            }
+            if($cartmoney[0]['sum(money)'] != null){//墓位费 合计
+                $price2=$cartmoney[0]['sum(money)'];
+            }else{
+                $price2=0;
+            }
+            $pricecount=$price1+$price2;
+        }
+        
+        $html1.='<tr class="trtr">';
+           $html1.='<th>1</th>';
+           $html1.='<th>来访份数</th>';
+           $html1.='<th>'.$banche.'</th>';
+           $html1.='<th>'.$cart.'</th>';
+           $html1.='<th>'.$count1.'</th>';
+        $html1.='</tr>';
+        $html1.='<tr class="trtr">';
+           $html1.='<th>2</th>';
+           $html1.='<th>成交份数</th>';
+           $html1.='<th>'.$banchecount.'</th>';
+           $html1.='<th>'.$cartcount.'</th>';
+           $html1.='<th>'.$count2.'</th>';
+        $html1.='</tr>';
+        $html1.='<tr class="trtr">';
+           $html1.='<th>2</th>';
+           $html1.='<th>份数成交率</th>';
+           $html1.='<th></th>';
+           $html1.='<th></th>';
+           $html1.='<th></th>';
+        $html1.='</tr>';
+        $html1.='<tr class="trtr">';
+           $html1.='<th>2</th>';
+           $html1.='<th>成交个数</th>';
+           $html1.='<th>'.$sum1.'</th>';
+           $html1.='<th>'.$sum2.'</th>';
+           $html1.='<th>'.$sumcount.'</th>';
+        $html1.='</tr>';
+        $html1.='<tr class="trtr">';
+           $html1.='<th>2</th>';
+           $html1.='<th>个数成交率</th>';
+           $html1.='<th></th>';
+           $html1.='<th></th>';
+           $html1.='<th></th>';
+        $html1.='</tr>';
+        $html1.='<tr class="trtr">';
+           $html1.='<th>2</th>';
+           $html1.='<th>成交金额</th>';
+           $html1.='<th>'.$price1.'</th>';
+           $html1.='<th>'.$price2.'</th>';
+           $html1.='<th>'.$pricecount.'</th>';
+        $html1.='</tr>';
+        return $html1;
+    }
+    //墓位销售、剩余情况表 统计结果  有时间
+    static public function select_mwsell_list_time($arra){
+        $pai=self::table('cem_row')->field('id,title')->where(['cem_id'=>$arra['id'],'cem_area_id'=>$arra['area']])->select();
+        $cem_model=_Tpl::tlist(8);//墓位类型
+        $html='';
+        $price='';
+        foreach ($pai as $key => $value) {
+            $data['zcount']=self::where('cem_id='.$arra['id'].' and cem_area_id='.$arra['area'].' and cem_row_id= '.$value['id'].' and create_time<='.strtotime($arra['endtime']))->count();
+            $data['mcount']=self::where('cem_id='.$arra['id'].' and cem_area_id='.$arra['area'].' and cem_row_id= '.$value['id'].' and status =44 and settime<='.strtotime($arra['endtime']))->count();
+            $data['scount']=$data['zcount']-$data['mcount'];
+            $p=self::field('price,model')->where('cem_id='.$arra['id'].' and cem_area_id='.$arra['area'].' and cem_row_id= '.$value['id'].' and create_time<='.strtotime($arra['endtime']))->find();
+            $money=self::field('sum(price)')->where('cem_id='.$arra['id'].' and cem_area_id='.$arra['area'].' and cem_row_id= '.$value['id'].' and status =38 and create_time<='.strtotime($arra['endtime']))->select();
+            if($money[0]['sum(price)'] != null){//墓位费 合计
+                $price=$money[0]['sum(price)'];
+            }else{
+                $price=0;
+            }
+            $k=$key+1;
+            $html.='<tr class="trtr">';
+                $html.='<td>'.$k.'</td>';
+                $html.='<td>'.$p['price'].'</td>';
+                $html.='<td>'.$value['title'].'</td>';
+                $html.='<td>'.$cem_model[$p['model']]['title'].'</td>';
+                $html.='<td>'.$data['zcount'].'</td>';
+                $html.='<td>'.$data['mcount'].'</td>';
+                $html.='<td>'.$data['scount'].'</td>';
+                $html.='<td>'.$price.'</td>';
+            $html.='</tr>';
+        }
+        return $html;
+    }
+    ////墓位销售、剩余情况表 统计结果 
+    static public function select_mwsell_list($arra){
+        $pai=self::table('cem_row')->field('id,title')->where(['cem_id'=>$arra['id'],'cem_area_id'=>$arra['area']])->select();
+        $cem_model=_Tpl::tlist(8);//墓位类型
+        $html='';
+        $price='';
+        foreach ($pai as $key => $value) {
+            $data['zcount']=self::where(['cem_id'=>$arra['id'],'cem_area_id'=>$arra['area'],'cem_row_id'=>$value['id']])->count();
+            $data['mcount']=self::where(['cem_id'=>$arra['id'],'cem_area_id'=>$arra['area'],'cem_row_id'=>$value['id'],'status'=>44])->count();
+            $data['scount']=$data['zcount']-$data['mcount'];
+            $p=self::field('price,model')->where(['cem_id'=>$arra['id'],'cem_area_id'=>$arra['area'],'cem_row_id'=>$value['id']])->find();
+            $money=self::field('sum(price)')->where(['cem_id'=>$arra['id'],'cem_area_id'=>$arra['area'],'cem_row_id'=>$value['id'],'status'=>38])->select();
+            if($money[0]['sum(price)'] != null){//墓位费 合计
+                $price=$money[0]['sum(price)'];
+            }else{
+                $price=0;
+            }
+            $k=$key+1;
+            $html.='<tr class="trtr">';
+                $html.='<td>'.$k.'</td>';
+                $html.='<td>'.$p['price'].'</td>';
+                $html.='<td>'.$value['title'].'</td>';
+                $html.='<td>'.$cem_model[$p['model']]['title'].'</td>';
+                $html.='<td>'.$data['zcount'].'</td>';
+                $html.='<td>'.$data['mcount'].'</td>';
+                $html.='<td>'.$data['scount'].'</td>';
+                $html.='<td>'.$price.'</td>';
+            $html.='</tr>';
+        }
+        return $html;
+    }
+    //墓位销售员业绩统计-个人  有时间
     static public function sselect_user_list_tab_one_time($arra){
         if($arra['type'] == 'one'){
             $html='';
@@ -2831,7 +3352,7 @@ class CemInfo extends Root {
                 'width'          => $info['width'],
                 'acreage'        => $info['acreage'],
                 'price'        => $info['price'],
-                'create_time'    => dttm(),
+                'create_time'    => time(),
                 'create_by'    => session('id'),
             ]) !== false) {
             return RE_SUCCESS;
@@ -2853,7 +3374,7 @@ class CemInfo extends Root {
                         'width'          => $info['width'],
                         'acreage'        => $info['acreage'],
                         'price'        => $info['price'],
-                        'create_time'    => dttm(),
+                        'create_time'    => time(),
                         'create_by'    => session('id'),
                     ];
             }
