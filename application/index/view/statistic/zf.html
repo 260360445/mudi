@@ -1,0 +1,151 @@
+<div class="cont">
+  <form>
+    <fieldset>
+       <legend>统计条件设置与结果打印</legend>             
+       <div class="conta">
+          <p>选择墓园</p>
+          <p>统计开始时间：</p>
+          <p>统计结束时间：</p>
+       </div>
+       <div class="contb">
+        <select name="cem_id" class="cem_id">
+            {foreach $cem_list as $k => $vo}
+                 <option value="{$vo.id}">{$vo.title}</option>
+            {/foreach}
+         </select>
+         <input class="Wdate xiaostime" id="starttime" type="text" onclick="WdatePicker()" style="outline: 0;font-size: 14px;color: #000;float: left;margin-left: 10px;">
+         <input class="Wdate xiaostime" id="endtime" type="text" onClick="WdatePicker()" style="outline: 0;font-size: 14px;color: #000;float: left;margin-left: 10px;">
+          <button type="button" class="contc show_all">统计墓园</button>
+          <div class="contc">打印统计总额</div>
+          <div class="contc">打印明细</div>
+          <div class="contc">退出</div>
+       </div>
+    </fieldset>
+    
+  </form>
+  <div class="conbiao">
+    <table class="table table-bordered">
+      <!--<caption>边框表格布局</caption>-->
+      <thead>
+        <tr>
+          <th>墓园编号</th>
+          <th>墓园名称</th>
+          <th>杂费单数量（单位：个）</th>
+          <th>杂费总金额（单位：元）</th>                 
+        </tr>
+      </thead>
+      <tbody class="add_row">
+        
+      </tbody>
+    </table>
+    <table class="table table-bordered">
+      <!--<caption>边框表格布局</caption>-->
+      <thead class="add_row_all_th">
+        <!-- <tr class="thth">
+          <th>编号</th>
+          <th>墓位全称</th>
+          <th>刻字金额</th>
+          <th>贴金箔金额</th> 
+          <th>瓷像类型</th> 
+          <th>瓷像费用</th> 
+          <th>封门立碑</th> 
+          <th>封门立碑费用</th> 
+          <th>费用总计</th>
+          <th>付款情况</th> 
+          <th>备注</th>               
+        </tr> -->
+      </thead>
+      <tbody class="add_row_all_tr">
+        
+      </tbody>
+    </table>
+  </div>
+</div>
+<script src="__JS__/layer/layer.js"></script>
+<script language="javascript" type="text/javascript" src="__JS__/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+  $(function(){
+    var cem=$(".cem_id option:selected").val();
+    che(cem);
+  })
+  function che(cem){
+    var index = layer.load(1, {
+      shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
+    $.ajax({
+        type        : 'post',
+        url         : '{:url('select_zf_list')}',
+        dataType    : 'json',
+        data        : {
+            id : cem,
+        },
+        success     : function(g){
+          layer.close(index);
+          $(".add_row").append(g);
+        }
+    });
+  }
+  $(".show_all").click(function(){
+    var index = layer.load(1, {
+      shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
+    $(".trtr").remove();
+    $(".thth").remove();
+    $(".trall").remove();
+    var starttime=$("#starttime").val();
+    var endtime=$("#endtime").val();
+    var cem=$(".cem_id option:selected").val();
+    if(starttime!='' || endtime!=''){
+      $.ajax({
+          type        : 'post',
+          url         : '{:url('select_zf_list_time')}',
+          dataType    : 'json',
+          data        : {
+              id : cem,
+              starttime : starttime,
+              endtime : endtime,
+          },
+          success     : function(g){
+            layer.close(index);
+            $(".add_row").append(g);
+          }
+      });
+    }else{
+      che(cem);
+    }
+  })
+  function setalltr(id){
+    var index = layer.load(1, {
+      shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
+    $(".thth").remove();
+    $(".trall").remove();
+    var html='';
+    $.ajax({
+        type        : 'post',
+        url         : '{:url('select_zf_list_all')}',
+        dataType    : 'json',
+        data        : {
+            id : id,
+        },
+        success     : function(g){
+          layer.close(index);
+          html+='<tr class="thth">';
+            html+='<th>编号</th>';
+            html+='<th>墓位全称</th>';
+            html+='<th>刻字金额</th>';
+            html+='<th>贴金箔金额</th> ';
+            html+='<th>瓷像类型</th>'; 
+            html+='<th>瓷像费用</th>'; 
+            html+='<th>封门立碑</th>'; 
+            html+='<th>封门立碑费用</th> ';
+            html+='<th>费用总计</th>';
+            html+='<th>付款情况</th> ';
+            html+='<th>备注</th>  ';             
+          html+='</tr>';
+          $(".add_row_all_th").append(html);
+          $(".add_row_all_tr").append(g);
+        }
+    });
+  }
+</script>

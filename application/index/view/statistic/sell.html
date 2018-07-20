@@ -1,0 +1,156 @@
+<div class="cont">
+  <form>
+    <fieldset>
+       <legend>统计条件设置与结果打印</legend>             
+       <div class="conta">
+          <p>选择墓园</p>
+          <p>选择墓区</p>
+          <p>统计开始时间：</p>
+          <p>统计结束时间：</p>
+       </div>
+       <div class="contb">
+          <select name="cem_id" class="cem_id">
+            {foreach $cem_list as $k => $vo}
+                 <option value="{$vo.id}">{$vo.title}</option>
+            {/foreach}
+         </select>
+         <select name="cem_area_id" class="cem_area_id">
+         </select>
+        <input class="Wdate xiaostime" id="starttime" type="text" value="<?php $time=strtotime('-1 month', time());echo date('Y-m-d',$time);?>" onClick="WdatePicker()" style="outline: 0;font-size: 14px;color: #000;float: left;margin-left: 10px;">
+        <input class="Wdate xiaostime" id="endtime" type="text" value="<?php echo date('Y-m-d',time())?>" onClick="WdatePicker()" style="outline: 0;font-size: 14px;color: #000;float: left;margin-left: 10px;">
+        <button type="button" class="contc show_all_one">统计结果</button>
+        <button type="button" class="contc show_sell_all">统计园区总体情况</button>
+        <div class="contc">打印统计结果</div>
+            <div class="contc">退出</div>
+       </div>
+    </fieldset>
+    
+  </form>
+  <div class="conbiao">
+    <table class="table table-bordered">
+      <!--<caption>边框表格布局</caption>-->
+      <thead class="add_one">
+      </thead>
+      <tbody class="add_row">
+      </tbody>
+    </table>
+  </div>
+</div>
+<script src="__JS__/layer/layer.js"></script>
+<script language="javascript" type="text/javascript" src="__JS__/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+  $(function(){
+    /*$(".trtr").remove();
+    $(".add_row_one").remove();*/
+    index = layer.load(1, {
+      shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
+    var start=$("#starttime").val();
+    var end=$("#endtime").val();
+    $('.cem_id').trigger('change');
+    che(start,end);
+  })
+  function che(sta,end){
+    var html1='';
+    $.ajax({
+          type        : 'post',
+          url         : '{:url('show_sell_row_all')}',
+          dataType    : 'json',
+          data        : {
+              starttime:sta,
+              endtime:end,
+          },
+          success     : function(g){
+            layer.close(index);
+            html1+='<tr class="add_row_one">';
+               html1+='<th>墓园墓区</th>';
+               html1+='<th>成交个数（座）</th>';
+               html1+='<th>占总成交个数的比例（%）</th>';
+               html1+='<th>实收金额（¥）</th>';
+               html1+='<th>占总金额比例（%）</th>';
+            html1+='</tr>';
+            $(".add_one").append(html1);
+            $(".add_row").append(g);
+          }
+      });
+  }
+  $(".show_sell_all").click(function(){
+    index = layer.load(1, {
+      shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
+    $(".trtr").remove();
+    $(".add_row_one").remove();
+    var start=$("#starttime").val();
+    var end=$("#endtime").val();
+    che(start,end);
+  })
+  $(".show_all_one").click(function(){
+    index = layer.load(1, {
+      shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
+    $(".trtr").remove();
+    $(".add_row_one").remove();
+    var start=$("#starttime").val();
+    var end=$("#endtime").val();
+    var cem_id=$(".cem_id option:selected").val();
+    var cem_area_id=$(".cem_area_id option:selected").val();
+    var html1='';
+    $.ajax({
+          type        : 'post',
+          url         : '{:url('show_sell_row_one')}',
+          dataType    : 'json',
+          data        : {
+              starttime:start,
+              endtime:end,
+              cem_id:cem_id,
+              cem_area_id:cem_area_id,
+          },
+          success     : function(g){
+            layer.close(index);
+            html1+='<tr class="add_row_one">';
+               html1+='<th>墓园墓区</th>';
+               html1+='<th>墓位价格</th>';
+               html1+='<th>所属墓排</th>';
+               html1+='<th>成交个数（座）</th>';
+               html1+='<th>占总成交个数的比例（%）</th>';
+               html1+='<th>实收金额（¥）</th>';
+               html1+='<th>占总金额比例（%）</th>';
+            html1+='</tr>';
+            $(".add_one").append(html1);
+            $(".add_row").append(g);
+          }
+      });
+  })
+  $('.cem_id').change(function(){
+      get_area($(this), '-1');
+  });
+  function get_area (_this, _select_id) {
+      // var _select_id = _select_id ? _select_id : 0;
+      let cem_id = _this.val();
+      let form = _this.parents('form');
+      if (cem_id) {
+          $.ajax({
+              type        : 'GET',
+              url         : '{:url('Cem/area_wlist')}',
+              dataType    : 'json',
+              data        : {
+                  cem_id : cem_id
+              },
+              success     : function(e){
+                  let html = '';
+                  for (i in e) {
+                      html += '<option ';
+                      if (_select_id == e[i]['id']) {
+                          html += 'selected';
+                      }
+                      html += ' value="'+e[i]['id']+'">'+e[i]['title']+'</option>';
+                  }
+                  form.find('.cem_area_id').html(html);
+              },
+              error       : function () {
+
+              },
+          });
+      }
+  }
+</script>

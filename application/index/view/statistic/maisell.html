@@ -1,0 +1,80 @@
+<div class="cont">
+          <form>
+            <fieldset>
+               <legend>统计条件设置与结果打印</legend>             
+               <div class="conta">
+                  <p>统计开始时间1</p>
+                  <p>统计截止时间1</p>
+                  <p>统计开始时间2</p>
+                  <p>统计截止时间2</p>
+               </div>
+               <div class="contb">
+                <input class="Wdate xiaostime" id="starttime1" type="text" onclick="WdatePicker()" style="outline: 0;font-size: 14px;color: #000;float: left;margin-left: 10px;">
+                <input class="Wdate xiaostime" id="endtime1" type="text" onClick="WdatePicker()" style="outline: 0;font-size: 14px;color: #000;float: left;margin-left: 10px;">
+                <input class="Wdate xiaostime" id="starttime2" type="text" onclick="WdatePicker()" style="outline: 0;font-size: 14px;color: #000;float: left;margin-left: 10px;">
+                <input class="Wdate xiaostime" id="endtime2" type="text" onClick="WdatePicker()" style="outline: 0;font-size: 14px;color: #000;float: left;margin-left: 10px;">
+                <button type="button" class="contc show_all">统计结果</button>
+                <div class="contc">打印统计结果</div>
+               </div>
+            </fieldset>
+            
+          </form>
+          <div class="conbiao">
+            <table class="table table-bordered">
+             
+              <thead>
+                <tr>
+                  <th>序号</th>             
+                  <th>接待员</th>
+                  <th>接待首次份数</th>           
+                  <th>成交份数</th>
+                  <th>预订份数</th>                 
+                  <th>成交率（%）</th>
+                  <th>总销售额</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>37</td>
+                  <td>112313</td>
+                  <td>12</td>
+                  <td>37</td>
+                  <td>112313</td>
+                  <td>1212</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+<script src="__JS__/layer/layer.js"></script>
+<script language="javascript" type="text/javascript" src="__JS__/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+  $(".show_all").click(function(){
+    var index = layer.load(1, {
+      shade: [0.1,'#fff'] //0.1透明度的白色背景
+    });
+    $(".trtr").remove();
+    $(".thth").remove();
+    $(".trall").remove();
+    var starttime=$("#starttime").val();
+    var endtime=$("#endtime").val();
+    var cem=$(".cem_id option:selected").val();
+    if(starttime!='' || endtime!=''){
+      $.ajax({
+          type        : 'post',
+          url         : '{:url('select_zf_list_time')}',
+          dataType    : 'json',
+          data        : {
+              id : cem,
+              starttime : starttime,
+              endtime : endtime,
+          },
+          success     : function(g){
+            layer.close(index);
+            $(".add_row").append(g);
+          }
+      });
+    }
+  })
+</script>

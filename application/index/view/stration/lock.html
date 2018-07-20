@@ -1,44 +1,89 @@
 <div class="cont">
-          <h1 class="suod">【请选择以下被锁定的墓位，双击该条记录即可解锁。】</h1>
-          <div class="conbiao">
-            <table class="table table-bordered">
-              <!--<caption>边框表格布局</caption>-->
-              <thead>
-                <tr>
-                  <th>墓位全称</th>
-                  <th>墓位长</th>
-                  <th>墓位宽</th>
-                  <th>墓位面积</th>
-                  <th>墓位价格</th>
-                  <th>墓位类型</th>
-                  <th>墓位材质</th>
-                  <th>墓位样式</th>
-                  <th>墓位状态</th>
-                  <th>操作人</th>
-                  <th>操作时间</th>
-                  <th>是否被锁定</th>
-                 
+<h1 class="suod">【单击该条记录即可解锁。】</h1>
+<div class="conbiao">
+  <table class="table table-bordered">
+    <!--<caption>边框表格布局</caption>-->
+    <thead>
+      <tr>
+        <th>墓位全称</th>
+        <th>墓位长</th>
+        <th>墓位宽</th>
+        <th>墓位面积</th>
+        <th>墓位价格</th>
+        <th>墓位类型</th>
+        <th>墓位材质</th>
+        <th>墓位样式</th>
+        <th>墓位状态</th>
+        <th>操作人</th>
+        <th>操作时间</th>
+        <th>是否被锁定</th>
+       
 
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>天祥园A区1排0009号</td>
-                  <td>0.84</td>
-                  <td>0.62</td>
-                  <td>0.3421</td>
-                  <td>12342</td>
-                  <td>传统-01</td>
-                  <td>花岗岩G654</td>
-                  <td>双人墓</td>  
-                  <td>已订购</td>
-                  <td>李敏</td>
-                  <td>2016-09-18 8:26</td>
-                  <td>已锁定</td>
-                  
-                </tr>
-               
-              </tbody>
-            </table>
-          </div>
-        </div>
+      </tr>
+    </thead>
+    <tbody>
+    {volist name="list" id="vo"}
+      <tr onclick="set('{$vo.id}')" style="cursor:pointer">
+        <td>{$vo['long_title']}</td>
+        <td>{$vo['length']}</td>
+        <td>{$vo['width']}</td>
+        <td>{$vo['acreage']}</td>
+        <td>{$vo['price']}</td>
+        <td>{$cem_model[$vo['model']]['title']}</td>
+        <td>{$cem_mat[$vo['material']]['title']}</td>
+        <td>{$cem_sty[$vo['style']]['title']}</td>  
+        {if condition="$vo['status'] eq 38"}
+          <td>空闲</td> 
+        {elseif condition="$vo['status'] eq 39" /} 
+          <td>已预订</td> 
+        {elseif condition="$vo['status'] eq 41" /} 
+          <td>已葬</td> 
+        {elseif condition="$vo['status'] eq 44" /} 
+          <td>付款（已定）</td> 
+        {/if}
+        <td>{$row_staff[$vo['suo_staff_id']]['nickname']}</td>
+        <td>{$vo['suo_time']|date="Y-m-d",###}</td>
+        <td>已锁定</td>
+      </tr>
+    {/volist}
+    </tbody>
+  </table>
+</div>
+</div>
+<script src="__JS__/layer/layer.js"></script>
+<script type="text/javascript">
+function set(id){
+  var lay=layer.confirm('您确定要解锁该墓位吗？', {
+    btn: ['确定','取消'] //按钮
+  }, function(){
+    layer.close(lay);
+    var imgshtml = layer.load(1, {
+      shade: [0.5] //0.1透明度的白色背景
+    });
+  $.ajax({  
+        type        : 'post',
+        url         : '{:url('upd_lock_list')}',
+        dataType    : 'json',
+        data        : {
+            id : id,
+        },
+        success     : function(e){
+          layer.close(imgshtml);
+          if (e == 'ok') {
+            layer.msg('解锁成功',{offset: '300px',time: 2000,icon: 1},function () {
+                     window.location.reload();
+                  });
+          } else {
+            layer.msg('解锁失败',{offset: '300px',time: 2000,icon: 2},function () {
+                     window.location.reload();
+                  });
+          }
+        }
+    });
+  }, function(){
+    layer.close(lay);
+  });
+  
+}
+
+</script>

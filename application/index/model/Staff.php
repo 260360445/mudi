@@ -41,11 +41,23 @@ class Staff extends Root {
         // wcc($info);
         if (isset($info['pwd']) && $info['pwd']) {
             $salt = salt();
-            $info['show_pwd'] = $info['pwd'];
-            $info['pwd']  = encrypt($info['pwd'], $salt);
-            $info['salt'] = $salt;
+            $data['show_pwd'] = $info['pwd'];
+            $data['pwd']  = encrypt($info['pwd'], $salt);
+            $data['salt'] = $salt;
         }
-        if (self::where('id', $id)->update($info) !== false) {
+        if($info['account']){
+            $data['account']=$info['account'];
+        }
+        if($info['nickname']){
+            $data['nickname']=$info['nickname'];
+        }
+        if($info['idcard']){
+            $data['idcard']=$info['idcard'];
+        }
+        if($info['role_id']){
+            $data['role_id']=$info['role_id'];
+        }
+        if (self::where('id', $id)->update($data) !== false) {
             return RE_SUCCESS;
         }
         return RE_ERROR;

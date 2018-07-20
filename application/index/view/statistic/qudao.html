@@ -15,7 +15,6 @@
           {/volist}
         </select>
         <select id="qudao2">
-          <option >请选择</option>
         </select>
         <input class="Wdate xiaostime" id="starttime" type="text" onClick="WdatePicker()" style="outline: 0;font-size: 14px;color: #000;float: left;margin-left: 10px;">
         <input class="Wdate xiaostime" id="endtime" type="text" onClick="WdatePicker()" style="outline: 0;font-size: 14px;color: #000;float: left;margin-left: 10px;">
@@ -62,7 +61,7 @@
               cem_id : cem_id
           },
           success     : function(e){
-              let html = '<option >请选择</option>';
+              let html = '';
               for (i in e) {
                   html += '<option value="'+e[i]['id']+'">'+e[i]['title']+'</option>';
               }

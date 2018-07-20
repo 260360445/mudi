@@ -7,8 +7,8 @@
           <p>统计截止时间</p>
        </div>
        <div class="contb">
-        <input class="Wdate xiaostime" id="starttime" type="text" onClick="WdatePicker()" style="outline: 0;font-size: 14px;color: #000;float: left;margin-left: 10px;">
-        <input class="Wdate xiaostime" id="endtime" type="text" onClick="WdatePicker()" style="outline: 0;font-size: 14px;color: #000;float: left;margin-left: 10px;">
+        <input class="Wdate xiaostime" id="starttime" type="text" value="<?php $time = strtotime('-1 month', time());echo date('Y-m-d',$time)?>" onClick="WdatePicker()" style="outline: 0;font-size: 14px;color: #000;float: left;margin-left: 10px;">
+        <input class="Wdate xiaostime" id="endtime" type="text" value="<?php echo date('Y-m-d',time());?>" onClick="WdatePicker()" style="outline: 0;font-size: 14px;color: #000;float: left;margin-left: 10px;">
         <button type="button" class="contc show_all_come">统计结果</button>
         <div class="contc">打印统计结果</div>
        </div>

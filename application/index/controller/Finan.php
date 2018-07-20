@@ -129,10 +129,17 @@ class Finan  extends Root {
     }
     //碑文杂费收费确认
     public function muweiz () {
-        $this->assign('glist', _Gset::wlist());
+        $this->assign('list', _Info::wlist_zf());
+        $this->assign('wlist', _Info::wlist());
         return $this->fetch();
     }
-
+    public function finan_set_muweiz(){
+        $e = _Info::finan_set_muweiz($_POST);
+        if ($e['status']) {
+            return '2';
+        }
+        return '3';
+    }
     //寄存位收费确认
     public function syslist () {
         $time=time();

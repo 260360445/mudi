@@ -11,6 +11,7 @@ use app\index\model\Visit as _Visit;
 use app\index\model\Cem as _Cem;
 use app\index\model\CemInfo as _Info;
 use think\Request;
+use think\Db;
 class Stration extends Root {
     public function _initialize() {
         parent::_initialize();
@@ -54,7 +55,16 @@ class Stration extends Root {
     }
     //墓位杂费单据管理
     public function fee () {
+        $this->assign('cem_list', _Cem::wlist());
         return $this->fetch();
+    }
+    //杂费信息 --有查询
+    public function select_show_one(){
+        return _Info::select_show_one($_POST);
+    }
+    //杂费信息 --全部
+    public function select_show_zf_all(){
+        return _Info::select_show_zf_all();
     }
     //来访登记管理
     public function visit_log ($wh = '') {
@@ -128,8 +138,19 @@ class Stration extends Root {
     }
     //墓位销售锁定管理
     public function lock () {
-       
+        $map = ['suo'=>2];
+        $this->assign('row_staff', _Staff::wlistf());
+        $this->assign('cem_model', _Tpl::tlist(8));//墓位类型
+        $this->assign('cem_sty', _Tpl::tlist(2));//墓位样式
+        $this->assign('cem_mat', _Tpl::tlist(3));//墓位材料
+        $this->assign('list', _Info::wlist($map));
         return $this->fetch();
+    }
+    public function upd_lock_list(){
+        if (Db::table('cem_info')->where('id', $_POST['id'])->update(['suo'=>3,'suo_staff_id'=>session('id'),'suo_time'=>time()]) !== false) {
+            return 'ok';
+        }
+        return 'no';
     }
     //墓位订购时间格式
     public function format(){

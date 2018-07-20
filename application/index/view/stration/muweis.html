@@ -12,7 +12,7 @@
        </div>
        <div class="contb">
           <select name="cem_id" class="cem_id">
-             <option value="">请选择</option>
+             <option value="0">请选择</option>
              {foreach $cem_list as $k => $vo}
                   <option value="{$vo.id}">{$vo.title}</option>
              {/foreach}
@@ -63,7 +63,6 @@
           <th>业务员</th>
           <th>业务员姓名</th>
           <th>墓位号</th>  
-          <th>当日销售流水号</th>
           <th>合同编号</th>
         </tr>
       </thead>
@@ -122,7 +121,6 @@
           <td>{$row_staff[$vo['salesman']]['nickname']}</td>
           <td>{$row_staff[$vo['salesman']]['nickname']}</td>
           <td>{$vo['mwnum']}</td>
-          <td>{$vo['lnum']}</td>
           <td>{$vo['hnum']}</td>
         </tr>
       {/volist} 
@@ -210,7 +208,16 @@ $('.show_all').click(function(){
 var cem_id = $('.add_row').find('.cem_id').val();
 var cem_area_id = $('.add_row').find('.cem_area_id').val();
 var cem_row_id = $('.add_row').find('.cem_row_id').val();
-window.location.href="{:url('/index/Stration/muweis/cem_id/"+cem_id+"/cem_area_id/"+cem_area_id+"/cem_row_id/"+cem_row_id+"')}";
+if(cem_id !=0 && cem_area_id!=0 && cem_row_id!=0){
+  window.location.href="{:url('/index/Stration/muweis/cem_id/"+cem_id+"/cem_area_id/"+cem_area_id+"/cem_row_id/"+cem_row_id+"')}";
+}else if(cem_id!=0 && cem_area_id!=0){
+  window.location.href="{:url('/index/Stration/muweis/cem_id/"+cem_id+"/cem_area_id/"+cem_area_id+"')}";
+}else if(cem_id!=0){
+  window.location.href="{:url('/index/Stration/muweis/cem_id/"+cem_id+"')}";
+}else{
+  layer.msg('请选择墓园');
+}
+
 });
 function get_row (_this, _select_id) {
   // var _select_id = _select_id ? _select_id : 0;

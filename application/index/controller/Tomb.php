@@ -68,7 +68,83 @@ class Tomb  extends Root {
         $this->view->engine->layout(false);
         return $this->fetch();
     }
-
+    //授权折扣
+    public function reserve_zksq(){
+        $data = _Info::reserve_zksq($_POST);
+        return $data;
+    }
+    //授权折扣
+    public function reserve_zksqs(){
+        $data = _Info::reserve_zksqs($_POST);
+        return $data;
+    }
+    public function reserve_setacc(){
+        $arr=Db::table('staff')->field('id,status,salt,role_id')->where(['account'=>$_POST['uacc']])->find();
+        if ($arr['id']) {
+            if($arr['status'] == '1'){
+                if ($arr['pwd'] != encrypt($_POST['upass'], $arr['salt'])) {
+                    $role=Db::table('role')->field('id,title,discount')->where(['id'=>$arr['role_id']])->find();
+                    if($role['discount'] != '1'){
+                        $info['msg']='ok';
+                        $info['acc']=$_POST['uacc'];
+                        $info['title']=$role['title'];
+                        $info['s_staff_id']=$arr['id'];
+                        $info['flg']=$role['discount'];
+                        return $info;
+                    }else{
+                        $info['msg']='no';
+                        $info['acc']=$_POST['uacc'];
+                        $info['title']=$role['title'];
+                        $info['flg']=1;
+                        return $info;
+                    }
+                }else{
+                    $info['msg']='nopass';
+                    return $info;
+                }
+            }else{
+                $info['msg']='nosta';
+                return $info;
+            }
+        }else{
+            $info['msg']='noacc';
+            return $info;
+        }
+    }
+    public function reserve_setaccs(){
+        $arr=Db::table('staff')->field('id,status,salt,role_id')->where(['account'=>$_POST['uacc']])->find();
+        if ($arr['id']) {
+            if($arr['status'] == '1'){
+                if ($arr['pwd'] != encrypt($_POST['upass'], $arr['salt'])) {
+                    $role=Db::table('role')->field('id,title,discount')->where(['id'=>$arr['role_id']])->find();
+                    if($role['discount'] != '1'){
+                        $info['msg']='ok';
+                        $info['acc']=$_POST['uacc'];
+                        $info['title']=$role['title'];
+                        $info['s_staff_id']=$arr['id'];
+                        $info['flg']=$role['discount'];
+                        return $info;
+                    }else{
+                        $info['msg']='no';
+                        $info['acc']=$_POST['uacc'];
+                        $info['title']=$role['title'];
+                        $info['flg']=1;
+                        return $info;
+                    }
+                }else{
+                    $info['msg']='nopass';
+                    return $info;
+                }
+            }else{
+                $info['msg']='nosta';
+                return $info;
+            }
+        }else{
+            $info['msg']='noacc';
+            return $info;
+        }
+    }
+    //预订墓位
     public function reserve () {
         $data = _Info::reserve($_POST);
         return $data;
@@ -81,7 +157,7 @@ class Tomb  extends Root {
         if($user){
             Db::startTrans();
             try{
-                Db::table('contacts')->where(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]); 
+                Db::table('contacts')->where(['name'=>$_POST['contacts_name'],'age'=>$_POST['contacts_age'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]); 
                 $data['status']  = 39;
                 $data['reserve_date']=strtotime($_POST['reserve_date']);
                 $data['remind_date']=strtotime($_POST['remind_date']);
@@ -96,6 +172,12 @@ class Tomb  extends Root {
                 $data['mwnum']=$_POST['seid'];
                 $data['lnum']=date('YmdHis',time());
                 $data['hnum']='TQ'.date('YmdHis',time());
+                if($_POST['s_sta'] == '2' && $_POST['s_staff_id'] != ''){
+                    $data['s_staff_id']=$_POST['s_staff_id'];
+                    $data['s_sta']=2;
+                    $data['s_lv']=$_POST['s_lv'];
+                    $data['s_time']=time();
+                }
                 $ss=Db::table('cem_info')->where(['id'=>$_POST['seid']])->update($data);
                 $dead['cem_info_id'] = $_POST['seid'];
                 $dead['relationship'] = $_POST['dead_relationship'];
@@ -112,7 +194,7 @@ class Tomb  extends Root {
         }else{
             Db::startTrans();
             try{
-                Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
+                Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'age'=>$_POST['contacts_age'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
                 $LastInsID =Db::table('contacts')->getLastInsID();
                 Db::table('visit_log')->insert(['contacts_id'=>$LastInsID,'transaction_status'=>1,'transaction_suc_date'=>time(),'come_date'=>time(),'receiver'=>$_POST['salesman']]);
                 $data['status']  = 39;
@@ -129,6 +211,12 @@ class Tomb  extends Root {
                 $data['lnum']=date('YmdHis',time());
                 $data['hnum']='TQ'.date('YmdHis',time());
                 $data['contacts_id'] = $LastInsID;
+                if($_POST['s_sta'] == '2' && $_POST['s_staff_id'] != ''){
+                    $data['s_staff_id']=$_POST['s_staff_id'];
+                    $data['s_sta']=2;
+                    $data['s_lv']=$_POST['s_lv'];
+                    $data['s_time']=time();
+                }
                 _Info::where('id', $_POST['seid'])->update($data);
                 $dead['cem_info_id'] = $_POST['seid'];
                 $dead['dead_name'] = $_POST['dead_name'];
@@ -151,7 +239,7 @@ class Tomb  extends Root {
         if($user){
             Db::startTrans();
             try{
-                $sss=Db::table('contacts')->where(['id'=>$user['id']])->update(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]); 
+                $sss=Db::table('contacts')->where(['id'=>$user['id']])->update(['name'=>$_POST['contacts_name'],'age'=>$_POST['contacts_age'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]); 
                 $data['status']  = 44;
                 $data['settime']=strtotime($_POST['settime']);
                 $data['starttime']=strtotime($_POST['starttime']);
@@ -171,6 +259,7 @@ class Tomb  extends Root {
                 $data['update_by']=session('id');
                 $data['create_time']=$_POST['create_time'];
                 $data['contacts_id']=$user['id'];
+                $data['flg']=3;
                 $ss=Db::table('cem_info')->where(['id'=>$_POST['seid']])->update($data);
                 $dead['cem_info_id'] = $_POST['seid'];
                 $dead['relationship'] = $_POST['dead_relationship'];
@@ -187,7 +276,7 @@ class Tomb  extends Root {
         }else{
             Db::startTrans();
             try{
-                Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
+                Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'age'=>$_POST['contacts_age'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
                 $LastInsID =Db::table('contacts')->getLastInsID();
                 Db::table('visit_log')->insert(['contacts_id'=>$LastInsID,'transaction_status'=>1,'transaction_suc_date'=>time(),'come_date'=>time(),'receiver'=>$_POST['salesman']]);
                 $data['status']  = 44;
@@ -207,6 +296,7 @@ class Tomb  extends Root {
                 $data['salesman']=$_POST['salesman'];
                 $data['update_by']=session('id');
                 $data['create_time']=$_POST['create_time'];
+                $data['flg']=3;
                 $data['contacts_id'] = $LastInsID;
                 _Info::where('id', $_POST['seid'])->update($data);
                 $dead['relationship'] = $_POST['dead_relationship'];
@@ -229,7 +319,7 @@ class Tomb  extends Root {
         if($user){
             Db::startTrans();
             try{
-                $sss=Db::table('contacts')->where(['id'=>$user['id']])->update(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]); 
+                $sss=Db::table('contacts')->where(['id'=>$user['id']])->update(['name'=>$_POST['contacts_name'],'img'=>$_POST['usercardimg'],'age'=>$_POST['contacts_age'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]); 
                 $data['status']  = 44;
                 $data['settime']=strtotime($_POST['settime']);
                 $data['starttime']=strtotime($_POST['starttime']);
@@ -250,6 +340,13 @@ class Tomb  extends Root {
                 $data['update_by']=session('id');
                 $data['create_time']=$_POST['create_time'];
                 $data['contacts_id']=$user['id'];
+                $data['flg']=2;
+                if($_POST['s_sta'] == '2' && $_POST['s_staff_id'] != ''){
+                    $data['s_staff_id']=$_POST['s_staff_id'];
+                    $data['s_sta']=2;
+                    $data['s_lv']=$_POST['s_lv'];
+                    $data['s_time']=time();
+                }
                 $ss=Db::table('cem_info')->where(['id'=>$_POST['seid']])->update($data);
                 $dead['cem_info_id'] = $_POST['seid'];
                 $dead['relationship'] = $_POST['dead_relationship'];
@@ -266,7 +363,7 @@ class Tomb  extends Root {
         }else{
             Db::startTrans();
             try{
-                Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
+                Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'age'=>$_POST['contacts_age'],'img'=>$_POST['usercardimg'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
                 $LastInsID =Db::table('contacts')->getLastInsID();
                 Db::table('visit_log')->insert(['contacts_id'=>$LastInsID,'transaction_status'=>1,'transaction_suc_date'=>time(),'come_date'=>time(),'receiver'=>$_POST['salesman']]);
                 $data['status']  = 44;
@@ -288,6 +385,13 @@ class Tomb  extends Root {
                 $data['update_by']=session('id');
                 $data['create_time']=$_POST['create_time'];
                 $data['contacts_id'] = $LastInsID;
+                $data['flg']=2;
+                if($_POST['s_sta'] == '2' && $_POST['s_staff_id'] != ''){
+                    $data['s_staff_id']=$_POST['s_staff_id'];
+                    $data['s_sta']=2;
+                    $data['s_lv']=$_POST['s_lv'];
+                    $data['s_time']=time();
+                }
                 _Info::where('id', $_POST['seid'])->update($data);
                 $dead['relationship'] = $_POST['dead_relationship'];
                 $dead['dead_name'] = $_POST['dead_name'];
@@ -307,7 +411,7 @@ class Tomb  extends Root {
         if($user){
             Db::startTrans();
             try{
-                Db::table('contacts')->where(['id'=>$user['id']])->update(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]); 
+                Db::table('contacts')->where(['id'=>$user['id']])->update(['name'=>$_POST['contacts_name'],'age'=>$_POST['contacts_age'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]); 
                 $data['status']  = 39;
                 $data['reserve_date']=strtotime($_POST['reserve_date']);
                 $data['remind_date']=strtotime($_POST['remind_date']);
@@ -332,7 +436,7 @@ class Tomb  extends Root {
         }else{
             Db::startTrans();
             try{
-                Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
+                Db::table('contacts')->insert(['name'=>$_POST['contacts_name'],'age'=>$_POST['contacts_age'],'sex'=>$_POST['contacts_sex'],'relationship'=>$_POST['dead_relationship'],'postcode'=>$_POST['contacts_postcode'],'idcard'=>$_POST['contacts_idcard'],'tel'=>$_POST['contacts_tel'],'phone'=>$_POST['contacts_phone'],'email'=>$_POST['contacts_email'],'address'=>$_POST['contacts_address'],'workplace'=>$_POST['contacts_workplace']]);
                 $LastInsID =Db::table('contacts')->getLastInsID();
                 Db::table('visit_log')->insert(['contacts_id'=>$LastInsID,'transaction_status'=>1,'transaction_suc_date'=>time(),'receiver'=>$_POST['salesman']]);
                 $data['status']  = 39;
@@ -390,8 +494,132 @@ class Tomb  extends Root {
     public function reserve_bwtc(){//碑文设置
         return _Info::reserve_bwtc($_POST);
     }
+    public function tomb_setbwcs(){//碑文参数设置
+        $e = _Info::tomb_setbwcs($_POST);
+        if ($e == 'ok') {
+            return 'ok';
+        }else if($e == 'no'){
+            return 'no';
+        }else if($e == 'msg'){
+            return 'msg';
+        }
+    }
+    public function tomb_setbeiwencont(){//碑文内容设置
+        $e = _Info::tomb_setbeiwencont($_POST);
+        if ($e == 'ok') {
+            return 'ok';
+        }else if($e == 'no'){
+            return 'no';
+        }else if($e == 'flg'){
+            return 'flg';    
+        }else if($e == 'msg'){
+            return 'msg';    
+        }
+    }
+    public function tomb_setbeizf(){//碑文杂费设置
+        return _Info::tomb_setbeizf($_POST);
+    }
+    public function tomb_setjsd_set(){//碑文杂费设置--添加
+        $e =  _Info::tomb_setjsd_set($_POST);
+        if ($e == 'ok') {
+            return 'ok';
+        }else if($e == 'no'){
+            return 'no';
+        }else if($e == 'msg'){
+            return 'msg';    
+        }
+    }
     public function reserve_gzdj(){//故者落葬登
         return _Info::reserve_gzdj($_POST);
+    }
+    public function tomb_setgzdj(){//故者落葬登
+        $cem_info=Db::table('cem_info')->field('id,cem_id,cem_area_id,cem_row_id,contacts_id,salesman')->where(['id'=>$_POST['eid']])->find();
+        Db::startTrans();
+        try{
+            //处理cem_info
+            $data1['starttime']=strtotime($_POST['starttime']);
+            $data1['endtime']=strtotime($_POST['endtime']);
+            $data1['status']=41;
+            $data1['beizhu']=$_POST['beizhu'];
+            Db::table('cem_info')->where(['id'=>$_POST['eid']])->update($data1);
+
+            //处理dead
+            $deada=Db::table('dead')->field('id,dead_name')->where(['cem_info_id'=>$_POST['eid'],'dead_name'=>$_POST['dead_name']])->find();
+            $dead['relationship'] = $cem_info['salesman'];
+            $dead['cem_info_id'] = $_POST['eid'];
+            $dead['dead_name'] = $_POST['dead_name'];
+            $dead['sex'] = $_POST['dead_sex'];
+            $dead['cem_id'] = $cem_info['cem_id'];
+            $dead['cem_area_id'] = $cem_info['dead_cem_area_id'];
+            $dead['cem_row_id'] = $cem_info['dead_cem_row_id'];
+            $dead['dead_work'] = $_POST['dead_work'];
+            $dead['dead_address'] = $_POST['dead_address'];
+            if($_POST['gstime']){
+                $dead['gstime'] = strtotime($_POST['gstime']);
+            }
+            if($_POST['nstime']){
+                $dead['nstime'] = $_POST['nstime'];
+            }    
+            if($_POST['gdtime']){
+                $dead['gdtime'] = strtotime($_POST['gdtime']);
+            } 
+            if($_POST['ndtime']){
+                $dead['ndtime'] = $_POST['ndtime'];
+            } 
+            if($_POST['jrtime']){
+                $dead['jrtime'] = strtotime($_POST['jrtime']);
+            } 
+            if($_POST['gltime']){
+                $dead['gltime'] = strtotime($_POST['gltime']);
+            } 
+            if($_POST['nltime']){
+                $dead['nltime'] = $_POST['nltime'];
+            } 
+            $dead['cstype'] = $_POST['cstype'];
+            $dead['lztype'] = $_POST['lztype'];
+            $dead['sstype'] = $_POST['sstype'];
+            $dead['salesman'] = $cem_info['salesman'];
+            if($deada){
+                Db::table('dead')->where(['cem_info_id'=>$_POST['eid'],'dead_name'=>$_POST['dead_name']])->update($dead);
+            }else{
+                $dead['sta']=2;
+                Db::table('dead')->insert($dead);
+            }
+
+            //处理联系人
+            Db::table('contacts')->where(['id'=>$cem_info['contacts_id']])->update(['name'=>$_POST['cname'],'img'=>$_POST['usercardimg'],'sex'=>$_POST['sex'],'postcode'=>$_POST['postcode'],'relationship'=>$_POST['relationship'],'idcard'=>$_POST['idcard'],'tel'=>$_POST['tel'],'phone'=>$_POST['phone'],'email'=>$_POST['email'],'address'=>$_POST['address'],'workplace'=>$_POST['workplace']]); 
+            // 提交事务
+            Db::commit();
+            return 'ok';
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            return 'no';
+        }
+    }
+    public function show_updlz(){//刷新故者信息
+        return _Info::show_updlz($_POST);
+    }
+    public function tomb_uicard(){//身份证照片
+        return _Info::tomb_uicard();
+    }
+    public function reserve_setcardimg(){//身份证照片
+        $data='';
+        // 获取上传文件信息
+        if(!empty($_FILES['img']['name'])){//处理上传的文件
+            foreach($_FILES as $key => $files){
+                if(!empty($_FILES[$key]['name'])){
+                    $data[$key] = $this->uploads($key);
+                }   
+            }
+        }
+        if($data){
+            $info['data']=$data;
+            $info['msg']='ok';
+        }else{
+            $info['msg']='no';     
+        }
+        return $info;
     }
     public function reserve_xjglf(){//续交管理费
         return _Info::reserve_xjglf($_POST);
@@ -757,4 +985,132 @@ class Tomb  extends Root {
         //print_r(_Info::getLastSql());
         return $this->fetch();
     }
+    //已落葬墓位管理
+    public function zang ($wh = '') {
+        $this->www_list($wh);    
+        return $this->fetch();
+    }
+    //故者落葬情况管理
+    public function zlist () {
+        return $this->fetch();
+    }
+    //故者落葬信息
+    public function select_lz_list(){
+        return _Info::select_lz_list($_POST);
+    }
+    //故者落葬信息  全部信息
+    public function select_lz_list_all(){
+        return _Info::select_lz_list_all();
+    }
+    //故者落葬确认
+    public function toset(){
+        $count=Db::table('dead')->where(['type'=>3])->count();
+        $this->assign('count',$count);
+        return $this->fetch();
+    }
+    public function tomb_toset_html(){
+        return _Info::tomb_toset_html($_POST);      
+    }
+    public function tomb_toset_setuser(){
+        if (Db::table('dead')->where('id', $_POST['id'])->update(['type'=>2,'gltime' => time()]) !== false) {
+            return 'ok';
+        }
+        return 'no';
+    }
+    //墓位锁定
+    public function select_buy_suoding(){
+        if (Db::table('cem_info')->where('id', $_POST['id'])->update(['suo'=>2,'suo_staff_id'=>session('id'),'suo_time'=>time()]) !== false) {
+            return 'ok';
+        }
+        return 'no';
+    }
+    //故者落葬确认
+    public function select_toset_list(){
+        return _Info::select_toset_list($_POST);    
+    }
+    //故者落葬确认
+    public function select_toset_list_all(){
+        return _Info::select_toset_list_all();    
+    }
+    //安葬日提醒
+    public function azset(){
+        return $this->fetch();
+    }
+    //安葬日提醒--信息
+    public function select_azset_list(){
+        return _Info::select_azset_list($_POST); 
+    }
+    //安葬日提醒--信息
+    public function select_azset_list_all(){
+        return _Info::select_azset_list_all($_POST); 
+    }
+    //祭祀日管理
+    public function jtoady(){
+        return $this->fetch();
+    }
+    //祭祀日管理--信息
+    public function select_jtoday_list(){
+        //本周
+        $map="";
+        $time = time();
+        $w_day=date("w",$time);
+        if($w_day=='1'){
+            $cflag = '+0';
+            $lflag = '-1';
+        }else{
+            $cflag = '-1';
+            $lflag = '-2';
+        }
+        $weekstar = strtotime(date('Y-m-d',strtotime("$cflag week Monday", $time))); //本周一零点的时间戳
+        $weekend = strtotime(date('Y-m-d',strtotime("$cflag week Monday", $time)))+604799;//本周末零点的时间戳
+        //本月
+        $begmonth=mktime(0,0,0,date('m'),1,date('Y'));
+        $endmonth=mktime(23,59,59,date('m'),date('t'),date('Y'));
+        //三个月之内
+        $now = time();
+        $time = strtotime('-2 month', $now);
+        $beginThismonth=mktime(0,0,0,date('m',$time),1,date('Y',$time));
+        $endThismonth = mktime(0, 0, 0, date('m', $now), date('t', $now), date('Y', $now));
+        if ($_POST['lxse'] != 0 && $_POST['today']) {
+            $t = time()+3600*8;//这里和标准时间相差8小时需要补足
+            $tget = $t+3600*24*$_POST['today'];//比如5天前的时间
+            if($gtime==2){//一周内过期
+                $map="gdtime >= ".$tget." and gdtime<=".$weekend."";
+            }else if($gtime==3){//一个月内过期
+                $map="gdtime >= ".$tget." and gdtime<=".$endmonth."";
+            }else if($gtime==4){//一个季度内过期
+                $map="gdtime >= ".$tget." and gdtime<=".$endThismonth."";
+            }
+        }else if($_POST['lxse'] == 0 && $_POST['today']){
+            $t = time()+3600*8;//这里和标准时间相差8小时需要补足
+            $tget = $t+3600*24*$_POST['today'];//比如5天前的时间
+            if($gtime==2){//一周内过期
+                $map="gdtime >= ".$tget." and gdtime<=".$weekend."";
+            }else if($gtime==3){//一个月内过期
+                $map="gdtime >= ".$tget." and gdtime<=".$endmonth."";
+            }else if($gtime==4){//一个季度内过期
+                $map="gdtime >= ".$tget." and gdtime<=".$endThismonth."";
+            }
+        }else if($_POST['lxse'] != 0 && empty($_POST['today'])){
+            if($_POST['gtime']==2){//一周内过期
+                $map="gdtime >= ".$weekstar." and gdtime<=".$weekend."";
+            }else if($_POST['gtime']==3){//一个月内过期
+                $map="gdtime >= ".$begmonth." and gdtime<=".$endmonth."";
+            }else if($_POST['gtime']==4){//一个季度内过期
+                $map="gdtime >= ".$beginThismonth." and gdtime<=".$endThismonth."";
+            }
+        }else if($_POST['lxse'] == 0 && empty($_POST['today'])){
+            if($_POST['gtime']==2){//一周内过期
+                $map="gdtime >= ".$weekstar." and gdtime<=".$weekend."";
+            }else if($_POST['gtime']==3){//一个月内过期
+                $map="gdtime >= ".$begmonth." and gdtime<=".$endmonth."";
+            }else if($_POST['gtime']==4){//一个季度内过期
+                $map="gdtime >= ".$beginThismonth." and gdtime<=".$endThismonth."";
+            }  
+                     
+        }
+        $list=_Info::select_toset_list_all($map,$_POST['trtime']);
+        return $list;
+    }
+
 }

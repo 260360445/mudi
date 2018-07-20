@@ -1,0 +1,120 @@
+<div class="cont">
+  <form>
+    <fieldset>
+       <legend>统计条件设置与结果打印</legend>             
+       <div class="conta">
+          <p>选择墓园</p>
+          <p>统计开始时间：</p>
+          <p>统计结束时间：</p>
+         
+       </div>
+       <div class="contb">
+          <select name="cem_id" class="cem_id">
+              <option value="0">请选择</option>
+              {foreach $cem_list as $k => $vo}
+                   <option value="{$vo.id}">{$vo.title}</option>
+              {/foreach}
+           </select>
+        <input class="Wdate xiaostime" id="starttime" value="<?php $time = strtotime('-1 month', time()); echo date('Y-m-d',$time)?>" type="text" onclick="WdatePicker()" style="outline: 0;font-size: 14px;color: #000;float: left;margin-left: 10px;">
+        <input class="Wdate xiaostime" id="endtime"  value="<?php echo date('Y-m-d',time())?>" type="text" onClick="WdatePicker()" style="outline: 0;font-size: 14px;color: #000;float: left;margin-left: 10px;">
+        <button type="button" class="contc show_all">统计信息</button>         
+          <div class="xiaosd">打印统计结果</div>  
+       </div>
+    </fieldset>
+    
+  </form>
+  <div class="conbiao">
+    <table class="table table-bordered">
+      <!--<caption>边框表格布局</caption>-->
+      <thead>
+        <tr>
+          <th>授权人ID</th>
+          <th>授权人</th>
+          <th>墓位全称</th>
+          <th>墓位原价</th>
+          <th>成交价</th>
+          <th>折扣率</th>
+          <th>授权时间</th>
+        </tr>
+      </thead>
+      <tbody class="add_row">
+        
+      </tbody>
+    </table>
+  </div>
+</div>  
+<script src="__JS__/layer/layer.js"></script>
+<script language="javascript" type="text/javascript" src="__JS__/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+  $(".show_all").click(function(){
+    var html = layer.load(1, {
+              shade: [0.5] //0.1透明度的白色背景
+            });
+    $(".trtr").remove();
+    var cem_id=$(".cem_id option:selected").val();
+    var starttime=$("#starttime").val();
+    var endtime=$("#endtime").val();
+    if(cem_id !='0' && starttime== '' && endtime == ''){
+      $.ajax({
+          type        : 'post',
+          url         : '{:url('select_zlist')}',
+          dataType    : 'json',
+          data        : {
+              cem_id : cem_id,
+          },
+          success     : function(g){
+              layer.close(html);
+              $(".add_row").append(g);
+          }
+      });
+    }else if(cem_id !='0' && starttime!='' && endtime=='' ){
+      $.ajax({
+          type        : 'post',
+          url         : '{:url('select_zlist_time')}',
+          dataType    : 'json',
+          data        : {
+              cem_id : cem_id,
+              starttime:starttime,
+              endtime:endtime,
+          },
+          success     : function(g){
+              layer.close(html);
+              $(".add_row").append(g);
+          }
+      });
+    }else if(cem_id !='0' && starttime=='' && endtime!='' ){
+      $.ajax({
+          type        : 'post',
+          url         : '{:url('select_zlist_time')}',
+          dataType    : 'json',
+          data        : {
+              cem_id : cem_id,
+              starttime:starttime,
+              endtime:endtime,
+          },
+          success     : function(g){
+              layer.close(html);
+              $(".add_row").append(g);
+          }
+      });
+    }else if(cem_id !='0' && starttime!='' && endtime!='' ){
+      $.ajax({
+          type        : 'post',
+          url         : '{:url('select_zlist_time')}',
+          dataType    : 'json',
+          data        : {
+              cem_id : cem_id,
+              starttime:starttime,
+              endtime:endtime,
+          },
+          success     : function(g){
+              layer.close(html);
+              $(".add_row").append(g);
+          }
+      });
+    }else if(cem_id =='0'){
+      layer.close(html);
+      layer.msg('请选择墓园');
+    }
+  })
+</script>

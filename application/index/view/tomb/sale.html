@@ -1,6 +1,6 @@
 <style type="text/css">
     .ktanc div{
-        margin-left: 82px;
+        margin-left: 45px;
     }
 </style>
 <div class="cont">
@@ -23,24 +23,17 @@
                        <option value="{$vo.id}">{$vo.title}</option>
                   {/foreach}
                </select>
-
-
-
-                   <select name="cem_area_id" class="cem_area_id">
-                      <option value="0">请选择</option>
-                   </select>
-
-
-
-                   <select name="cem_row_id" class="cem_row_id">
-                      <option value="0">请选择</option>
-
-                   </select>
-                       <select class="style_id">
-                   {foreach $cem_style as $k => $vo}
-                        <option value="{$vo.id}">{$vo.title}</option>
-                   {/foreach}
-                      </select>
+               <select name="cem_area_id" class="cem_area_id">
+                  <option value="0">请选择</option>
+               </select>
+               <select name="cem_row_id" class="cem_row_id">
+                  <option value="0">请选择</option>
+               </select>
+                <select class="style_id">
+                 {foreach $cem_style as $k => $vo}
+                      <option value="{$vo.id}">{$vo.title}</option>
+                 {/foreach}
+                </select>
                 <select class="status_id">
                     {foreach $cem_status as $k => $vo}
                          <option value="{$vo.id}">{$vo.title}</option>
@@ -63,6 +56,81 @@
 <iframe frameborder = "0" scrolling = "no" class="ktan tc3" src=""  ></iframe> -->
 <script src="__JS__/layer/layer.js"></script>
 <script language="javascript" type="text/javascript" src="__JS__/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript">
+  //下面用于多图片上传预览功能
+function setImagePreviews1(avalue1) {
+  var docObj1 = document.getElementById("doc1");
+  var dd1 = document.getElementById("dd1");
+  dd1.innerHTML = "";
+  var fileList = docObj1.files;
+  for (var i = 0; i < fileList.length; i++) {           
+    dd1.innerHTML += "<div style='float:left' > <img id='img" + i + "'  /> </div>";
+    var imgObjPreview = document.getElementById("img"+i); 
+    if (docObj1.files && docObj1.files[i]) {
+      //火狐下，直接设img属性
+      imgObjPreview.style.display = 'block';
+      imgObjPreview.style.width = '200px';
+      imgObjPreview.style.height = '200px';
+      //imgObjPreview.src = docObj1.files[0].getAsDataURL();
+      //火狐7以上版本不能用上面的getAsDataURL()方式获取，需要一下方式
+      imgObjPreview.src = window.URL.createObjectURL(docObj1.files[i]);
+    }
+    else {
+      //IE下，使用滤镜
+      docObj1.select();
+      var imgSrc = document.selection.createRange().text;
+      alert(imgSrc)
+      var localImagId = document.getElementById("img" + i);
+      //必须设置初始大小
+      localImagId.style.width = "200px";
+      localImagId.style.height = "200px";
+      //图片异常的捕捉，防止用户修改后缀来伪造图片
+      try {
+          localImagId.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+          localImagId.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = imgSrc;
+      }
+      catch (e) {
+          alert("您上传的图片格式不正确，请重新选择!");
+          return false;
+      }
+      imgObjPreview.style.display = 'none';
+      document.selection.empty();
+    }
+  }  
+  return true;
+}
+function setcardimg(){
+  var html = layer.load(1, {
+              shade: [0.5] //0.1透明度的白色背景
+            });
+  var information = new FormData($('#information')[0]);
+  $.ajax({
+      type : 'post',
+      url : '{:url('reserve_setcardimg')}',
+      data : information,
+      async : false,
+      processData:false,
+      contentType:false,
+      error : function () {
+          layer.msg('网络故障，请稍后重试!',{offset: '300px',time: 1500,icon: 7});
+      },
+      success : function (responses) {
+        if(responses.msg == 'ok'){
+          layer.msg('上传成功',{offset: '300px',time: 2000,icon: 1},function () {
+            layer.close(html);
+            layer.close(uimghtml);
+            $("#usercardimg").val(responses['data']['img']);
+          });
+        }else{
+          layer.msg('上传失败',{offset: '300px',time: 2000,icon: 2},function () {
+            layer.close(html);
+            layer.close(uimghtml);
+          });
+        }
+      } 
+  });
+}
+</script>
     <script type="text/javascript">
 
         var id;
@@ -123,7 +191,30 @@
             //
             // $('.tc1').show();
         });
-
+        function suoding(){
+          imghtml = layer.load(0, {
+            shade: [0.5] //0.1透明度的白色背景
+          });
+          $.ajax({
+              type        : 'post',
+              url         : '{:url('select_buy_suoding')}',
+              dataType    : 'json',
+              data        : {
+                  id : id,
+              },
+              success     : function(g){
+                  layer.close(imghtml);
+                  layer.close(imhtml);
+                  if(g == 'ok'){
+                    layer.msg('设置成功');
+                    $(".show_all").trigger('click');
+                  }else{
+                    layer.msg('设置失败');
+                    $(".show_all").trigger('click');
+                  }
+              }
+          });
+        }
         function _tc2_show() {
             $('.tc2').attr('src', "{:url('sale_sling_words', '', '')}/id/" + id);
             $('.tc2').show();
@@ -143,18 +234,229 @@
                 },
                 success     : function(g){
                     layer.close(html);
-                     //页面层
-                    vhtml=layer.open({
-                      type: 1,
-                      title: '墓位预订', //不显示标题
-                      skin: 'layui-layer-rim', //加上边框
-                      area: ['858px', '608px'], //宽高
-                      content: g
-                    });
+                    if(g == 2){
+                      layer.msg('该墓位已锁定');  
+                    }else{
+                      //页面层
+                      vhtml=layer.open({
+                        type: 1,
+                        title: '墓位预订', //不显示标题
+                        skin: 'layui-layer-rim', //加上边框
+                        area: ['858px', '608px'], //宽高
+                        content: g
+                      });
+                    }
                 }
             });
             /*$('.tc1').attr('src', "{:url('reserve', '', '')}/id/" + id);
             $('.tc1').show();*/
+        }
+        function reservemoney(){
+          var money=$("#money").val();
+          var reserve_money=$("#reserve_money").val();
+          var sum=Number(money)-Number(reserve_money);
+          $("input[name=unpaid_money]").val(sum);
+        }
+        function blurmoney(){
+          var price=$("#blurprice").val();
+          var money=$("#money").val();
+          if(Number(price) == Number(money)){
+            $("#usubmit").attr("disabled",false);
+            $("#shouquan").attr("disabled",true);
+            $("#usubmit").css("color","#000");
+            $("#shouquan").css("color","#c6c6c6");
+            $("#shouquantishi").html('');
+          }else{
+            $("#usubmit").attr("disabled",true);
+            $("#shouquan").attr("disabled",false);
+            $("#usubmit").css("color","#c6c6c6");
+            $("#shouquan").css("color","#000");
+            var lv=Number(money)/Number(price);
+            $("#shouquantishi").html('墓位成交价格有变动，需授权登录。当前折扣为：'+lv.toFixed(4));
+          }
+        }
+        //授权折扣登录
+        function setacc(){
+          var html = layer.load(1, {
+              shade: [0.5] //0.1透明度的白色背景
+            });
+          var uacc=$("#uacc").val();
+          var upass=$("#upass").val();
+          var price=$("#blurprice").val();
+          var money=$("#money").val();
+          $.ajax({  
+              type        : 'post',
+              url         : '{:url('reserve_setacc')}',
+              dataType    : 'json',
+              data        : {
+                  uacc : uacc,
+                  upass:upass,
+              },
+              success     : function(g){
+                  layer.close(html);
+                  if(g.msg == 'noacc'){
+                    layer.msg('账号错误');
+                  }else if(g.msg == 'nosta'){
+                    layer.msg('账号被冻结，无法登录。');
+                  }else if(g.msg == 'nopass'){
+                    layer.msg('密码错误。');
+                  }else if(g.msg == 'no'){
+                    var lv=Number(money)/Number(price);
+                    var alsq=layer.alert('当前授权用户为：'+g.title+'<br>用户销售折扣权限为：'+g.flg+'<br>当前墓位实际折扣为：'+lv.toFixed(4)+' <br><br>授权失败，用户不具备相应的权限', {
+                      icon: 4,
+                      skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+                    }, function(){
+                      layer.close(acchtml);
+                      layer.close(alsq);
+                    })
+                  }else if(g.msg == 'ok'){
+                    var lv=Number(money)/Number(price);
+                    var zk=lv.toFixed(4);
+                    if(g.flg <= zk){
+                      var alsq=layer.alert('当前授权用户为：'+g.title+'<br>用户销售折扣权限为：'+g.flg+'<br>当前墓位实际折扣为：'+zk+' <br><br>授权成功', {
+                        icon: 4,  
+                        skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+                      }, function(){
+                        layer.close(alsq);
+                        layer.close(acchtml);
+                        $("#s_sta").val("");
+                        $("#s_staff_id").val(g.s_staff_id);
+                        $("#s_sta").val("2");
+                        $("#s_lv").val(zk);
+                        $("#usubmit").attr("disabled",false);
+                        $("#shouquan").attr("disabled",true);
+                        $("#usubmit").css("color","#000");
+                        $("#shouquan").css("color","#c6c6c6");
+                      })
+                    }else{
+                      var alsq=layer.alert('当前授权用户为：'+g.title+'<br>用户销售折扣权限为：'+g.flg+'<br>当前墓位实际折扣为：'+zk+' <br><br>授权失败，用户不具备相应的权限', {
+                        icon: 4,  
+                        skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+                      }, function(){
+                        layer.close(alsq);
+                        layer.close(acchtml);
+                      })
+                    }
+                  }
+              }
+          });
+        }
+        //授权折扣登录
+        function setaccs(){
+          var html = layer.load(1, {
+              shade: [0.5] //0.1透明度的白色背景
+            });
+          var uacc=$("#uacc").val();
+          var upass=$("#upass").val();
+          var price=$("#yprice").val();
+          var money=$("#mw_price").val();
+          $.ajax({  
+              type        : 'post',
+              url         : '{:url('reserve_setaccs')}',
+              dataType    : 'json',
+              data        : {
+                  uacc : uacc,
+                  upass:upass,
+              },
+              success     : function(g){
+                  layer.close(html);
+                  if(g.msg == 'noacc'){
+                    layer.msg('账号错误');
+                  }else if(g.msg == 'nosta'){
+                    layer.msg('账号被冻结，无法登录。');
+                  }else if(g.msg == 'nopass'){
+                    layer.msg('密码错误。');
+                  }else if(g.msg == 'no'){
+                    var lv=Number(money)/Number(price);
+                    var alsq=layer.alert('当前授权用户为：'+g.title+'<br>用户销售折扣权限为：'+g.flg+'<br>当前墓位实际折扣为：'+lv.toFixed(4)+' <br><br>授权失败，用户不具备相应的权限', {
+                      icon: 4,
+                      skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+                    }, function(){
+                      layer.close(acchtml);
+                      layer.close(alsq);
+                    })
+                  }else if(g.msg == 'ok'){
+                    var lv=Number(money)/Number(price);
+                    var zk=lv.toFixed(4);
+                    if(g.flg <= zk){
+                      var alsq=layer.alert('当前授权用户为：'+g.title+'<br>用户销售折扣权限为：'+g.flg+'<br>当前墓位实际折扣为：'+zk+' <br><br>授权成功', {
+                        icon: 4,  
+                        skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+                      }, function(){
+                        layer.close(alsq);
+                        layer.close(acchtml);
+                        $("#s_sta").val("");
+                        $("#s_staff_id").val(g.s_staff_id);
+                        $("#s_sta").val("2");
+                        $("#s_lv").val(zk);
+                        $("#zusubmit").attr("disabled",false);
+                        $("#zshouquan").attr("disabled",true);
+                        $("#zusubmit").css("color","#000");
+                        $("#zshouquan").css("color","#c6c6c6");
+                      })
+                    }else{
+                      var alsq=layer.alert('当前授权用户为：'+g.title+'<br>用户销售折扣权限为：'+g.flg+'<br>当前墓位实际折扣为：'+zk+' <br><br>授权失败，用户不具备相应的权限', {
+                        icon: 4,  
+                        skin: 'layer-ext-moon' //该皮肤由layer.seaning.com友情扩展。关于皮肤的扩展规则，去这里查阅
+                      }, function(){
+                        layer.close(alsq);
+                        layer.close(acchtml);
+                      })
+                    }
+                  }
+              }
+          });
+        }
+        function zksq(){
+          var html = layer.load(1, {
+              shade: [0.5] //0.1透明度的白色背景
+            });
+          $.ajax({
+                type        : 'post',
+                url         : '{:url('reserve_zksq')}',
+                dataType    : 'json',
+                data        : {
+                    id : id,
+                },
+                success     : function(g){
+                    layer.close(html);
+                    //页面层
+                    acchtml=layer.open({
+                      type: 1,
+                      title: '授权登录', //不显示标题
+                      skin: 'layui-layer-rim', //加上边框
+                      area: ['468px', '230px'], //宽高
+                      content: g
+                    });
+                }
+            });
+        }
+        function zksqs(){
+          var html = layer.load(1, {
+              shade: [0.5] //0.1透明度的白色背景
+            });
+          $.ajax({
+                type        : 'post',
+                url         : '{:url('reserve_zksqs')}',
+                dataType    : 'json',
+                data        : {
+                    id : id,
+                },
+                success     : function(g){
+                    layer.close(html);
+                    //页面层
+                    acchtml=layer.open({
+                      type: 1,
+                      title: '授权登录', //不显示标题
+                      skin: 'layui-layer-rim', //加上边框
+                      area: ['468px', '230px'], //宽高
+                      content: g
+                    });
+                }
+            });
+        }
+        function closacc(){
+            layer.close(acchtml);
         }
         function closeghtml(){
             layer.close(dghtml);
@@ -172,6 +474,7 @@
             var dead_name=$("input[name='dead_name']").val();
             var dead_relationship=$("#dead_relationship option:selected").val();
             var contacts_name=$("input[name='contacts_name']").val();
+            var contacts_age=$("input[name='contacts_age']").val();
             var contacts_postcode=$("input[name='contacts_postcode']").val();
             var contacts_idcard=$("input[name='contacts_idcard']").val();
             var contacts_sex=$("#contacts_sex option:selected").val();
@@ -182,7 +485,10 @@
             var contacts_address=$("input[name='contacts_address']").val();
             var salesman=$("#salesman option:selected").val();
             var beizhu=$("#buzhi").val();
-            if(reserve_date != '' && remind_date !='' && money !='' && reserve_money !='' && unpaid_money !='' && dead_name !='' && dead_relationship !='' && contacts_name !='' && contacts_postcode !='' && contacts_idcard !='' && contacts_sex !='' && contacts_phone !=''&& contacts_tel !=''&& salesman !=''){
+            var s_staff_id=$("#s_staff_id").val();
+            var s_lv=$("#s_lv").val();
+            var s_sta=$("#s_sta").val();
+            if(reserve_date != '' && remind_date !='' && money !='' && reserve_money !='' && unpaid_money !='' && dead_name !='' && dead_relationship !='' && contacts_name !='' && contacts_postcode !='' && contacts_idcard !='' && contacts_sex !='' && contacts_phone !=''&& contacts_tel !=''&& salesman !='' && contacts_age!=''){
                 layer.close(vhtml);
                 var html = layer.load(0, {
                   shade: [0.5] //0.1透明度的白色背景
@@ -200,12 +506,16 @@
                         reserve_money : reserve_money,
                         unpaid_money : unpaid_money,
                         dead_name : dead_name,
+                        s_sta:s_sta,
+                        s_staff_id:s_staff_id,
+                        s_lv:s_lv,
                         dead_relationship : dead_relationship,
                         contacts_name : contacts_name,
                         contacts_postcode : contacts_postcode,
                         contacts_idcard : contacts_idcard,
                         contacts_sex : contacts_sex,
                         contacts_tel : contacts_tel,
+                        contacts_age:contacts_age,
                         contacts_phone : contacts_phone,
                         contacts_workplace : contacts_workplace,
                         contacts_email : contacts_email,
@@ -215,6 +525,7 @@
                     },
                     success     : function(g){
                         if(g == 'ok'){
+                            $('.show_all').trigger('click');
                             layer.close(html);
                             layer.msg('设置成功');
                         }else{
@@ -241,14 +552,18 @@
                 },
                 success     : function(g){
                     layer.close(html);
-                     //页面层
-                    dghtml=layer.open({
-                      type: 1,
-                      title: '墓位定购', //不显示标题
-                      skin: 'layui-layer-rim', //加上边框
-                      area: ['872px', '600px'], //宽高
-                      content: g
-                    });
+                    if(g == "2"){
+                      layer.msg('改墓位已锁定');
+                    }else{
+                      dghtml=layer.open({
+                        type: 1,
+                        title: '墓位定购', //不显示标题
+                        skin: 'layui-layer-rim', //加上边框
+                        area: ['872px', '600px'], //宽高
+                        content: g
+                      });
+                    }
+                    
                 }
             });
         }
@@ -265,6 +580,7 @@
             var pay_sum_money=$("input[name='pay_sum_money']").val();
             var dead_relationship=$("#dead_relationship option:selected").val();
             var contacts_name=$("input[name='contacts_name']").val();
+            var contacts_age=$("input[name='contacts_age']").val();
             var contacts_idcard=$("input[name='contacts_idcard']").val();
             var contacts_sex=$("#contacts_sex option:selected").val();
             var contacts_tel=$("input[name='contacts_tel']").val();
@@ -274,6 +590,10 @@
             var contacts_address=$("input[name='contacts_address']").val();
             var salesman=$("#salesman option:selected").val();
             var beizhu=$("#beizhu").val();
+            var usercardimg=$("#usercardimg").val();
+            var s_staff_id=$("#s_staff_id").val();
+            var s_lv=$("#s_lv").val();
+            var s_sta=$("#s_sta").val();
             var reg=/^(0|[1-9][0-9]*)$/;
             if(mw_price == ''){
               layer.msg('请填写墓位费');
@@ -334,7 +654,7 @@
               layer.msg('请填写手机号');
               return false;
             }
-            if(mw_price != '' && manage_money != '' && manage_year != '' && settime != '' && starttime != '' && endtime != '' && contacts_name != '' && contacts_idcard != '' && contacts_tel != ''  && contacts_phone != '' && dead_name != ''){
+            if(mw_price != '' && manage_money != '' && manage_year != '' && settime != '' && starttime != '' && endtime != '' && contacts_name != '' && contacts_idcard != '' && contacts_tel != ''  && contacts_phone != '' && dead_name != '' && contacts_age!='' ){
                 layer.close(dghtml);
                 ldghtml = layer.load(0, {
                     shade: [0.5] //0.1透明度的白色背景
@@ -353,9 +673,14 @@
                         starttime : starttime,
                         dead_name:dead_name,
                         endtime : endtime,
+                        usercardimg:usercardimg,
+                        contacts_age:contacts_age,
                         pay_sum_money : pay_sum_money,
                         dead_relationship : dead_relationship,
                         contacts_name : contacts_name,
+                        s_staff_id:s_staff_id,
+                        s_sta:s_sta,
+                        s_lv:s_lv,
                         contacts_idcard : contacts_idcard,
                         contacts_sex : contacts_sex,
                         contacts_tel : contacts_tel,
@@ -368,6 +693,7 @@
                     },
                     success     : function(g){
                         if(g == 'ok'){
+                            $('.show_all').trigger('click');
                             layer.close(ldghtml);
                             layer.msg('设置成功');
                         }else{
@@ -377,6 +703,28 @@
                     }
                 });
             }
+          }
+          function uicard(){
+            var imgshtml = layer.load(0, {
+              shade: [0.5] //0.1透明度的白色背景
+            });
+            $.ajax({
+                type        : 'post',
+                url         : '{:url('tomb_uicard')}',
+                dataType    : 'json',
+                data        : {id:1},
+                success     : function(g){
+                    layer.close(imgshtml);
+                     //页面层
+                    uimghtml=layer.open({
+                      type: 1,
+                      title: '购墓联系人身份证设置', //不显示标题
+                      skin: 'layui-layer-rim', //加上边框
+                      area: ['600px', '380px'], //宽高
+                      content: g
+                    });
+                }
+            });
           }
           function gmobile(){
             var mobile=$("#mobile").val();
@@ -389,11 +737,26 @@
           }
           function jcwf(){
             var mw_price=$("#mw_price").val();
+            var yprice=$("#yprice").val();
             var reg=/^(0|[1-9][0-9]*)$/;
             if (!reg.test(mw_price)) {
                 layer.msg('请填写数字'); 
                 $('#mw_price').focus();
               return false;
+            }
+            if(Number(mw_price) == Number(yprice)){
+              $("#zusubmit").attr("disabled",false);
+              $("#zshouquan").attr("disabled",true);
+              $("#zusubmit").css("color","#000");
+              $("#zshouquan").css("color","#c6c6c6");
+              $("#zshouquantishi").html('');
+            }else{
+              $("#zusubmit").attr("disabled",true);
+              $("#zshouquan").attr("disabled",false);
+              $("#zusubmit").css("color","#c6c6c6");
+              $("#zshouquan").css("color","#000");
+              var lv=Number(mw_price)/Number(yprice);
+              $("#zshouquantishi").html('墓位成交价格有变动，需授权登录。当前折扣为：'+lv.toFixed(4));
             }
           }
           function glmone(){
